@@ -27,7 +27,7 @@ SAMPLE_CSV_PATH = "data/df_sample.csv"
 MODEL_DRIVE_ID = "1j69jqMBryuYz0Rk0DC2oc80Cg-LA5inR"
 CSV_DRIVE_ID = "1k2bs1DFJ9oawf8twKkY49AfRmmmjBSbu"
 HISTORY_DRIVE_ID = "1rA-PNTRfMSX5QP1UtoO3tpVWRKBwA9AC"
-SAMPLE_CSV_DRIVE_ID = "1abcDEF1234567890exampleID"  # Remplace par l'ID réel de df_sample.csv
+SAMPLE_CSV_DRIVE_ID = "1GJbXKgyZTK_B68zlmrMU0SNop4LcR9yo"  # Remplace par l'ID réel de df_sample.csv
 
 # --- TELECHARGEMENT DES FICHIERS SI ABSENTS
 download_from_drive(MODEL_PATH, MODEL_DRIVE_ID)
