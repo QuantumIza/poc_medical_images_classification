@@ -22,6 +22,7 @@ import matplotlib.pyplot as plt
 # -------------------------
 from loaders import (
     load_model_cnn,
+    load_model_ictn,
     load_dataframe,
     load_sample_dataframe,
     load_training_history,
