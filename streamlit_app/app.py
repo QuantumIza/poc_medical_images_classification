@@ -83,7 +83,7 @@ color_map = {
 # ------------------------------------------------------
 with tab1:
     st.header("ANALYSE EXPLORATOIRE")
-    st.subheader("REPRESENTATION EQUILIBREE DES CLASSES")
+    st.subheader("REPRÉSENTATION EQUILIBRÉE DES CLASSES")
 
     class_counts = df["class"].value_counts()
     labels = class_counts.index.tolist()
