@@ -187,8 +187,12 @@ with tab2:
 
         with row1_col2:
             st.subheader("Choisissez le(s) modèle(s) à utiliser")
-            use_baseline = st.checkbox("📘 Baseline CNN", value=True)
-            use_ictn = st.checkbox("📗 ICTN")
+            cb_col1, cb_col2 = st.columns(2)
+            with cb_col1:
+                use_baseline = st.checkbox("📘 Baseline CNN", value=True)
+            with cb_col2:
+                use_ictn = st.checkbox("📗 ICTN")
+
 
         # 🔹 Ligne 2 : prédictions par modèle
         row2_col1, row2_col2 = st.columns(2)
