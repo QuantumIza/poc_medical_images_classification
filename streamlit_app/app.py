@@ -148,23 +148,63 @@ with tab1:
 # ----------------------------------------------------
 # COMPOSANT GRAPHIQUE ONGLET  2 : PREDICTION D'IMAGE
 # ----------------------------------------------------
+# with tab2:
+#     st.header("PREDICTIONS")
+#     uploaded_file = st.file_uploader("Choisissez une image", type=["jpg", "jpeg", "png"])
+
+#     if uploaded_file:
+#         img = Image.open(uploaded_file)
+#         img = img.resize((250, 250))
+#         col1, col2 = st.columns([1, 2])
+#         col1.image(img, caption="Image chargée", use_column_width=False)
+
+#         img_batch = preprocess_image(img)
+#         y_pred = model.predict(img_batch)
+#         pred_class = classes[np.argmax(y_pred)]
+#         col2.success(f"CLASSE PREDITE : **{pred_class}**")
+
+#         probas = pd.Series(y_pred[0], index=classes).sort_values(ascending=False)
+#         col2.bar_chart(probas)
+# ----------------------------------------------------
+# COMPOSANT GRAPHIQUE ONGLET  2 : PREDICTIONS
+# ----------------------------------------------------
 with tab2:
     st.header("PREDICTIONS")
     uploaded_file = st.file_uploader("Choisissez une image", type=["jpg", "jpeg", "png"])
 
     if uploaded_file:
-        img = Image.open(uploaded_file)
+        img = Image.open(uploaded_file).convert("RGB")
         img = img.resize((250, 250))
         col1, col2 = st.columns([1, 2])
-        col1.image(img, caption="Image chargée", use_column_width=False)
+        col1.image(img, caption="Image chargée", width="content")
 
         img_batch = preprocess_image(img)
-        y_pred = model.predict(img_batch)
-        pred_class = classes[np.argmax(y_pred)]
-        col2.success(f"CLASSE PREDITE : **{pred_class}**")
 
-        probas = pd.Series(y_pred[0], index=classes).sort_values(ascending=False)
-        col2.bar_chart(probas)
+        st.subheader("Choisissez le(s) modèle(s) à utiliser")
+        selected_models = st.multiselect(
+            "Modèles disponibles",
+            ["Baseline CNN", "ICTN"],
+            default=["Baseline CNN"]
+        )
+
+        if "Baseline CNN" in selected_models:
+            y_pred_base = model.predict(img_batch)
+            pred_base = classes[np.argmax(y_pred_base)]
+            col2.success(f"📘 Baseline CNN : **{pred_base}**")
+            probas_base = pd.Series(y_pred_base[0], index=classes).sort_values(ascending=False)
+            st.bar_chart(probas_base)
+
+        if "ICTN" in selected_models:
+            try:
+                ictn_model = load_model_ictn()  # à définir dans loaders.py
+                y_pred_ictn = ictn_model.predict(img_batch)
+                pred_ictn = classes[np.argmax(y_pred_ictn)]
+                col2.info(f"📗 ICTN : **{pred_ictn}**")
+                probas_ictn = pd.Series(y_pred_ictn[0], index=classes).sort_values(ascending=False)
+                st.bar_chart(probas_ictn)
+            except Exception as e:
+                st.warning(f"Erreur de chargement du modèle ICTN : {e}")
+
 
 # -------------------------------------------------------
 # COMPOSANT GRAPHIQUE ONGLET  3 : COURBES D'ENTRAINEMENT
