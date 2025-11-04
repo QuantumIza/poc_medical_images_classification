@@ -128,17 +128,27 @@ with tab1:
 with tab2:
     st.header("🖼️ Prédiction d'une image")
     uploaded_file = st.file_uploader("Choisissez une image", type=["jpg", "jpeg", "png"])
+
     if uploaded_file:
         img = Image.open(uploaded_file)
-        st.image(img, caption="Image chargée", use_column_width=True)
+        img = img.resize((250, 250))  # Redimensionne l'image pour un affichage plus compact
 
+        col1, col2 = st.columns([1, 2])
+
+        # Affichage de l'image
+        col1.image(img, caption="Image chargée", use_column_width=False)
+
+        # Prédiction
         img_batch = preprocess_image(img)
         y_pred = model.predict(img_batch)
         pred_class = classes[np.argmax(y_pred)]
-        st.success(f"Classe prédite : **{pred_class}**")
 
+        col2.success(f"Classe prédite : **{pred_class}**")
+
+        # Affichage des probabilités
         probas = pd.Series(y_pred[0], index=classes).sort_values(ascending=False)
-        st.bar_chart(probas)
+        col2.bar_chart(probas)
+
 
 # --- TAB 3 : COURBES D'ENTRAINEMENT
 with tab3:
