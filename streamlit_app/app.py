@@ -12,10 +12,10 @@ from tensorflow.keras.models import load_model
 import plotly.express as px
 import matplotlib.pyplot as plt
 
-# # ------------------------------
-# # CONFIGURATION DE LA PAGE
-# # ------------------------------
-# st.set_page_config(page_title="Dashboard POC – Projet 7", layout="wide")
+# ------------------------------
+# CONFIGURATION DE LA PAGE
+# ------------------------------
+st.set_page_config(page_title="Dashboard POC – Projet 7", layout="wide")
 
 # # ------------------------------
 # # CHEMINS LOCAUX ET URLS HF
