@@ -40,16 +40,22 @@ def load_image_from_drive(file_id):
 #     os.makedirs(os.path.dirname(file_path), exist_ok=True)
 #     url = f"https://drive.google.com/uc?id={file_id}"
 #     gdown.download(url, file_path, quiet=False)
+
+# def download_from_drive(file_path, file_id):
+#     os.makedirs(os.path.dirname(file_path), exist_ok=True)
+#     url = f"https://drive.google.com/uc?export=download&id={file_id}"
+#     response = requests.get(url)
+#     if response.status_code == 200:
+#         with open(file_path, "wb") as f:
+#             f.write(response.content)
+#     else:
+#         st.error(f"Erreur de téléchargement du fichier {file_id} (code {response.status_code})")
+#         st.stop()
+
 def download_from_drive(file_path, file_id):
     os.makedirs(os.path.dirname(file_path), exist_ok=True)
-    url = f"https://drive.google.com/uc?export=download&id={file_id}"
-    response = requests.get(url)
-    if response.status_code == 200:
-        with open(file_path, "wb") as f:
-            f.write(response.content)
-    else:
-        st.error(f"Erreur de téléchargement du fichier {file_id} (code {response.status_code})")
-        st.stop()
+    url = f"https://drive.google.com/uc?id={file_id}"
+    gdown.download(url, file_path, quiet=False)
 
 
 
@@ -90,15 +96,7 @@ def load_model_cnn():
 
 model = load_model_cnn()
 
-if st.button("📥 Tester le téléchargement du modèle"):
-    try:
-        download_from_drive(MODEL_PATH, MODEL_DRIVE_ID)
-        if os.path.exists(MODEL_PATH):
-            st.success("Téléchargement réussi et fichier présent.")
-        else:
-            st.error("Téléchargement échoué : fichier introuvable.")
-    except Exception as e:
-        st.error(f"Erreur pendant le téléchargement : {e}")
+
 
 
 # --- CHARGEMENT DES DATAFRAMES
