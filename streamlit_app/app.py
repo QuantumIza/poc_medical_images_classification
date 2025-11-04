@@ -75,10 +75,15 @@ download_from_drive(HISTORY_PATH, HISTORY_DRIVE_ID)
 def load_model_cnn():
     try:
         download_from_drive(MODEL_PATH, MODEL_DRIVE_ID)
+        if not os.path.exists(MODEL_PATH):
+            st.error(f"Fichier non trouvé après téléchargement : {MODEL_PATH}")
+            st.stop()
+        st.success("Fichier modèle trouvé, tentative de chargement...")
         return load_model(MODEL_PATH)
     except Exception as e:
         st.error(f"Erreur de chargement du modèle : {e}")
         st.stop()
+
 
 
 
