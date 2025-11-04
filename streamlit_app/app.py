@@ -90,6 +90,17 @@ def load_model_cnn():
 
 model = load_model_cnn()
 
+if st.button("📥 Tester le téléchargement du modèle"):
+    try:
+        download_from_drive(MODEL_PATH, MODEL_DRIVE_ID)
+        if os.path.exists(MODEL_PATH):
+            st.success("Téléchargement réussi et fichier présent.")
+        else:
+            st.error("Téléchargement échoué : fichier introuvable.")
+    except Exception as e:
+        st.error(f"Erreur pendant le téléchargement : {e}")
+
+
 # --- CHARGEMENT DES DATAFRAMES
 @st.cache_data
 def load_dataframe():
