@@ -18,6 +18,7 @@ st.set_page_config(page_title="Dashboard POC – Projet 7", layout="wide")
 
 
 # --- TELECHARGEMENT DEPUIS URL DRIVE
+@st.cache_data
 def load_image_from_drive(file_id):
     """
     Télécharge une image depuis Google Drive à partir de son ID.
