@@ -168,28 +168,28 @@ with tab2:
 
         # 🔹 LIGNE 1 : IMAGE À GAUCHE, CHECKBOX À DROITE
         row1_col1, row1_col2 = st.columns([1, 2])
+
         with row1_col1:
             st.subheader("IMAGE CHARGÉE")
             st.image(img, caption="IMAGE CHARGÉE", use_column_width=False)
 
         with row1_col2:
-    st.subheader("CHOISISSEZ LE(S) MODÈLE(S) À UTILISER")
-    cb_col1, cb_col2 = st.columns(2)
+            st.subheader("CHOISISSEZ LE(S) MODÈLE(S) À UTILISER")
+            cb_col1, cb_col2 = st.columns(2)
 
-        with cb_col1:
-            st.markdown(
-                f"<h5 style='color:{model_colors['BASELINE CNN']}; font-size:18px;'>BASELINE CNN</h5>",
-                unsafe_allow_html=True
-            )
-            use_baseline = st.checkbox("", value=True)
-    
-        with cb_col2:
-            st.markdown(
-                f"<h5 style='color:{model_colors['ICTN']}; font-size:18px;'>ICTN</h5>",
-                unsafe_allow_html=True
-            )
-            use_ictn = st.checkbox("")
+            with cb_col1:
+                st.markdown(
+                    f"<h5 style='color:{model_colors['BASELINE CNN']}; font-size:18px;'>BASELINE CNN</h5>",
+                    unsafe_allow_html=True
+                )
+                use_baseline = st.checkbox("", value=True)
 
+            with cb_col2:
+                st.markdown(
+                    f"<h5 style='color:{model_colors['ICTN']}; font-size:18px;'>ICTN</h5>",
+                    unsafe_allow_html=True
+                )
+                use_ictn = st.checkbox("")
 
         # 🔹 LIGNE 2 : PRÉDICTIONS PAR MODÈLE
         row2_col1, row2_col2 = st.columns(2)
@@ -265,6 +265,7 @@ with tab2:
                     y=alt.Y("Probabilité", title="PROBABILITÉ")
                 ).properties(height=300)
                 st.altair_chart(chart_ictn, use_container_width=True)
+
 
 
 
