@@ -83,7 +83,7 @@ color_map = {
 # ------------------------------------------------------
 with tab1:
     st.header("ANALYSE EXPLORATOIRE")
-    st.subheader("Répartition des classes")
+    st.subheader("REPRESENTATION EQUILIBREE DES CLASSES")
 
     class_counts = df["class"].value_counts()
     labels = class_counts.index.tolist()
@@ -100,7 +100,7 @@ with tab1:
         y="count",
         color="class",
         color_discrete_map=class_colors,
-        title="Répartition des classes"
+        title="DISTRIBUTION DES CLASSES"
     )
     col1.plotly_chart(fig_bar, use_container_width=True)
 
@@ -117,7 +117,7 @@ with tab1:
     plt.setp(autotexts, size=12, weight="bold")
     col2.pyplot(fig)
 
-    st.subheader("Exemples d'images par classe")
+    st.subheader("APERÇU D'IMAGES PAR CLASSE")
     show_normal = st.checkbox("🟦 Classe normal", value=True)
     show_benign = st.checkbox("🟩 Classe benign")
     show_malignant = st.checkbox("🟥 Classe malignant")
