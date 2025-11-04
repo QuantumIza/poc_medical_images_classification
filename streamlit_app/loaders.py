@@ -11,6 +11,7 @@ from io import BytesIO
 from tensorflow.keras.models import load_model
 import plotly.express as px
 import matplotlib.pyplot as plt
+import gdown
 # ------------------------------
 # CHEMINS LOCAUX ET URLS HF
 # ------------------------------
@@ -37,18 +38,18 @@ def download_from_huggingface(file_path, hf_url):
         st.error(f"Erreur de téléchargement depuis Hugging Face : {response.status_code}")
         st.stop()
 
+
+
 def load_image_from_drive(file_id):
     url = f"https://drive.google.com/uc?id={file_id.strip()}"
-    response = requests.get(url)
-    if response.status_code == 200:
-        try:
-            return Image.open(BytesIO(response.content))
-        except Exception as e:
-            st.warning(f"Erreur de lecture de l'image {file_id} : {e}")
-            return None
-    else:
-        st.warning(f"Impossible de télécharger l'image {file_id} (code {response.status_code})")
+    try:
+        tmp_path = f"temp_image_{file_id}.jpg"
+        gdown.download(url, tmp_path, quiet=True)
+        return Image.open(tmp_path)
+    except Exception as e:
+        st.warning(f"Erreur de lecture de l'image {file_id} : {e}")
         return None
+
 
 def preprocess_image(img, target_size=(227, 227)):
     img = img.resize(target_size).convert("RGB")
