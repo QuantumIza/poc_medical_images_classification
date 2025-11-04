@@ -22,15 +22,18 @@ def download_from_drive(file_path, file_id):
 MODEL_PATH = "model/best_model_baseline_cnn.keras"
 CSV_PATH = "data/df_full.csv"
 HISTORY_PATH = "outputs/history_baseline_cnn.joblib"
+SAMPLE_CSV_PATH = "data/df_sample.csv"
 
-MODEL_DRIVE_ID = "1j69jqMBryuYz0Rk0DC2oc80Cg-LA5inR"  # https://drive.google.com/file/d/1j69jqMBryuYz0Rk0DC2oc80Cg-LA5inR/view?usp=sharing
-CSV_DRIVE_ID = "1k2bs1DFJ9oawf8twKkY49AfRmmmjBSbu"  # https://drive.google.com/file/d/1k2bs1DFJ9oawf8twKkY49AfRmmmjBSbu/view?usp=sharing
-HISTORY_DRIVE_ID = "1rA-PNTRfMSX5QP1UtoO3tpVWRKBwA9AC"  # https://drive.google.com/file/d/1rA-PNTRfMSX5QP1UtoO3tpVWRKBwA9AC/view?usp=sharing
+MODEL_DRIVE_ID = "1j69jqMBryuYz0Rk0DC2oc80Cg-LA5inR"
+CSV_DRIVE_ID = "1k2bs1DFJ9oawf8twKkY49AfRmmmjBSbu"
+HISTORY_DRIVE_ID = "1rA-PNTRfMSX5QP1UtoO3tpVWRKBwA9AC"
+SAMPLE_CSV_DRIVE_ID = "1abcDEF1234567890exampleID"  # Remplace par l'ID réel de df_sample.csv
 
 # --- TELECHARGEMENT DES FICHIERS SI ABSENTS
 download_from_drive(MODEL_PATH, MODEL_DRIVE_ID)
 download_from_drive(CSV_PATH, CSV_DRIVE_ID)
 download_from_drive(HISTORY_PATH, HISTORY_DRIVE_ID)
+download_from_drive(SAMPLE_CSV_PATH, SAMPLE_CSV_DRIVE_ID)
 
 # --- CHARGEMENT DU MODELE
 @st.cache_resource
@@ -39,12 +42,17 @@ def load_model_cnn():
 
 model = load_model_cnn()
 
-# --- CHARGEMENT DU DATAFRAME
+# --- CHARGEMENT DES DATAFRAMES
 @st.cache_data
 def load_dataframe():
     return pd.read_csv(CSV_PATH)
 
+@st.cache_data
+def load_sample_dataframe():
+    return pd.read_csv(SAMPLE_CSV_PATH)
+
 df = load_dataframe()
+df_sample = load_sample_dataframe()
 classes = sorted(df["class"].unique())
 
 # --- PRETRAITEMENT IMAGE
@@ -73,10 +81,12 @@ with tab1:
     st.bar_chart(class_counts)
 
     st.subheader("Exemples d'images par classe")
-    selected_class = st.selectbox("Choisir une classe", class_counts.index)
-    sample_paths = df[df["class"] == selected_class]["source_path"].sample(3)
-    for path in sample_paths:
-        st.image(path, caption=selected_class, width=200)
+    selected_class = st.selectbox("Choisir une classe", df_sample["class"].unique())
+    sample_ids = df_sample[df_sample["class"] == selected_class]["image_id"].sample(3)
+
+    for file_id in sample_ids:
+        url = f"https://drive.google.com/uc?id={file_id}"
+        st.image(url, caption=selected_class, width=200)
 
 # --- TAB 2 : PREDICTION D'IMAGE
 with tab2:
