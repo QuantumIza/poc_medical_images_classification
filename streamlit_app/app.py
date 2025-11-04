@@ -1,6 +1,6 @@
-# --------------
-# --- IMPORTS
-# --------------
+# ---------------------------
+# --- IMPORTS DES LIBRAIRIES
+# ---------------------------
 import streamlit as st
 import numpy as np
 import pandas as pd
@@ -12,80 +12,8 @@ from tensorflow.keras.models import load_model
 import plotly.express as px
 import matplotlib.pyplot as plt
 
-# ------------------------------
-# CONFIGURATION DE LA PAGE
-# ------------------------------
-st.set_page_config(page_title="Dashboard POC – Projet 7", layout="centered")
 
-# # ------------------------------
-# # CHEMINS LOCAUX ET URLS HF
-# # ------------------------------
-# MODEL_PATH = "model/initial_best_model_baseline_cnn.keras"
-# CSV_PATH = "data/my_df_full.csv"
-# SAMPLE_CSV_PATH = "data/my_df_sample.csv"
-# HISTORY_PATH = "outputs/history_baseline_cnn.json"
 
-# HF_MODEL_URL = "https://huggingface.co/QuantumIza/poc-baseline-cnn/resolve/main/initial_best_model_baseline_cnn.keras"
-# HF_CSV_URL = "https://huggingface.co/QuantumIza/poc-baseline-cnn/resolve/main/df_full.csv"
-# HF_SAMPLE_CSV_URL = "https://huggingface.co/QuantumIza/poc-baseline-cnn/resolve/main/df_sample.csv"
-# HF_HISTORY_URL = "https://huggingface.co/QuantumIza/poc-baseline-cnn/resolve/main/history_baseline_cnn.json"
-
-# # ------------------------------
-# # FONCTIONS UTILITAIRES
-# # ------------------------------
-# def download_from_huggingface(file_path, hf_url):
-#     os.makedirs(os.path.dirname(file_path), exist_ok=True)
-#     response = requests.get(hf_url)
-#     if response.status_code == 200:
-#         with open(file_path, "wb") as f:
-#             f.write(response.content)
-#     else:
-#         st.error(f"Erreur de téléchargement depuis Hugging Face : {response.status_code}")
-#         st.stop()
-
-# def load_image_from_drive(file_id):
-#     url = f"https://drive.google.com/uc?id={file_id.strip()}"
-#     response = requests.get(url)
-#     if response.status_code == 200:
-#         try:
-#             return Image.open(BytesIO(response.content))
-#         except Exception as e:
-#             st.warning(f"Erreur de lecture de l'image {file_id} : {e}")
-#             return None
-#     else:
-#         st.warning(f"Impossible de télécharger l'image {file_id} (code {response.status_code})")
-#         return None
-
-# def preprocess_image(img, target_size=(227, 227)):
-#     img = img.resize(target_size).convert("RGB")
-#     img_array = np.array(img) / 255.0
-#     img_batch = np.expand_dims(img_array, axis=0)
-#     return img_batch
-
-# # ------------------------------
-# # CHARGEMENT DES FICHIERS
-# # ------------------------------
-# @st.cache_resource
-# def load_model_cnn():
-#     try:
-#         download_from_huggingface(MODEL_PATH, HF_MODEL_URL)
-#         return load_model(MODEL_PATH)
-#     except Exception as e:
-#         st.error(f"Erreur de chargement du modèle : {e}")
-#         st.stop()
-
-# @st.cache_data
-# def load_dataframe():
-#     return pd.read_csv(HF_CSV_URL)
-
-# @st.cache_data
-# def load_sample_dataframe():
-#     return pd.read_csv(HF_SAMPLE_CSV_URL)
-
-# @st.cache_data
-# def load_training_history():
-#     response = requests.get(HF_HISTORY_URL)
-#     return pd.read_json(BytesIO(response.content))
 
 
 
@@ -118,17 +46,27 @@ df = load_dataframe()
 df_sample = load_sample_dataframe()
 classes = sorted(df["class"].unique())
 
-# ------------------------------
-# INTERFACE STREAMLIT
-# ------------------------------
+# ------------------------------------------
+# COMPOSANTS DE L'INTERFACE IHM STREAMLIT
+# ------------------------------------------
+# -------------------------------
+# --- CONFIGURATION DE LA PAGE
+# -------------------------------
+st.set_page_config(page_title="Dashboard POC – Projet 7", layout="wide")
 st.title("DASHBOARD – BASELINE CNN VS MODELE ICNT LS")
+
+# ---------------------------
+# --- DEFINITION DES ONGLETS
+# ---------------------------
 tab1, tab2, tab3, tab4 = st.tabs([
     "ANALYSE EXPLORATOIRE",
     "PREDICTIONS",
     "COURBES ENTRAINEMENT",
     "COMPARAISON MODELES"
 ])
-
+# ----------------------------------
+# --- DEFINITION DES CODES COULEURS
+# ----------------------------------
 class_colors = {
     "normal": "#A6CEE3",
     "benign": "#B2DF8A",
@@ -140,9 +78,9 @@ color_map = {
     "malignant": "#D95F02"
 }
 
-# ------------------------------
-# ONGLET 1 : ANALYSE EXPLORATOIRE
-# ------------------------------
+# ------------------------------------------------------
+# COMPOSANT GRAPHIQUE ONGLET 1 : ANALYSE EXPLORATOIRE
+# ------------------------------------------------------
 with tab1:
     st.header("ANALYSE EXPLORATOIRE")
     st.subheader("Répartition des classes")
@@ -206,9 +144,9 @@ with tab1:
                 else:
                     cols[i].warning(f"Image introuvable : {file_id}")
 
-# ------------------------------
-# ONGLET 2 : PREDICTION D'IMAGE
-# ------------------------------
+# ----------------------------------------------------
+# COMPOSANT GRAPHIQUE ONGLET  2 : PREDICTION D'IMAGE
+# ----------------------------------------------------
 with tab2:
     st.header("PREDICTIONS")
     uploaded_file = st.file_uploader("Choisissez une image", type=["jpg", "jpeg", "png"])
@@ -227,9 +165,9 @@ with tab2:
         probas = pd.Series(y_pred[0], index=classes).sort_values(ascending=False)
         col2.bar_chart(probas)
 
-# ------------------------------
-# ONGLET 3 : COURBES D'ENTRAINEMENT
-# ------------------------------
+# -------------------------------------------------------
+# COMPOSANT GRAPHIQUE ONGLET  3 : COURBES D'ENTRAINEMENT
+# -------------------------------------------------------
 with tab3:
     st.header("COURBES ENTRAINEMENT")
     try:
@@ -240,9 +178,9 @@ with tab3:
     except Exception as e:
         st.warning(f"Historique non disponible : {e}")
 
-# ------------------------------
-# ONGLET 4 : COMPARAISON MODELES
-# ------------------------------
+# ----------------------------------------------------
+# COMPOSANT GRAPHIQUE ONGLET  4 : COMPARAISON MODELES
+# ----------------------------------------------------
 with tab4:
     st.header("COMPARAISON MODELES")
     st.info("Le modèle ICN-T sera intégré ici dès qu'il sera entraîné.")
