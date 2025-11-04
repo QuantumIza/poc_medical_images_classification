@@ -42,13 +42,14 @@ def download_from_huggingface(file_path, hf_url):
 
 def load_image_from_drive(file_id):
     url = f"https://drive.google.com/uc?id={file_id.strip()}"
-    try:
-        tmp_path = f"temp_image_{file_id}.jpg"
-        gdown.download(url, tmp_path, quiet=True)
-        return Image.open(tmp_path)
-    except Exception as e:
-        st.warning(f"Erreur de lecture de l'image {file_id} : {e}")
-        return None
+    response = requests.get(url)
+    if response.status_code == 200:
+        try:
+            return Image.open(BytesIO(response.content))
+        except Exception as e:
+            st.warning(f"Erreur de lecture de l'image {file_id} : {e}")
+            return None
+
 
 
 def preprocess_image(img, target_size=(227, 227)):
