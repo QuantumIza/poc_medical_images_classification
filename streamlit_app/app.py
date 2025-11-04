@@ -25,9 +25,10 @@ from loaders import (
     load_dataframe,
     load_sample_dataframe,
     load_training_history,
-    load_image_from_drive,
+    load_image_from_url,
     preprocess_image
 )
+
 from loaders import (
     MODEL_PATH,
     HF_MODEL_URL,
@@ -134,15 +135,15 @@ with tab1:
                 f"<h4 style='color:{color_map[selected_class]};'>Classe : {selected_class}</h4>",
                 unsafe_allow_html=True
             )
-            sample_ids = df_sample[df_sample["class"] == selected_class]["image_id"].sample(3)
+            sample_urls = df_sample[df_sample["class"] == selected_class]["image_url"].sample(3)
             cols = st.columns(3)
-            for i, file_id in enumerate(sample_ids):
-                img = load_image_from_drive(file_id)
+            for i, url in enumerate(sample_urls):
+                img = load_image_from_url(url)
                 if img:
                     img = img.resize((250, 250))
                     cols[i].image(img, caption=selected_class, use_column_width=False)
                 else:
-                    cols[i].warning(f"Image introuvable : {file_id}")
+                    cols[i].warning(f"Image introuvable : {url}")
 
 # ----------------------------------------------------
 # COMPOSANT GRAPHIQUE ONGLET  2 : PREDICTION D'IMAGE
