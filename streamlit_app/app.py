@@ -97,27 +97,58 @@ tab1, tab2, tab3, tab4 = st.tabs([
     "🧠 Comparaison des modèles"
 ])
 
+# --- PALETTE DE COULEURS ACCESSIBLES PAR CLASSE
+class_colors = {
+    "benign": "#66c2a5",     # vert doux
+    "malignant": "#fc8d62",  # orange doux
+    "normal": "#8da0cb"      # bleu lavande
+}
+
 # --- TAB 1 : ANALYSE EXPLORATOIRE
 with tab1:
     st.header("📊 Analyse du dataset")
-    st.dataframe(df.head())
 
+    # Répartition des classes : bar chart + camembert côte à côte
+    st.subheader("Répartition des classes")
     class_counts = df["class"].value_counts()
-    st.bar_chart(class_counts)
+    labels = class_counts.index.tolist()
+    sizes = class_counts.values.tolist()
+    colors = [class_colors[cls] for cls in labels]
 
-    st.subheader("EXEMPLES D'IMAGES PAR CLASSE")
+    col1, col2 = st.columns(2)
+
+    # Diagramme en barres
+    col1.bar_chart(class_counts, color=colors)
+
+    # Diagramme en camembert
+    import matplotlib.pyplot as plt
+    fig, ax = plt.subplots()
+    wedges, texts, autotexts = ax.pie(
+        sizes,
+        labels=labels,
+        autopct='%1.1f%%',
+        startangle=90,
+        colors=colors,
+        textprops={'color': "black", 'fontsize': 12}
+    )
+    ax.axis('equal')
+    plt.setp(autotexts, size=12, weight="bold")
+    col2.pyplot(fig)
+
+    # Affichage des exemples d’images par classe
+    st.subheader("Exemples d'images par classe")
     selected_class = st.selectbox("Choisir une classe", df_sample["class"].unique())
     sample_ids = df_sample[df_sample["class"] == selected_class]["image_id"].sample(3)
-    
+
     cols = st.columns(3)
     for i, file_id in enumerate(sample_ids):
         img = load_image_from_drive(file_id)
         if img:
-            # Optionnel : redimensionner l’image pour plus de cohérence
             img = img.resize((250, 250))
             cols[i].image(img, caption=selected_class, use_column_width=False)
         else:
             cols[i].warning(f"Image introuvable : {file_id}")
+
 
 
 
