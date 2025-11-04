@@ -91,6 +91,11 @@ with tab1:
     test_url = "https://drive.google.com/uc?id=1QVy03hqFOLDwQp9Pyef4gHeZm-HHU2In"
     st.image(test_url, caption="Image test", width=300)
 
+    st.subheader("🔍 Test Drive – URL directe")
+    url = "https://drive.google.com/uc?id=1QVy03hqFOLDwQp9Pyef4gHeZm-HHU2In"
+    st.image(url, caption="Image test", use_column_width=True)
+
+
 # --- TAB 2 : PREDICTION D'IMAGE
 with tab2:
     st.header("🖼️ Prédiction d'une image")
