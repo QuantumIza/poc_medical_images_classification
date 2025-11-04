@@ -117,10 +117,21 @@ with tab1:
 
     col1, col2 = st.columns(2)
 
-    # Diagramme en barres
-    col1.bar_chart(class_counts, color=colors)
+    # Bar chart interactif avec plotly
+    import plotly.express as px
+    df_bar = class_counts.reset_index()
+    df_bar.columns = ["class", "count"]
+    fig_bar = px.bar(
+        df_bar,
+        x="class",
+        y="count",
+        color="class",
+        color_discrete_map=class_colors,
+        title="Répartition des classes"
+    )
+    col1.plotly_chart(fig_bar, use_container_width=True)
 
-    # Diagramme en camembert
+    # Camembert avec matplotlib
     import matplotlib.pyplot as plt
     fig, ax = plt.subplots()
     wedges, texts, autotexts = ax.pie(
@@ -148,6 +159,7 @@ with tab1:
             cols[i].image(img, caption=selected_class, use_column_width=False)
         else:
             cols[i].warning(f"Image introuvable : {file_id}")
+
 
 
 
