@@ -201,7 +201,15 @@ with tab1:
 #             pred_base = classes[np.argmax(y_pred_base)]
 #             with row2_col1:
 #                 st.markdown("### BASELINE CNN")
-#                 st.success(f"Classe prédite : **{pred_base}**")
+#                 st.markdown(
+                                f"""
+                                <div style='background-color:{model_colors["BASELINE CNN"]}; padding:10px; border-radius:8px;'>
+                                    <h5 style='color:white; text-align:center;'>CLASSE PRÉDITE : {pred_base.upper()}</h5>
+                                </div>
+                                """,
+                                unsafe_allow_html=True
+                            )
+
 
 #         if use_ictn:
 #             try:
