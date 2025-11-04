@@ -36,10 +36,22 @@ def load_image_from_drive(file_id):
         st.warning(f"Impossible de télécharger l'image {file_id} (code {response.status_code})")
         return None
 
+# def download_from_drive(file_path, file_id):
+#     os.makedirs(os.path.dirname(file_path), exist_ok=True)
+#     url = f"https://drive.google.com/uc?id={file_id}"
+#     gdown.download(url, file_path, quiet=False)
 def download_from_drive(file_path, file_id):
     os.makedirs(os.path.dirname(file_path), exist_ok=True)
-    url = f"https://drive.google.com/uc?id={file_id}"
-    gdown.download(url, file_path, quiet=False)
+    url = f"https://drive.google.com/uc?export=download&id={file_id}"
+    response = requests.get(url)
+    if response.status_code == 200:
+        with open(file_path, "wb") as f:
+            f.write(response.content)
+    else:
+        st.error(f"Erreur de téléchargement du fichier {file_id} (code {response.status_code})")
+        st.stop()
+
+
 
 # --- CHEMINS LOCAUX ET IDS DRIVE
 MODEL_PATH = "model/initial_best_model_baseline_cnn.keras"
@@ -61,7 +73,12 @@ download_from_drive(HISTORY_PATH, HISTORY_DRIVE_ID)
 # --- CHARGEMENT DU MODELE
 @st.cache_resource
 def load_model_cnn():
-    return load_model(MODEL_PATH)
+    try:
+        return load_model(MODEL_PATH)
+    except Exception as e:
+        st.error(f"Erreur de chargement du modèle : {e}")
+        st.stop()
+
 
 model = load_model_cnn()
 
