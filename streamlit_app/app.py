@@ -73,11 +73,15 @@ download_from_drive(HISTORY_PATH, HISTORY_DRIVE_ID)
 # --- CHARGEMENT DU MODELE
 @st.cache_resource
 def load_model_cnn():
+    if not os.path.exists(MODEL_PATH):
+        st.error("Le fichier du modèle est introuvable. Vérifie le téléchargement ou le chemin.")
+        st.stop()
     try:
         return load_model(MODEL_PATH)
     except Exception as e:
         st.error(f"Erreur de chargement du modèle : {e}")
         st.stop()
+
 
 
 model = load_model_cnn()
