@@ -184,31 +184,27 @@ with tab2:
         col1.image(img, caption="Image chargée", use_column_width=False)
 
         st.subheader("Choisissez le(s) modèle(s) à utiliser")
-        selected_models = st.multiselect(
-            "Modèles disponibles",
-            ["Baseline CNN", "ICTN"],
-            default=["Baseline CNN"]
-        )
+        use_baseline = st.checkbox("📘 Baseline CNN", value=True)
+        use_ictn = st.checkbox("📗 ICTN")
 
-        if selected_models:
-            for model_name in selected_models:
-                if model_name == "Baseline CNN":
-                    y_pred_base = model.predict(img_batch)
-                    pred_base = classes[np.argmax(y_pred_base)]
-                    col2.success(f"📘 Baseline CNN : **{pred_base}**")
-                    probas_base = pd.Series(y_pred_base[0], index=classes).sort_values(ascending=False)
-                    st.bar_chart(probas_base)
+        if use_baseline:
+            y_pred_base = model.predict(img_batch)
+            pred_base = classes[np.argmax(y_pred_base)]
+            col2.success(f"📘 Baseline CNN : **{pred_base}**")
+            probas_base = pd.Series(y_pred_base[0], index=classes).sort_values(ascending=False)
+            st.bar_chart(probas_base)
 
-                elif model_name == "ICTN":
-                    try:
-                        ictn_model = load_model_ictn()  # à définir dans loaders.py
-                        y_pred_ictn = ictn_model.predict(img_batch)
-                        pred_ictn = classes[np.argmax(y_pred_ictn)]
-                        col2.info(f"📗 ICTN : **{pred_ictn}**")
-                        probas_ictn = pd.Series(y_pred_ictn[0], index=classes).sort_values(ascending=False)
-                        st.bar_chart(probas_ictn)
-                    except Exception as e:
-                        st.warning(f"Erreur de chargement du modèle ICTN : {e}")
+        if use_ictn:
+            try:
+                ictn_model = load_model_ictn()  # à définir dans loaders.py
+                y_pred_ictn = ictn_model.predict(img_batch)
+                pred_ictn = classes[np.argmax(y_pred_ictn)]
+                col2.info(f"📗 ICTN : **{pred_ictn}**")
+                probas_ictn = pd.Series(y_pred_ictn[0], index=classes).sort_values(ascending=False)
+                st.bar_chart(probas_ictn)
+            except Exception as e:
+                st.warning(f"Erreur de chargement du modèle ICTN : {e}")
+
 
 
 
