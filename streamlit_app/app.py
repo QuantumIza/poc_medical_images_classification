@@ -179,31 +179,48 @@ with tab2:
         img = img.resize((250, 250))
         img_batch = preprocess_image(img)
 
-        st.subheader("Image chargée")
+        # Ligne principale : image + sélection + résultats
         col1, col2 = st.columns([1, 2])
-        col1.image(img, caption="Image chargée", use_column_width=False)
 
-        st.subheader("Choisissez le(s) modèle(s) à utiliser")
-        use_baseline = st.checkbox("📘 Baseline CNN", value=True)
-        use_ictn = st.checkbox("📗 ICTN")
+        with col1:
+            st.subheader("Image chargée")
+            st.image(img, caption="Image chargée", use_column_width=False)
 
-        if use_baseline:
-            y_pred_base = model.predict(img_batch)
-            pred_base = classes[np.argmax(y_pred_base)]
-            col2.success(f"📘 Baseline CNN : **{pred_base}**")
-            probas_base = pd.Series(y_pred_base[0], index=classes).sort_values(ascending=False)
-            st.bar_chart(probas_base)
+            st.subheader("Choisissez le(s) modèle(s) à utiliser")
+            use_baseline = st.checkbox("📘 Baseline CNN", value=True)
+            use_ictn = st.checkbox("📗 ICTN")
 
-        if use_ictn:
-            try:
-                ictn_model = load_model_ictn()  # à définir dans loaders.py
-                y_pred_ictn = ictn_model.predict(img_batch)
-                pred_ictn = classes[np.argmax(y_pred_ictn)]
-                col2.info(f"📗 ICTN : **{pred_ictn}**")
+        with col2:
+            if use_baseline:
+                y_pred_base = model.predict(img_batch)
+                pred_base = classes[np.argmax(y_pred_base)]
+                st.success(f"📘 Baseline CNN : **{pred_base}**")
+
+            if use_ictn:
+                try:
+                    ictn_model = load_model_ictn()  # à définir dans loaders.py
+                    y_pred_ictn = ictn_model.predict(img_batch)
+                    pred_ictn = classes[np.argmax(y_pred_ictn)]
+                    st.info(f"📗 ICTN : **{pred_ictn}**")
+                except Exception as e:
+                    st.warning(f"Erreur de chargement du modèle ICTN : {e}")
+
+        # Ligne en dessous : deux colonnes pour les probabilités
+        if use_baseline or use_ictn:
+            st.subheader("Probabilités par modèle")
+            prob_col1, prob_col2 = st.columns(2)
+
+            if use_baseline:
+                probas_base = pd.Series(y_pred_base[0], index=classes).sort_values(ascending=False)
+                with prob_col1:
+                    st.markdown("📘 **Baseline CNN**")
+                    st.bar_chart(probas_base)
+
+            if use_ictn:
                 probas_ictn = pd.Series(y_pred_ictn[0], index=classes).sort_values(ascending=False)
-                st.bar_chart(probas_ictn)
-            except Exception as e:
-                st.warning(f"Erreur de chargement du modèle ICTN : {e}")
+                with prob_col2:
+                    st.markdown("📗 **ICTN**")
+                    st.bar_chart(probas_ictn)
 
 
 
