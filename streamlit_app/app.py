@@ -87,6 +87,9 @@ with tab1:
     for file_id in sample_ids:
         url = f"https://drive.google.com/uc?id={file_id}"
         st.image(url, caption=selected_class, width=200)
+    st.subheader("🔍 Test d'affichage Drive")
+    test_url = "https://drive.google.com/uc?id=1QVy03hqFOLDwQp9Pyef4gHeZm-HHU2In"
+    st.image(test_url, caption="Image test", width=300)
 
 # --- TAB 2 : PREDICTION D'IMAGE
 with tab2:
