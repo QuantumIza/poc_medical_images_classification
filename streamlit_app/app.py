@@ -15,7 +15,7 @@ from tensorflow.keras.models import load_model
 st.set_page_config(page_title="Dashboard POC – Projet 7", layout="wide")
 
 
-
+# --- TELECHARGEMENT DEPUIS URL DRIVE
 def load_image_from_drive(file_id):
     """
     Télécharge une image depuis Google Drive à partir de son ID.
@@ -33,6 +33,10 @@ def load_image_from_drive(file_id):
         st.warning(f"Impossible de télécharger l'image {file_id} (code {response.status_code})")
         return None
 
+def download_from_drive(file_path, file_id):
+    os.makedirs(os.path.dirname(file_path), exist_ok=True)
+    url = f"https://drive.google.com/uc?id={file_id}"
+    gdown.download(url, file_path, quiet=False)
 
 # --- CHEMINS LOCAUX ET IDS DRIVE
 MODEL_PATH = "model/initial_best_model_baseline_cnn.keras"
@@ -68,17 +72,8 @@ def load_sample_dataframe():
     url = f"https://drive.google.com/uc?id={SAMPLE_CSV_DRIVE_ID}"
     return pd.read_csv(url)
 
-# --- TELECHARGEMENT DEPUIS URL DRIVE
-import requests
-from io import BytesIO
 
-def load_image_from_drive(file_id):
-    url = f"https://drive.google.com/uc?id={file_id.strip()}"
-    response = requests.get(url)
-    if response.status_code == 200:
-        return Image.open(BytesIO(response.content))
-    else:
-        return None
+
 
 
 df = load_dataframe()
