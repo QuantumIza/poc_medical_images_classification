@@ -152,42 +152,42 @@ with tab1:
     # Affichage des exemples d’images par classe
     st.subheader("Exemples d'images par classe")
 
-# Slider pour choisir le nombre d’images à afficher
-nb_images = st.slider("Nombre d'images par classe", min_value=1, max_value=5, value=3)
+    # Slider pour choisir le nombre d’images à afficher
+    nb_images = st.slider("Nombre d'images par classe", min_value=1, max_value=5, value=3)
 
-# Checkboxes pour chaque classe
-show_normal = st.checkbox("🟦 Classe normal", value=True)
-show_benign = st.checkbox("🟩 Classe benign")
-show_malignant = st.checkbox("🟥 Classe malignant")
+    # Checkboxes pour chaque classe
+    show_normal = st.checkbox("🟦 Classe normal", value=True)
+    show_benign = st.checkbox("🟩 Classe benign")
+    show_malignant = st.checkbox("🟥 Classe malignant")
 
-checkbox_map = {
-    "normal": show_normal,
-    "benign": show_benign,
-    "malignant": show_malignant
-}
+    checkbox_map = {
+        "normal": show_normal,
+        "benign": show_benign,
+        "malignant": show_malignant
+    }
 
-color_map = {
-    "normal": "#5B8FA8",
-    "benign": "#A1C181",
-    "malignant": "#D95F02"
-}
+    color_map = {
+        "normal": "#5B8FA8",
+        "benign": "#A1C181",
+        "malignant": "#D95F02"
+    }
 
-# Affichage des images pour chaque classe cochée
-for selected_class, is_checked in checkbox_map.items():
-    if is_checked:
-        st.markdown(
-            f"<h4 style='color:{color_map[selected_class]};'>Classe : {selected_class}</h4>",
-            unsafe_allow_html=True
-        )
-        sample_ids = df_sample[df_sample["class"] == selected_class]["image_id"].sample(nb_images)
-        cols = st.columns(nb_images)
-        for i, file_id in enumerate(sample_ids):
-            img = load_image_from_drive(file_id)
-            if img:
-                img = img.resize((250, 250))
-                cols[i].image(img, caption=selected_class, use_column_width=False)
-            else:
-                cols[i].warning(f"Image introuvable : {file_id}")
+    # Affichage des images pour chaque classe cochée
+    for selected_class, is_checked in checkbox_map.items():
+        if is_checked:
+            st.markdown(
+                f"<h4 style='color:{color_map[selected_class]};'>Classe : {selected_class}</h4>",
+                unsafe_allow_html=True
+            )
+            sample_ids = df_sample[df_sample["class"] == selected_class]["image_id"].sample(nb_images)
+            cols = st.columns(nb_images)
+            for i, file_id in enumerate(sample_ids):
+                img = load_image_from_drive(file_id)
+                if img:
+                    img = img.resize((250, 250))
+                    cols[i].image(img, caption=selected_class, use_column_width=False)
+                else:
+                    cols[i].warning(f"Image introuvable : {file_id}")
 
 
 
