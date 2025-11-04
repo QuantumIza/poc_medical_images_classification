@@ -230,29 +230,34 @@ with tab2:
 
         if use_baseline:
             probas_base = pd.Series(y_pred_base[0], index=classes).sort_values(ascending=False)
+            df_base = probas_base.reset_index()
+            df_base.columns = ["Classe", "Probabilité"]
             with row3_col1:
                 st.markdown(
                     f"<h4 style='color:{model_colors['BASELINE CNN']};'>PROBABILITÉS – BASELINE CNN</h4>",
                     unsafe_allow_html=True
                 )
-                chart_base = alt.Chart(probas_base.reset_index()).mark_bar(color=model_colors["BASELINE CNN"]).encode(
-                    x=alt.X("index", title="CLASSE"),
-                    y=alt.Y("0", title="PROBABILITÉ")
+                chart_base = alt.Chart(df_base).mark_bar(color=model_colors["BASELINE CNN"]).encode(
+                    x=alt.X("Classe", title="CLASSE"),
+                    y=alt.Y("Probabilité", title="PROBABILITÉ")
                 ).properties(height=300)
                 st.altair_chart(chart_base, use_container_width=True)
 
         if use_ictn:
             probas_ictn = pd.Series(y_pred_ictn[0], index=classes).sort_values(ascending=False)
+            df_ictn = probas_ictn.reset_index()
+            df_ictn.columns = ["Classe", "Probabilité"]
             with row3_col2:
                 st.markdown(
                     f"<h4 style='color:{model_colors['ICTN']};'>PROBABILITÉS – ICTN</h4>",
                     unsafe_allow_html=True
                 )
-                chart_ictn = alt.Chart(probas_ictn.reset_index()).mark_bar(color=model_colors["ICTN"]).encode(
-                    x=alt.X("index", title="CLASSE"),
-                    y=alt.Y("0", title="PROBABILITÉ")
+                chart_ictn = alt.Chart(df_ictn).mark_bar(color=model_colors["ICTN"]).encode(
+                    x=alt.X("Classe", title="CLASSE"),
+                    y=alt.Y("Probabilité", title="PROBABILITÉ")
                 ).properties(height=300)
                 st.altair_chart(chart_ictn, use_container_width=True)
+
 
 
 
