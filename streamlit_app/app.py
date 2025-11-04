@@ -101,9 +101,9 @@ tab1, tab2, tab3, tab4 = st.tabs([
 
 # --- PALETTE DE COULEURS ACCESSIBLES PAR CLASSE
 class_colors = {
-    "normal": "#5B8FA8",     # bleu doux
-    "benign": "#A1C181",     # vert olive
-    "malignant": "#D95F02"   # orange foncé
+    "normal": "#A6CEE3",
+    "benign": "#B2DF8A",
+    "malignant": "#FB9A99"
 }
 
 
