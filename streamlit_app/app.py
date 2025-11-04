@@ -149,9 +149,6 @@ with tab1:
 # ----------------------------------------------------
 # COMPOSANT GRAPHIQUE ONGLET  2 : PREDICTIONS
 # ----------------------------------------------------
-# ----------------------------------------------------
-# COMPOSANT GRAPHIQUE ONGLET  2 : PREDICTIONS
-# ----------------------------------------------------
 with tab2:
     st.header("PREDICTIONS")
     uploaded_file = st.file_uploader("CHOISISSEZ UNE IMAGE", type=["jpg", "jpeg", "png"])
@@ -176,12 +173,23 @@ with tab2:
             st.image(img, caption="IMAGE CHARGÉE", use_column_width=False)
 
         with row1_col2:
-            st.subheader("CHOISISSEZ LE(S) MODÈLE(S) À UTILISER")
-            cb_col1, cb_col2 = st.columns(2)
-            with cb_col1:
-                use_baseline = st.checkbox("BASELINE CNN", value=True)
-            with cb_col2:
-                use_ictn = st.checkbox("ICTN")
+    st.subheader("CHOISISSEZ LE(S) MODÈLE(S) À UTILISER")
+    cb_col1, cb_col2 = st.columns(2)
+
+        with cb_col1:
+            st.markdown(
+                f"<h5 style='color:{model_colors['BASELINE CNN']}; font-size:18px;'>BASELINE CNN</h5>",
+                unsafe_allow_html=True
+            )
+            use_baseline = st.checkbox("", value=True)
+    
+        with cb_col2:
+            st.markdown(
+                f"<h5 style='color:{model_colors['ICTN']}; font-size:18px;'>ICTN</h5>",
+                unsafe_allow_html=True
+            )
+            use_ictn = st.checkbox("")
+
 
         # 🔹 LIGNE 2 : PRÉDICTIONS PAR MODÈLE
         row2_col1, row2_col2 = st.columns(2)
