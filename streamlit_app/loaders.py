@@ -40,16 +40,28 @@ def download_from_huggingface(file_path, hf_url):
 
 
 
+# def load_image_from_drive(file_id):
+#     url = f"https://drive.google.com/uc?id={file_id.strip()}"
+#     response = requests.get(url)
+#     if response.status_code == 200:
+#         try:
+#             return Image.open(BytesIO(response.content))
+#         except Exception as e:
+#             st.warning(f"Erreur de lecture de l'image {file_id} : {e}")
+#             return None
+
+import gdown
+import tempfile
+
 def load_image_from_drive(file_id):
     url = f"https://drive.google.com/uc?id={file_id.strip()}"
-    response = requests.get(url)
-    if response.status_code == 200:
-        try:
-            return Image.open(BytesIO(response.content))
-        except Exception as e:
-            st.warning(f"Erreur de lecture de l'image {file_id} : {e}")
-            return None
-
+    try:
+        with tempfile.NamedTemporaryFile(suffix=".jpg", delete=False) as tmp:
+            gdown.download(url, tmp.name, quiet=True)
+            return Image.open(tmp.name)
+    except Exception as e:
+        st.warning(f"Erreur de lecture de l'image {file_id} : {e}")
+        return None
 
 
 def preprocess_image(img, target_size=(227, 227)):
