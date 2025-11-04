@@ -52,6 +52,18 @@ def load_sample_dataframe():
     url = f"https://drive.google.com/uc?id={SAMPLE_CSV_DRIVE_ID}"
     return pd.read_csv(url)
 
+# --- TELECHARGEMENT DEPUIS URL DRIVE
+import requests
+from io import BytesIO
+
+def load_image_from_drive(file_id):
+    url = f"https://drive.google.com/uc?id={file_id.strip()}"
+    response = requests.get(url)
+    if response.status_code == 200:
+        return Image.open(BytesIO(response.content))
+    else:
+        return None
+
 
 df = load_dataframe()
 df_sample = load_sample_dataframe()
@@ -87,8 +99,12 @@ with tab1:
     sample_ids = df_sample[df_sample["class"] == selected_class]["image_id"].sample(3)
 
     for file_id in sample_ids:
-        url = f"https://drive.google.com/uc?id={file_id}"
-        st.image(url, caption=selected_class, width=200, use_column_width=True)
+    img = load_image_from_drive(file_id)
+    if img:
+        st.image(img, caption=selected_class, use_column_width=True)
+    else:
+        st.warning(f"Impossible de charger l'image {file_id}")
+
     
 
 
