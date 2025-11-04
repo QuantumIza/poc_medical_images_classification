@@ -151,17 +151,28 @@ with tab1:
 
     # Affichage des exemples d’images par classe
     st.subheader("Exemples d'images par classe")
-    selected_class = st.selectbox("Choisir une classe", df_sample["class"].unique())
-    sample_ids = df_sample[df_sample["class"] == selected_class]["image_id"].sample(3)
+    
+    # Sélection multiple des classes
+    selected_classes = st.multiselect(
+        "Choisir une ou plusieurs classes",
+        options=df_sample["class"].unique(),
+        default=["normal"]
+    )
 
-    cols = st.columns(3)
-    for i, file_id in enumerate(sample_ids):
-        img = load_image_from_drive(file_id)
-        if img:
-            img = img.resize((250, 250))
-            cols[i].image(img, caption=selected_class, use_column_width=False)
-        else:
-            cols[i].warning(f"Image introuvable : {file_id}")
+    # Affichage des images pour chaque classe sélectionnée
+    for selected_class in selected_classes:
+        st.markdown(f"### Classe : {selected_class}")
+        sample_ids = df_sample[df_sample["class"] == selected_class]["image_id"].sample(3)
+    
+        cols = st.columns(3)
+        for i, file_id in enumerate(sample_ids):
+            img = load_image_from_drive(file_id)
+            if img:
+                img = img.resize((250, 250))
+                cols[i].image(img, caption=selected_class, use_column_width=False)
+            else:
+                cols[i].warning(f"Image introuvable : {file_id}")
+
 
 
 
