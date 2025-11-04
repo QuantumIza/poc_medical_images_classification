@@ -7,16 +7,32 @@ from PIL import Image
 import os
 import joblib
 import gdown
+import requests
+from io import BytesIO
 from tensorflow.keras.models import load_model
 
 # --- CONFIGURATION DE LA PAGE
 st.set_page_config(page_title="Dashboard POC – Projet 7", layout="wide")
 
-# --- FONCTION DE TELECHARGEMENT DEPUIS GOOGLE DRIVE
-def download_from_drive(file_path, file_id):
-    os.makedirs(os.path.dirname(file_path), exist_ok=True)
-    url = f"https://drive.google.com/uc?id={file_id}"
-    gdown.download(url, file_path, quiet=False)
+
+
+def load_image_from_drive(file_id):
+    """
+    Télécharge une image depuis Google Drive à partir de son ID.
+    Retourne un objet PIL.Image ou None si échec.
+    """
+    url = f"https://drive.google.com/uc?id={file_id.strip()}"
+    response = requests.get(url)
+    if response.status_code == 200:
+        try:
+            return Image.open(BytesIO(response.content))
+        except Exception as e:
+            st.warning(f"Erreur de lecture de l'image {file_id} : {e}")
+            return None
+    else:
+        st.warning(f"Impossible de télécharger l'image {file_id} (code {response.status_code})")
+        return None
+
 
 # --- CHEMINS LOCAUX ET IDS DRIVE
 MODEL_PATH = "model/best_model_baseline_cnn.keras"
@@ -99,11 +115,12 @@ with tab1:
     sample_ids = df_sample[df_sample["class"] == selected_class]["image_id"].sample(3)
 
     for file_id in sample_ids:
-    img = load_image_from_drive(file_id)
-    if img:
-        st.image(img, caption=selected_class, use_column_width=True)
-    else:
-        st.warning(f"Impossible de charger l'image {file_id}")
+        img = load_image_from_drive(file_id)
+        if img:
+            st.image(img, caption=selected_class, use_column_width=True)
+        else:
+            st.warning(f"Image introuvable pour l'ID : {file_id}")
+
 
     
 
