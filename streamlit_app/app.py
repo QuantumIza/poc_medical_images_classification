@@ -15,7 +15,7 @@ import matplotlib.pyplot as plt
 # ------------------------------
 # CONFIGURATION DE LA PAGE
 # ------------------------------
-st.set_page_config(page_title="Dashboard POC – Projet 7", layout="wide")
+st.set_page_config(page_title="Dashboard POC – Projet 7", layout="centered")
 
 # # ------------------------------
 # # CHEMINS LOCAUX ET URLS HF
