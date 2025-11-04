@@ -149,21 +149,25 @@ with tab1:
 # ----------------------------------------------------
 # COMPOSANT GRAPHIQUE ONGLET  2 : PREDICTIONS
 # ----------------------------------------------------
+# ----------------------------------------------------
+# COMPOSANT GRAPHIQUE ONGLET  2 : PREDICTIONS
+# ----------------------------------------------------
 with tab2:
     st.header("PREDICTIONS")
     uploaded_file = st.file_uploader("CHOISISSEZ UNE IMAGE", type=["jpg", "jpeg", "png"])
 
     if uploaded_file:
+        import altair as alt
+
         img = Image.open(uploaded_file).convert("RGB")
         img = img.resize((250, 250))
         img_batch = preprocess_image(img)
 
-        # 🔹 COULEURS ACCESSIBLES POUR LES MODÈLES
+        # 🔹 COULEURS ACCESSIBLES TEMPÉRÉES
         model_colors = {
-        "BASELINE CNN": "#3B82F6",  # Bleu doux
-        "ICTN": "#A78BFA"           # Lavande foncée
-         }
-
+            "BASELINE CNN": "#3B82F6",  # Bleu doux
+            "ICTN": "#A78BFA"           # Lavande foncée
+        }
 
         # 🔹 LIGNE 1 : IMAGE À GAUCHE, CHECKBOX À DROITE
         row1_col1, row1_col2 = st.columns([1, 2])
@@ -181,6 +185,7 @@ with tab2:
 
         # 🔹 LIGNE 2 : PRÉDICTIONS PAR MODÈLE
         row2_col1, row2_col2 = st.columns(2)
+
         if use_baseline:
             y_pred_base = model.predict(img_batch)
             pred_base = classes[np.argmax(y_pred_base)]
@@ -222,6 +227,7 @@ with tab2:
 
         # 🔹 LIGNE 3 : PROBABILITÉS PAR MODÈLE
         row3_col1, row3_col2 = st.columns(2)
+
         if use_baseline:
             probas_base = pd.Series(y_pred_base[0], index=classes).sort_values(ascending=False)
             with row3_col1:
@@ -229,16 +235,11 @@ with tab2:
                     f"<h4 style='color:{model_colors['BASELINE CNN']};'>PROBABILITÉS – BASELINE CNN</h4>",
                     unsafe_allow_html=True
                 )
-                st.bar_chart(probas_base)
-                import altair as alt
-
                 chart_base = alt.Chart(probas_base.reset_index()).mark_bar(color=model_colors["BASELINE CNN"]).encode(
                     x=alt.X("index", title="CLASSE"),
                     y=alt.Y("0", title="PROBABILITÉ")
                 ).properties(height=300)
-                
                 st.altair_chart(chart_base, use_container_width=True)
-
 
         if use_ictn:
             probas_ictn = pd.Series(y_pred_ictn[0], index=classes).sort_values(ascending=False)
@@ -247,7 +248,12 @@ with tab2:
                     f"<h4 style='color:{model_colors['ICTN']};'>PROBABILITÉS – ICTN</h4>",
                     unsafe_allow_html=True
                 )
-                st.bar_chart(probas_ictn)
+                chart_ictn = alt.Chart(probas_ictn.reset_index()).mark_bar(color=model_colors["ICTN"]).encode(
+                    x=alt.X("index", title="CLASSE"),
+                    y=alt.Y("0", title="PROBABILITÉ")
+                ).properties(height=300)
+                st.altair_chart(chart_ictn, use_container_width=True)
+
 
 
 
