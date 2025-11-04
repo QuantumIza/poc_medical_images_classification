@@ -62,7 +62,7 @@ st.title("DASHBOARD – BASELINE CNN VS MODELE ICNT LS")
 tab1, tab2, tab3, tab4 = st.tabs([
     "ANALYSE EXPLORATOIRE",
     "PREDICTIONS",
-    "COURBES ENTRAINEMENT",
+    "PERFORMANCES",
     "COMPARAISON MODELES"
 ])
 # ----------------------------------
