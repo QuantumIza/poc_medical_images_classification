@@ -98,11 +98,19 @@ def load_model_cnn():
 def load_dataframe():
     download_from_drive(CSV_PATH, CSV_DRIVE_ID)
     return pd.read_csv(CSV_PATH)
+@st.cache_data
+def load_dataframe_fromHF():
+    hf_url = "https://huggingface.co/QuantumIza/poc-baseline-cnn/resolve/main/df_full.csv"
+    return pd.read_csv(hf_url)
 
 @st.cache_data
 def load_sample_dataframe():
     download_from_drive(SAMPLE_CSV_PATH, SAMPLE_CSV_DRIVE_ID)
     return pd.read_csv(SAMPLE_CSV_PATH)
+@st.cache_data
+def load_sample_dataframe_fromHF():
+    hf_url = "https://huggingface.co/QuantumIza/poc-baseline-cnn/resolve/main/df_sample.csv"
+    return pd.read_csv(hf_url)
 
 @st.cache_data
 def load_training_history():
@@ -113,8 +121,8 @@ def load_training_history():
 # INITIALISATION DES DONNÉES
 # ------------------------------
 model = load_model_cnn_fromHF()
-df = load_dataframe()
-df_sample = load_sample_dataframe()
+df = load_dataframe_fromHF()
+df_sample = load_sample_dataframe_fromHF()
 classes = sorted(df["class"].unique())
 
 # ------------------------------
