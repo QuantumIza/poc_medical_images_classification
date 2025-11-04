@@ -60,12 +60,13 @@ def download_from_drive(file_path, file_id):
 
 
 # --- CHEMINS LOCAUX ET IDS DRIVE
-MODEL_PATH = "model/initial_best_model_baseline_cnn.keras"
+MODEL_PATH = "model/my_initial_best_model_baseline_cnn.keras"
 CSV_PATH = "data/df_full.csv"
 HISTORY_PATH = "outputs/history_baseline_cnn.joblib"
 SAMPLE_CSV_PATH = "data/df_sample.csv"
 
-MODEL_DRIVE_ID = "1j69jqMBryuYz0Rk0DC2oc80Cg-LA5inR"  # https://drive.google.com/file/d/1j69jqMBryuYz0Rk0DC2oc80Cg-LA5inR/view?usp=sharing
+MODEL_DRIVE_ID = "1Ia-C-c1JneTNz95_cIccDrpNdNn3dZkQ"  # https://drive.google.com/file/d/1j69jqMBryuYz0Rk0DC2oc80Cg-LA5inR/view?usp=sharing
+# https://drive.google.com/file/d/1Ia-C-c1JneTNz95_cIccDrpNdNn3dZkQ/view?usp=sharing
 CSV_DRIVE_ID = "1k2bs1DFJ9oawf8twKkY49AfRmmmjBSbu"
 HISTORY_DRIVE_ID = "1rA-PNTRfMSX5QP1UtoO3tpVWRKBwA9AC"
 SAMPLE_CSV_DRIVE_ID = "1GJbXKgyZTK_B68zlmrMU0SNop4LcR9yo"
