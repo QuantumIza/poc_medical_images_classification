@@ -244,9 +244,10 @@ with tab2:
 
         # 🔹 COULEURS ACCESSIBLES POUR LES MODÈLES
         model_colors = {
-            "BASELINE CNN": "#1E3A8A",  # Bleu foncé
-            "ICTN": "#7C3AED"           # Violet prune
-        }
+        "BASELINE CNN": "#3B82F6",  # Bleu doux
+        "ICTN": "#A78BFA"           # Lavande foncée
+         }
+
 
         # 🔹 LIGNE 1 : IMAGE À GAUCHE, CHECKBOX À DROITE
         row1_col1, row1_col2 = st.columns([1, 2])
