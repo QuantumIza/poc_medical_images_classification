@@ -35,7 +35,7 @@ def load_image_from_drive(file_id):
 
 
 # --- CHEMINS LOCAUX ET IDS DRIVE
-MODEL_PATH = "model/best_model_baseline_cnn.keras"
+MODEL_PATH = "model/initial_best_model_baseline_cnn.keras"
 CSV_PATH = "data/df_full.csv"
 HISTORY_PATH = "outputs/history_baseline_cnn.joblib"
 SAMPLE_CSV_PATH = "data/df_sample.csv"
