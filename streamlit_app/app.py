@@ -33,7 +33,7 @@ SAMPLE_CSV_DRIVE_ID = "1GJbXKgyZTK_B68zlmrMU0SNop4LcR9yo"  # Remplace par l'ID r
 download_from_drive(MODEL_PATH, MODEL_DRIVE_ID)
 download_from_drive(CSV_PATH, CSV_DRIVE_ID)
 download_from_drive(HISTORY_PATH, HISTORY_DRIVE_ID)
-download_from_drive(SAMPLE_CSV_PATH, SAMPLE_CSV_DRIVE_ID)
+# download_from_drive(SAMPLE_CSV_PATH, SAMPLE_CSV_DRIVE_ID)
 
 # --- CHARGEMENT DU MODELE
 @st.cache_resource
