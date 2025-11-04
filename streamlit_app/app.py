@@ -147,90 +147,6 @@ with tab1:
                     cols[i].warning(f"Image introuvable : {url}")
 
 # ----------------------------------------------------
-# COMPOSANT GRAPHIQUE ONGLET  2 : PREDICTION D'IMAGE
-# ----------------------------------------------------
-# with tab2:
-#     st.header("PREDICTIONS")
-#     uploaded_file = st.file_uploader("Choisissez une image", type=["jpg", "jpeg", "png"])
-
-#     if uploaded_file:
-#         img = Image.open(uploaded_file)
-#         img = img.resize((250, 250))
-#         col1, col2 = st.columns([1, 2])
-#         col1.image(img, caption="Image chargée", use_column_width=False)
-
-#         img_batch = preprocess_image(img)
-#         y_pred = model.predict(img_batch)
-#         pred_class = classes[np.argmax(y_pred)]
-#         col2.success(f"CLASSE PREDITE : **{pred_class}**")
-
-#         probas = pd.Series(y_pred[0], index=classes).sort_values(ascending=False)
-#         col2.bar_chart(probas)
-
-# # ----------------------------------------------------
-# # COMPOSANT GRAPHIQUE ONGLET  2 : PREDICTIONS
-# # ----------------------------------------------------
-# with tab2:
-#     st.header("PREDICTIONS")
-#     uploaded_file = st.file_uploader("Choisissez une image", type=["jpg", "jpeg", "png"])
-
-#     if uploaded_file:
-#         img = Image.open(uploaded_file).convert("RGB")
-#         img = img.resize((250, 250))
-#         img_batch = preprocess_image(img)
-
-#         # 🔹 Ligne 1 : image + sélection des modèles
-#         row1_col1, row1_col2 = st.columns([1, 2])
-#         with row1_col1:
-#             st.subheader("Image chargée")
-#             st.image(img, caption="Image chargée", use_column_width=False)
-
-#         with row1_col2:
-#             st.subheader("CHOISISSEZ LE(S) MODELE(s) DE PREDICTIONr")
-#             cb_col1, cb_col2 = st.columns(2)
-#             with cb_col1:
-#                 use_baseline = st.checkbox("📘 Baseline CNN", value=True)
-#             with cb_col2:
-#                 use_ictn = st.checkbox("📗 ICTN")
-
-
-#         # 🔹 Ligne 2 : prédictions par modèle
-#         row2_col1, row2_col2 = st.columns(2)
-#         if use_baseline:
-#             y_pred_base = model.predict(img_batch)
-#             pred_base = classes[np.argmax(y_pred_base)]
-#             with row2_col1:
-#                 st.markdown("### BASELINE CNN")
-#                 st.markdown()
-
-
-#         if use_ictn:
-#             try:
-#                 ictn_model = load_model_ictn()  # à définir dans loaders.py
-#                 y_pred_ictn = ictn_model.predict(img_batch)
-#                 pred_ictn = classes[np.argmax(y_pred_ictn)]
-#                 with row2_col2:
-#                     st.markdown("### MODELE ICTN")
-#                     st.info(f"Classe prédite : **{pred_ictn}**")
-#             except Exception as e:
-#                 with row2_col2:
-#                     st.warning(f"Erreur de chargement du modèle ICTN : {e}")
-
-#         # 🔹 Ligne 3 : probabilités par modèle
-#         row3_col1, row3_col2 = st.columns(2)
-#         if use_baseline:
-#             probas_base = pd.Series(y_pred_base[0], index=classes).sort_values(ascending=False)
-#             with row3_col1:
-#                 st.markdown("PROBABILITES – BASELINE CNN")
-#                 st.bar_chart(probas_base)
-
-#         if use_ictn:
-#             probas_ictn = pd.Series(y_pred_ictn[0], index=classes).sort_values(ascending=False)
-#             with row3_col2:
-#                 st.markdown("PROBABILITES – ICTN")
-#                 st.bar_chart(probas_ictn)
-
-# ----------------------------------------------------
 # COMPOSANT GRAPHIQUE ONGLET  2 : PREDICTIONS
 # ----------------------------------------------------
 with tab2:
@@ -314,6 +230,15 @@ with tab2:
                     unsafe_allow_html=True
                 )
                 st.bar_chart(probas_base)
+                import altair as alt
+
+                chart_base = alt.Chart(probas_base.reset_index()).mark_bar(color=model_colors["BASELINE CNN"]).encode(
+                    x=alt.X("index", title="CLASSE"),
+                    y=alt.Y("0", title="PROBABILITÉ")
+                ).properties(height=300)
+                
+                st.altair_chart(chart_base, use_container_width=True)
+
 
         if use_ictn:
             probas_ictn = pd.Series(y_pred_ictn[0], index=classes).sort_values(ascending=False)
