@@ -63,13 +63,13 @@ def download_from_drive(file_path, file_id):
 MODEL_PATH = "model/my_initial_best_model_baseline_cnn.keras"
 CSV_PATH = "data/my_df_full.csv"
 HISTORY_PATH = "outputs/history_baseline_cnn.joblib"
-SAMPLE_CSV_PATH = "data/df_sample.csv"
+SAMPLE_CSV_PATH = "data/my_df_sample.csv"
 
 MODEL_DRIVE_ID = "1Ia-C-c1JneTNz95_cIccDrpNdNn3dZkQ"  # https://drive.google.com/file/d/1j69jqMBryuYz0Rk0DC2oc80Cg-LA5inR/view?usp=sharing
 # https://drive.google.com/file/d/1Ia-C-c1JneTNz95_cIccDrpNdNn3dZkQ/view?usp=sharing
 CSV_DRIVE_ID = "12ONyFUXjjlF4d3cY0oKHlgmG_YhPGErI"  # https://drive.google.com/file/d/12ONyFUXjjlF4d3cY0oKHlgmG_YhPGErI/view?usp=sharing
 HISTORY_DRIVE_ID = "1rA-PNTRfMSX5QP1UtoO3tpVWRKBwA9AC"
-SAMPLE_CSV_DRIVE_ID = "1GJbXKgyZTK_B68zlmrMU0SNop4LcR9yo"
+SAMPLE_CSV_DRIVE_ID = "1Hcws4ET-4bup9JLdK1_G6jLyUB8PDWbs"  # https://drive.google.com/file/d/1Hcws4ET-4bup9JLdK1_G6jLyUB8PDWbs/view?usp=sharing
 
 # --- TELECHARGEMENT DES FICHIERS SI ABSENTS
 # download_from_drive(MODEL_PATH, MODEL_DRIVE_ID)
