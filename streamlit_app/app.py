@@ -105,16 +105,20 @@ with tab1:
     class_counts = df["class"].value_counts()
     st.bar_chart(class_counts)
 
-    st.subheader("Exemples d'images par classe")
+    st.subheader("EXEMPLES D'IMAGES PAR CLASSE")
     selected_class = st.selectbox("Choisir une classe", df_sample["class"].unique())
     sample_ids = df_sample[df_sample["class"] == selected_class]["image_id"].sample(3)
-
-    for file_id in sample_ids:
+    
+    cols = st.columns(3)
+    for i, file_id in enumerate(sample_ids):
         img = load_image_from_drive(file_id)
         if img:
-            st.image(img, caption=selected_class, use_column_width=True)
+            # Optionnel : redimensionner l’image pour plus de cohérence
+            img = img.resize((250, 250))
+            cols[i].image(img, caption=selected_class, use_column_width=False)
         else:
-            st.warning(f"Image introuvable pour l'ID : {file_id}")
+            cols[i].warning(f"Image introuvable : {file_id}")
+
 
 
     
