@@ -10,6 +10,8 @@ import gdown
 import requests
 from io import BytesIO
 from tensorflow.keras.models import load_model
+import plotly.express as px
+
 
 # --- CONFIGURATION DE LA PAGE
 st.set_page_config(page_title="Dashboard POC – Projet 7", layout="wide")
