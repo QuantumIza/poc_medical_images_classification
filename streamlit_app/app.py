@@ -65,7 +65,7 @@ HISTORY_DRIVE_ID = "1rA-PNTRfMSX5QP1UtoO3tpVWRKBwA9AC"
 SAMPLE_CSV_DRIVE_ID = "1GJbXKgyZTK_B68zlmrMU0SNop4LcR9yo"
 
 # --- TELECHARGEMENT DES FICHIERS SI ABSENTS
-download_from_drive(MODEL_PATH, MODEL_DRIVE_ID)
+# download_from_drive(MODEL_PATH, MODEL_DRIVE_ID)
 download_from_drive(CSV_PATH, CSV_DRIVE_ID)
 download_from_drive(HISTORY_PATH, HISTORY_DRIVE_ID)
 # download_from_drive(SAMPLE_CSV_PATH, SAMPLE_CSV_DRIVE_ID)
@@ -73,14 +73,13 @@ download_from_drive(HISTORY_PATH, HISTORY_DRIVE_ID)
 # --- CHARGEMENT DU MODELE
 @st.cache_resource
 def load_model_cnn():
-    if not os.path.exists(MODEL_PATH):
-        st.error("Le fichier du modèle est introuvable. Vérifie le téléchargement ou le chemin.")
-        st.stop()
     try:
+        download_from_drive(MODEL_PATH, MODEL_DRIVE_ID)
         return load_model(MODEL_PATH)
     except Exception as e:
         st.error(f"Erreur de chargement du modèle : {e}")
         st.stop()
+
 
 
 
