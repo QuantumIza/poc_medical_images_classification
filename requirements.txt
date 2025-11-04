@@ -2,6 +2,7 @@ streamlit
 tensorflow
 keras
 matplotlib
+plotly
 scikit-learn
 numpy
 pandas
