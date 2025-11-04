@@ -167,41 +167,111 @@ with tab1:
 #         probas = pd.Series(y_pred[0], index=classes).sort_values(ascending=False)
 #         col2.bar_chart(probas)
 
+# # ----------------------------------------------------
+# # COMPOSANT GRAPHIQUE ONGLET  2 : PREDICTIONS
+# # ----------------------------------------------------
+# with tab2:
+#     st.header("PREDICTIONS")
+#     uploaded_file = st.file_uploader("Choisissez une image", type=["jpg", "jpeg", "png"])
+
+#     if uploaded_file:
+#         img = Image.open(uploaded_file).convert("RGB")
+#         img = img.resize((250, 250))
+#         img_batch = preprocess_image(img)
+
+#         # 🔹 Ligne 1 : image + sélection des modèles
+#         row1_col1, row1_col2 = st.columns([1, 2])
+#         with row1_col1:
+#             st.subheader("Image chargée")
+#             st.image(img, caption="Image chargée", use_column_width=False)
+
+#         with row1_col2:
+#             st.subheader("CHOISISSEZ LE(S) MODELE(s) DE PREDICTIONr")
+#             cb_col1, cb_col2 = st.columns(2)
+#             with cb_col1:
+#                 use_baseline = st.checkbox("📘 Baseline CNN", value=True)
+#             with cb_col2:
+#                 use_ictn = st.checkbox("📗 ICTN")
+
+
+#         # 🔹 Ligne 2 : prédictions par modèle
+#         row2_col1, row2_col2 = st.columns(2)
+#         if use_baseline:
+#             y_pred_base = model.predict(img_batch)
+#             pred_base = classes[np.argmax(y_pred_base)]
+#             with row2_col1:
+#                 st.markdown("### BASELINE CNN")
+#                 st.success(f"Classe prédite : **{pred_base}**")
+
+#         if use_ictn:
+#             try:
+#                 ictn_model = load_model_ictn()  # à définir dans loaders.py
+#                 y_pred_ictn = ictn_model.predict(img_batch)
+#                 pred_ictn = classes[np.argmax(y_pred_ictn)]
+#                 with row2_col2:
+#                     st.markdown("### MODELE ICTN")
+#                     st.info(f"Classe prédite : **{pred_ictn}**")
+#             except Exception as e:
+#                 with row2_col2:
+#                     st.warning(f"Erreur de chargement du modèle ICTN : {e}")
+
+#         # 🔹 Ligne 3 : probabilités par modèle
+#         row3_col1, row3_col2 = st.columns(2)
+#         if use_baseline:
+#             probas_base = pd.Series(y_pred_base[0], index=classes).sort_values(ascending=False)
+#             with row3_col1:
+#                 st.markdown("PROBABILITES – BASELINE CNN")
+#                 st.bar_chart(probas_base)
+
+#         if use_ictn:
+#             probas_ictn = pd.Series(y_pred_ictn[0], index=classes).sort_values(ascending=False)
+#             with row3_col2:
+#                 st.markdown("PROBABILITES – ICTN")
+#                 st.bar_chart(probas_ictn)
+
 # ----------------------------------------------------
 # COMPOSANT GRAPHIQUE ONGLET  2 : PREDICTIONS
 # ----------------------------------------------------
 with tab2:
     st.header("PREDICTIONS")
-    uploaded_file = st.file_uploader("Choisissez une image", type=["jpg", "jpeg", "png"])
+    uploaded_file = st.file_uploader("CHOISISSEZ UNE IMAGE", type=["jpg", "jpeg", "png"])
 
     if uploaded_file:
         img = Image.open(uploaded_file).convert("RGB")
         img = img.resize((250, 250))
         img_batch = preprocess_image(img)
 
-        # 🔹 Ligne 1 : image + sélection des modèles
+        # 🔹 COULEURS ACCESSIBLES POUR LES MODÈLES
+        model_colors = {
+            "BASELINE CNN": "#1E3A8A",  # Bleu foncé
+            "ICTN": "#7C3AED"           # Violet prune
+        }
+
+        # 🔹 LIGNE 1 : IMAGE À GAUCHE, CHECKBOX À DROITE
         row1_col1, row1_col2 = st.columns([1, 2])
         with row1_col1:
-            st.subheader("Image chargée")
-            st.image(img, caption="Image chargée", use_column_width=False)
+            st.subheader("IMAGE CHARGÉE")
+            st.image(img, caption="IMAGE CHARGÉE", use_column_width=False)
 
         with row1_col2:
-            st.subheader("Choisissez le(s) modèle(s) à utiliser")
+            st.subheader("CHOISISSEZ LE(S) MODÈLE(S) À UTILISER")
             cb_col1, cb_col2 = st.columns(2)
             with cb_col1:
-                use_baseline = st.checkbox("📘 Baseline CNN", value=True)
+                use_baseline = st.checkbox("BASELINE CNN", value=True)
             with cb_col2:
-                use_ictn = st.checkbox("📗 ICTN")
+                use_ictn = st.checkbox("ICTN")
 
-
-        # 🔹 Ligne 2 : prédictions par modèle
+        # 🔹 LIGNE 2 : PRÉDICTIONS PAR MODÈLE
         row2_col1, row2_col2 = st.columns(2)
         if use_baseline:
             y_pred_base = model.predict(img_batch)
             pred_base = classes[np.argmax(y_pred_base)]
             with row2_col1:
-                st.markdown("### 📘 Baseline CNN")
-                st.success(f"Classe prédite : **{pred_base}**")
+                st.markdown(
+                    f"<h4 style='color:{model_colors['BASELINE CNN']};'>PRÉDICTION – BASELINE CNN</h4>",
+                    unsafe_allow_html=True
+                )
+                st.success(f"CLASSE PRÉDITE : **{pred_base.upper()}**")
 
         if use_ictn:
             try:
@@ -209,26 +279,34 @@ with tab2:
                 y_pred_ictn = ictn_model.predict(img_batch)
                 pred_ictn = classes[np.argmax(y_pred_ictn)]
                 with row2_col2:
-                    st.markdown("### 📗 ICTN")
-                    st.info(f"Classe prédite : **{pred_ictn}**")
+                    st.markdown(
+                        f"<h4 style='color:{model_colors['ICTN']};'>PRÉDICTION – ICTN</h4>",
+                        unsafe_allow_html=True
+                    )
+                    st.info(f"CLASSE PRÉDITE : **{pred_ictn.upper()}**")
             except Exception as e:
                 with row2_col2:
-                    st.warning(f"Erreur de chargement du modèle ICTN : {e}")
+                    st.warning(f"ERREUR DE CHARGEMENT DU MODÈLE ICTN : {e}")
 
-        # 🔹 Ligne 3 : probabilités par modèle
+        # 🔹 LIGNE 3 : PROBABILITÉS PAR MODÈLE
         row3_col1, row3_col2 = st.columns(2)
         if use_baseline:
             probas_base = pd.Series(y_pred_base[0], index=classes).sort_values(ascending=False)
             with row3_col1:
-                st.markdown("📊 Probabilités – Baseline CNN")
+                st.markdown(
+                    f"<h4 style='color:{model_colors['BASELINE CNN']};'>PROBABILITÉS – BASELINE CNN</h4>",
+                    unsafe_allow_html=True
+                )
                 st.bar_chart(probas_base)
 
         if use_ictn:
             probas_ictn = pd.Series(y_pred_ictn[0], index=classes).sort_values(ascending=False)
             with row3_col2:
-                st.markdown("📊 Probabilités – ICTN")
+                st.markdown(
+                    f"<h4 style='color:{model_colors['ICTN']};'>PROBABILITÉS – ICTN</h4>",
+                    unsafe_allow_html=True
+                )
                 st.bar_chart(probas_ictn)
-
 
 
 
