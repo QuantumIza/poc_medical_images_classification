@@ -49,7 +49,7 @@ def download_from_huggingface(file_path, hf_url):
 #         except Exception as e:
 #             st.warning(f"Erreur de lecture de l'image {file_id} : {e}")
 #             return None
-
+# --- stabilite chargement images avec gdown
 import gdown
 import tempfile
 
