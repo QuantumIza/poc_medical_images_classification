@@ -59,7 +59,22 @@ from loaders import (
 model = load_model_cnn()
 df = load_dataframe()
 df_sample = load_sample_dataframe()
-classes = sorted(df["class"].unique())
+# classes = sorted(df["class"].unique())
+# --- CHARGEMENT DU FICHIER CORRESPONDANCE CLASSES ET PRED
+import requests
+import json
+
+# URL du fichier JSON hébergé sur HuggingFace
+json_url = "https://huggingface.co/QuantumIza/poc-baseline-cnn/resolve/main/class_labels_icnt.json"
+
+# Chargement du contenu
+response = requests.get(json_url)
+classes = json.loads(response.text)
+st.write("✅ Classes chargées depuis HuggingFace :", classes)
+
+
+
+
 
 # ------------------------------------------
 # COMPOSANTS DE L'INTERFACE IHM STREAMLIT
@@ -255,7 +270,7 @@ with tab2:
         row3_col1, row3_col2 = st.columns(2)
 
         if use_baseline:
-            probas_base = pd.Series(y_pred_base[0], index=classes).sort_values(ascending=False)
+            probas_base = pd.Series(y_pred_base[0], index=).sort_values(ascending=False)
             df_base = probas_base.reset_index()
             df_base.columns = ["Classe", "Probabilité"]
             with row3_col1:
@@ -270,7 +285,7 @@ with tab2:
                 st.altair_chart(chart_base, use_container_width=True)
 
         if use_ictn:
-            probas_ictn = pd.Series(y_pred_ictn[0], index=classes).sort_values(ascending=False)
+            probas_ictn = pd.Series(y_pred_ictn[0], index=).sort_values(ascending=False)
             df_ictn = probas_ictn.reset_index()
             df_ictn.columns = ["Classe", "Probabilité"]
             with row3_col2:
