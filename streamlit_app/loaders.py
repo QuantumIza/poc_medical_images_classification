@@ -116,6 +116,11 @@ def load_sample_dataframe():
     return pd.read_csv(HF_SAMPLE_CSV_URL)
 
 @st.cache_data
-def load_training_history():
-    response = requests.get(HF_HISTORY_URL)
+def load_training_history_cnn():
+    response = requests.get(HF_HISTORY_CNN_URL)
+    return pd.read_json(BytesIO(response.content))
+
+@st.cache_data
+def load_training_history_ictn():
+    response = requests.get(HF_HISTORY_ICTN_URL)
     return pd.read_json(BytesIO(response.content))
