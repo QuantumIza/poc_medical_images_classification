@@ -25,7 +25,8 @@ from loaders import (
     load_model_ictn,
     load_dataframe,
     load_sample_dataframe,
-    load_training_history,
+    load_training_history_cnn,
+    load_training_history_ictn,
     load_image_from_url,
     preprocess_image
 )
@@ -279,12 +280,12 @@ with tab2:
 with tab3:
     st.header("COURBES ENTRAINEMENT")
     try:
-        history = load_training_history()
-        df_hist = pd.DataFrame(history)
-        st.line_chart(df_hist[["accuracy", "val_accuracy"]])
-        st.line_chart(df_hist[["loss", "val_loss"]])
+        history_cnn = load_training_history_cnn()
+        df_hist_cnn = pd.DataFrame(history_cnn)
+        st.line_chart(df_hist_cnn[["accuracy", "val_accuracy"]])
+        st.line_chart(df_hist_cnn[["loss", "val_loss"]])
     except Exception as e:
-        st.warning(f"Historique non disponible : {e}")
+        st.warning(f"Historique cnn non disponible : {e}")
 
 # ----------------------------------------------------
 # COMPOSANT GRAPHIQUE ONGLET  4 : COMPARAISON MODELES
