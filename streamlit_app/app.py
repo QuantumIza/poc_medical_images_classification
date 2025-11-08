@@ -32,13 +32,24 @@ from loaders import (
 )
 
 from loaders import (
-    MODEL_PATH,
-    HF_MODEL_URL,
+    MODEL_CNN_PATH,
+    MODEL_ICNT_PATH
+    HF_MODEL_CNN_URL,
+    HF_MODEL_ICNT_URL
     HF_CSV_URL,
     HF_SAMPLE_CSV_URL,
     HF_HISTORY_CNN_URL ,
     HF_HISTORY_ICNT_URL 
 )
+
+
+
+
+
+
+
+
+
 
 
 
