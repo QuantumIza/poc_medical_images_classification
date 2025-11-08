@@ -99,7 +99,7 @@ def load_model_cnn():
 @st.cache_resource
 def load_model_ictn():
     try:
-        download_from_huggingface(MODEL_ICNT_PATH, HF_MODEL_CNN_URL) # download_from_huggingface("model/ictn_model.keras", "https://huggingface.co/QuantumIza/poc-baseline-cnn/resolve/main/ictn_model.keras")
+        download_from_huggingface(MODEL_ICNT_PATH, HF_MODEL_ICNT_URL) # download_from_huggingface("model/ictn_model.keras", "https://huggingface.co/QuantumIza/poc-baseline-cnn/resolve/main/ictn_model.keras")
         return load_model(MODEL_ICNT_PATH) # return load_model("model/ictn_model.keras")
     except Exception as e:
         st.error(f"Erreur de chargement du modèle ICTN : {e}")
