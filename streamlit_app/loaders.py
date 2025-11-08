@@ -26,7 +26,6 @@ HF_MODEL_CNN_URL = "https://huggingface.co/QuantumIza/poc-baseline-cnn/resolve/m
 HF_MODEL_ICNT_URL = "https://huggingface.co/QuantumIza/poc-baseline-cnn/resolve/main/best_model_icnt.keras"
 HF_CSV_URL = "https://huggingface.co/QuantumIza/poc-baseline-cnn/resolve/main/df_full.csv"
 HF_SAMPLE_CSV_URL = "https://huggingface.co/QuantumIza/poc-baseline-cnn/resolve/main/df_sample.csv"
-HF_HISTORY_URL = "https://huggingface.co/QuantumIza/poc-baseline-cnn/resolve/main/history_baseline_cnn.json"
 HF_HISTORY_CNN_URL = "https://huggingface.co/QuantumIza/poc-baseline-cnn/resolve/main/history_baseline_cnn.json"
 HF_HISTORY_ICNT_URL = "https://huggingface.co/QuantumIza/poc-baseline-cnn/resolve/main/history_icnt.json"
 
