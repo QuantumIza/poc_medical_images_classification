@@ -270,7 +270,7 @@ with tab2:
         row3_col1, row3_col2 = st.columns(2)
 
         if use_baseline:
-            probas_base = pd.Series(y_pred_base[0], index=).sort_values(ascending=False)
+            probas_base = pd.Series(y_pred_base[0], index=classes).sort_values(ascending=False)
             df_base = probas_base.reset_index()
             df_base.columns = ["Classe", "Probabilité"]
             with row3_col1:
