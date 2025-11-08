@@ -285,7 +285,8 @@ with tab2:
                 st.altair_chart(chart_base, use_container_width=True)
 
         if use_ictn:
-            probas_ictn = pd.Series(y_pred_ictn[0], index=).sort_values(ascending=False)
+            probas_ictn = pd.Series(y_pred_ictn[0], index=classes).sort_values(ascending=False)
+
             df_ictn = probas_ictn.reset_index()
             df_ictn.columns = ["Classe", "Probabilité"]
             with row3_col2:
