@@ -15,15 +15,20 @@ import gdown
 # ------------------------------
 # CHEMINS LOCAUX ET URLS HF
 # ------------------------------
-MODEL_PATH = "model/initial_best_model_baseline_cnn.keras"
+MODEL_CNN_PATH = "model/best_model_baseline_cnn.keras"
+MODEL_ICNT_PATH = "model/best_model_icnt.keras"
+
 CSV_PATH = "data/my_df_full.csv"
 SAMPLE_CSV_PATH = "data/my_df_sample.csv"
 HISTORY_PATH = "outputs/history_baseline_cnn.json"
 
-HF_MODEL_URL = "https://huggingface.co/QuantumIza/poc-baseline-cnn/resolve/main/initial_best_model_baseline_cnn.keras"
+HF_MODEL_CNN_URL = "https://huggingface.co/QuantumIza/poc-baseline-cnn/resolve/main/best_model_baseline_cnn.keras"
+HF_MODEL_ICNT_URL = "https://huggingface.co/QuantumIza/poc-baseline-cnn/resolve/main/best_model_icnt.keras"
 HF_CSV_URL = "https://huggingface.co/QuantumIza/poc-baseline-cnn/resolve/main/df_full.csv"
 HF_SAMPLE_CSV_URL = "https://huggingface.co/QuantumIza/poc-baseline-cnn/resolve/main/df_sample.csv"
 HF_HISTORY_URL = "https://huggingface.co/QuantumIza/poc-baseline-cnn/resolve/main/history_baseline_cnn.json"
+HF_HISTORY_CNN_URL = "https://huggingface.co/QuantumIza/poc-baseline-cnn/resolve/main/history_baseline_cnn.json"
+HF_HISTORY_ICNT_URL = "https://huggingface.co/QuantumIza/poc-baseline-cnn/resolve/main/history_icnt.json"
 
 # ------------------------------
 # FONCTIONS UTILITAIRES
@@ -87,16 +92,16 @@ def preprocess_image(img, target_size=(227, 227)):
 @st.cache_resource
 def load_model_cnn():
     try:
-        download_from_huggingface(MODEL_PATH, HF_MODEL_URL)
-        return load_model(MODEL_PATH)
+        download_from_huggingface(MODEL_CNN_PATH, HF_MODEL_CNN_URL)
+        return load_model(MODEL_CNN_PATH)
     except Exception as e:
-        st.error(f"Erreur de chargement du modèle : {e}")
+        st.error(f"Erreur de chargement du modèleCNN : {e}")
         st.stop()
 @st.cache_resource
 def load_model_ictn():
     try:
-        download_from_huggingface(MODEL_PATH, HF_MODEL_URL) # download_from_huggingface("model/ictn_model.keras", "https://huggingface.co/QuantumIza/poc-baseline-cnn/resolve/main/ictn_model.keras")
-        return load_model(MODEL_PATH) # return load_model("model/ictn_model.keras")
+        download_from_huggingface(MODEL_ICNT_PATH, HF_MODEL_CNN_URL) # download_from_huggingface("model/ictn_model.keras", "https://huggingface.co/QuantumIza/poc-baseline-cnn/resolve/main/ictn_model.keras")
+        return load_model(MODEL_ICNT_PATH) # return load_model("model/ictn_model.keras")
     except Exception as e:
         st.error(f"Erreur de chargement du modèle ICTN : {e}")
         st.stop()
