@@ -36,7 +36,8 @@ from loaders import (
     HF_MODEL_URL,
     HF_CSV_URL,
     HF_SAMPLE_CSV_URL,
-    HF_HISTORY_URL
+    HF_HISTORY_CNN_URL ,
+    HF_HISTORY_ICNT_URL 
 )
 
 
