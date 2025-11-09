@@ -28,7 +28,8 @@ from loaders import (
     load_training_history_cnn,
     load_training_history_ictn,
     load_image_from_url,
-    preprocess_image
+    preprocess_image_cnn,
+    preprocess_image_icnt
 )
 
 from loaders import (
@@ -197,8 +198,8 @@ with tab2:
         img = Image.open(uploaded_file).convert("RGB")
         img = img.resize((250, 250))
         # img_batch = preprocess_image(img)
-        img_batch_cnn = preprocess_image(img, target_size=(227, 227))
-        img_batch_ictn = preprocess_image(img, target_size=(224, 224))
+        img_batch_cnn = preprocess_image_cnn(img, target_size=(227, 227))
+        img_batch_ictn = preprocess_image_icnt(img, target_size=(224, 224))
 
 
         # 🔹 COULEURS ACCESSIBLES TEMPÉRÉES
