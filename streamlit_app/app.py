@@ -42,6 +42,9 @@ from loaders import (
     HF_HISTORY_CNN_URL ,
     HF_HISTORY_ICNT_URL 
 )
+import streamlit as st
+st.cache_resource.clear()
+st.cache_data.clear()
 
 
 
