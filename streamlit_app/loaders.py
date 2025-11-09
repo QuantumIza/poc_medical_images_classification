@@ -77,13 +77,31 @@ def load_image_from_url(url):
     else:
         st.warning(f"Image inaccessible : {url} (code {response.status_code})")
     return None
-
-
-def preprocess_image(img, target_size=(227, 227)):
+# ------------------------
+# --- PRETRAITEMENT CNN
+# -----------------------
+def preprocess_image_cnn(img, target_size=(227, 227)):
     img = img.resize(target_size).convert("RGB")
     img_array = np.array(img) / 255.0
     img_batch = np.expand_dims(img_array, axis=0)
     return img_batch
+# ------------------------
+# --- PRETRAITEMENT ICNT
+# -----------------------
+def preprocess_image_icnt(img, target_size=(224, 224)):
+    img = img.resize(target_size).convert("RGB")
+    img_array = np.array(img) / 255.0
+    img_batch = np.expand_dims(img_array, axis=0)
+    return img_batch
+
+
+
+# def preprocess_image(img, target_size=(227, 227)):
+#     img = img.resize(target_size).convert("RGB")
+#     img_array = np.array(img) / 255.0
+#     img_batch = np.expand_dims(img_array, axis=0)
+#     return img_batch
+
 
 # ------------------------------
 # CHARGEMENT DES FICHIERS
