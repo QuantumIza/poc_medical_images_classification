@@ -60,18 +60,28 @@ model = load_model_cnn()
 df = load_dataframe()
 df_sample = load_sample_dataframe()
 # classes = sorted(df["class"].unique())
-# --- CHARGEMENT DU FICHIER CORRESPONDANCE CLASSES ET PRED
+# -----------------------------------------------------------------------------
+# --- CHARGEMENT DU FICHIER CORRESPONDANCE CLASSES ET PRED POUR BASELINE CNN
+# ------------------------------------------------------------------------------
 import requests
 import json
-
-# URL du fichier JSON hébergé sur HuggingFace
-json_url = "https://huggingface.co/QuantumIza/poc-baseline-cnn/resolve/main/class_labels_icnt.json"
-
+# URL FICHIER JSON HEBERGE SUR HuggingFace
+json_url_cnn = "https://huggingface.co/QuantumIza/poc-baseline-cnn/resolve/main/class_labels_cnn.json"
 # Chargement du contenu
-response = requests.get(json_url)
-classes = json.loads(response.text)
-st.write("✅ Classes chargées depuis HuggingFace :", classes)
-
+response_cnn = requests.get(json_url_cnn)
+classes_cnn = json.loads(response_cnn.text)
+st.write("✅ Classes chargées depuis HuggingFace :", classes_cnn)
+# -----------------------------------------------------------------------------
+# --- CHARGEMENT DU FICHIER CORRESPONDANCE CLASSES ET PRED POUR ICNT
+# ------------------------------------------------------------------------------
+import requests
+import json
+# URL FICHIER JSON HEBERGE SUR HuggingFace
+json_url_icnt = "https://huggingface.co/QuantumIza/poc-baseline-cnn/resolve/main/class_labels_icnt.json"
+# Chargement du contenu
+response_icnt = requests.get(json_url_icnt)
+classes_icnt = json.loads(response_icnt.text)
+st.write("✅ Classes chargées depuis HuggingFace :", classes_icnt)
 
 
 
@@ -228,7 +238,7 @@ with tab2:
         if use_baseline:
             # y_pred_base = model.predict(img_batch)
             y_pred_base = model.predict(img_batch_cnn)
-            pred_base = classes[np.argmax(y_pred_base)]
+            pred_base = classes_cnn[np.argmax(y_pred_base)]
             with row2_col1:
                 st.markdown(
                     f"<h4 style='color:{model_colors['BASELINE CNN']};'>PRÉDICTION – BASELINE CNN</h4>",
@@ -248,7 +258,7 @@ with tab2:
                 ictn_model = load_model_ictn()  # à définir dans loaders.py
                 # y_pred_ictn = ictn_model.predict(img_batch)
                 y_pred_ictn = ictn_model.predict(img_batch_ictn)
-                pred_ictn = classes[np.argmax(y_pred_ictn)]
+                pred_ictn = classes_icnt[np.argmax(y_pred_ictn)]
                 with row2_col2:
                     st.markdown(
                         f"<h4 style='color:{model_colors['ICTN']};'>PRÉDICTION – ICTN</h4>",
@@ -270,7 +280,7 @@ with tab2:
         row3_col1, row3_col2 = st.columns(2)
 
         if use_baseline:
-            probas_base = pd.Series(y_pred_base[0], index=classes).sort_values(ascending=False)
+            probas_base = pd.Series(y_pred_base[0], index=classes_cnn).sort_values(ascending=False)
             df_base = probas_base.reset_index()
             df_base.columns = ["Classe", "Probabilité"]
             with row3_col1:
@@ -285,7 +295,7 @@ with tab2:
                 st.altair_chart(chart_base, use_container_width=True)
 
         if use_ictn:
-            probas_ictn = pd.Series(y_pred_ictn[0], index=classes).sort_values(ascending=False)
+            probas_ictn = pd.Series(y_pred_ictn[0], index=classes_icnt).sort_values(ascending=False)
 
 
             df_ictn = probas_ictn.reset_index()
