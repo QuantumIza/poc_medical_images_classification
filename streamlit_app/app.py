@@ -72,7 +72,7 @@ response_cnn = requests.get(json_url_cnn)
 classes_cnn = json.loads(response_cnn.text)
 st.write("✅ Classes chargées depuis HuggingFace :", classes_cnn)
 # -----------------------------------------------------------------------------
-# --- CHARGEMENT DU FICHIER CORRESPONDANCE CLASSES ET PRED POUR ICNT
+# --- CHARGEMENT DU FICHIER CORRESPONDANCE CLASSES ET PRED POUR modele ICNT
 # ------------------------------------------------------------------------------
 import requests
 import json
