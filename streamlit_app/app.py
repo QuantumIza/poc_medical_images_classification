@@ -267,6 +267,9 @@ with tab2:
                 # y_pred_ictn = ictn_model.predict(img_batch)
                 y_pred_ictn = ictn_model.predict(img_batch_ictn)
                 pred_ictn = classes_icnt[np.argmax(y_pred_ictn)]
+                st.write("Raw prediction ICNT:", y_pred_ictn)
+                st.write("Argmax index:", np.argmax(y_pred_ictn))
+                st.write("Classes:", classes_icnt)
                 with row2_col2:
                     st.markdown(
                         f"<h4 style='color:{model_colors['ICTN']};'>PRÉDICTION – ICTN</h4>",
