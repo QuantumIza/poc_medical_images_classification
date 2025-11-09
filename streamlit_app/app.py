@@ -243,6 +243,10 @@ with tab2:
             # y_pred_base = model.predict(img_batch)
             y_pred_base = model.predict(img_batch_cnn)
             pred_base = classes_cnn[np.argmax(y_pred_base)]
+            st.write("Raw prediction CNN:", y_pred_base)
+            st.write("Argmax index:", np.argmax(y_pred_base))
+            st.write("Classes:", classes_cnn)
+
             with row2_col1:
                 st.markdown(
                     f"<h4 style='color:{model_colors['BASELINE CNN']};'>PRÉDICTION – BASELINE CNN</h4>",
