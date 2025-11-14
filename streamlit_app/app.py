@@ -250,7 +250,7 @@ with tab2:
         row2_col1, row2_col2 = st.columns(2)
 
         if use_baseline:
-            y_pred_base = model.predict(img)
+            y_pred_base = model.predict(img_batch_cnn)
             pred_base = classes_cnn[np.argmax(y_pred_base)]
 
             with row2_col1:
@@ -270,7 +270,7 @@ with tab2:
         if use_ictn:
             try:
                 ictn_model = load_model_ictn()
-                y_pred_ictn = ictn_model.predict(img)
+                y_pred_ictn = ictn_model.predict(img_batch_ictn)
                 pred_ictn = classes_icnt[np.argmax(y_pred_ictn)]
 
                 with row2_col2:
