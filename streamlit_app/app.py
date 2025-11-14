@@ -44,14 +44,20 @@ df_sample = load_sample_dataframe()
 # -----------------------------------------------------------------------------
 # --- CHARGEMENT DU FICHIER CORRESPONDANCE CLASSES ET PRED POUR BASELINE CNN
 # ------------------------------------------------------------------------------
-json_url_cnn = "https://huggingface.co/QuantumIza/poc-baseline-cnn/resolve/main/class_labels_cnn.json"
+json_url_cnn = "https://huggingface.co/QuantumIza/poc-baseline-cnn/resolve/main/baseline_cnn/class_labels_cnn.json"
 classes_cnn = json.loads(requests.get(json_url_cnn).text)
 
 # -----------------------------------------------------------------------------
 # --- CHARGEMENT DU FICHIER CORRESPONDANCE CLASSES ET PRED POUR MODELE ICNT
 # ------------------------------------------------------------------------------
-json_url_icnt = "https://huggingface.co/QuantumIza/poc-baseline-cnn/resolve/main/class_labels_icnt.json"
+json_url_icnt = "https://huggingface.co/QuantumIza/poc-baseline-cnn/resolve/main/icnt/class_labels_icnt.json"
 classes_icnt = json.loads(requests.get(json_url_icnt).text)
+
+# -----------------------------------------------------------------------------
+# --- CHARGEMENT DU FICHIER CORRESPONDANCE CLASSES ET PRED POUR MODELE IIV3
+# ------------------------------------------------------------------------------
+json_url_iiv3 = "https://huggingface.co/QuantumIza/poc-baseline-cnn/resolve/main/iiv3/class_labels_iiv3.json"
+classes_iiv3 = json.loads(requests.get(json_url_iiv3).text)
 
 # -------------------------------------------------------------- #
 # --- GENERATION DES COMPOSANTS DE L'INTERFACE IHM STREAMLIT --- #
