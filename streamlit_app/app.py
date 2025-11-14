@@ -190,32 +190,30 @@ with tab1:
     plt.setp(autotexts, size=12, weight="bold")
     col2.pyplot(fig)
 
-    st.subheader("APERÇU D'IMAGES PAR CLASSE")
-    show_normal = st.checkbox("🟦 Classe normal", value=True)
-    show_benign = st.checkbox("🟩 Classe benign")
-    show_malignant = st.checkbox("🟥 Classe malignant")
+    # --- APERÇU D'IMAGES PAR CLASSE
+st.subheader("APERÇU D'IMAGES PAR CLASSE")
 
-    checkbox_map = {
-        "normal": show_normal,
-        "benign": show_benign,
-        "malignant": show_malignant
-    }
+checkbox_map = {}
+for cls in ["normal", "benign", "malignant"]:
+    label_html = f"<span style='color:{class_colors[cls]}; font-weight:bold;'>Classe {cls}</span>"
+    checkbox_map[cls] = st.checkbox(label_html, value=(cls == "normal"), unsafe_allow_html=True)
 
-    for selected_class, is_checked in checkbox_map.items():
-        if is_checked:
-            st.markdown(
-                f"<h4 style='color:{color_map[selected_class]};'>Classe : {selected_class}</h4>",
-                unsafe_allow_html=True
-            )
-            sample_urls = df_sample[df_sample["class"] == selected_class]["image_url"].sample(3)
-            cols = st.columns(3)
-            for i, url in enumerate(sample_urls):
-                img = load_image_from_url(url)
-                if img:
-                    img = img.resize((250, 250))
-                    cols[i].image(img, caption=selected_class, use_column_width=False)
-                else:
-                    cols[i].warning(f"Image introuvable : {url}")
+for selected_class, is_checked in checkbox_map.items():
+    if is_checked:
+        st.markdown(
+            f"<h4 style='color:{class_colors[selected_class]};'>Classe : {selected_class}</h4>",
+            unsafe_allow_html=True
+        )
+        sample_urls = df_sample[df_sample["class"] == selected_class]["image_url"].sample(3)
+        cols = st.columns(3)
+        for i, url in enumerate(sample_urls):
+            img = load_image_from_url(url)
+            if img:
+                img = img.resize((250, 250))
+                cols[i].image(img, caption=selected_class, use_column_width=False)
+            else:
+                cols[i].warning(f"Image introuvable : {url}")
+
 
 # ----------------------------------------------------
 # COMPOSANT GRAPHIQUE ONGLET  2 : PREDICTIONS
