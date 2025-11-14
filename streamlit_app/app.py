@@ -74,7 +74,7 @@ json_url_cnn = "https://huggingface.co/QuantumIza/poc-baseline-cnn/resolve/main/
 # Chargement du contenu
 response_cnn = requests.get(json_url_cnn)
 classes_cnn = json.loads(response_cnn.text)
-st.write("✅ Classes chargées depuis HuggingFace :", classes_cnn)
+
 # -----------------------------------------------------------------------------
 # --- CHARGEMENT DU FICHIER CORRESPONDANCE CLASSES ET PRED POUR modele ICNT
 # ------------------------------------------------------------------------------
@@ -85,7 +85,7 @@ json_url_icnt = "https://huggingface.co/QuantumIza/poc-baseline-cnn/resolve/main
 # Chargement du contenu
 response_icnt = requests.get(json_url_icnt)
 classes_icnt = json.loads(response_icnt.text)
-st.write("✅ Classes chargées depuis HuggingFace :", classes_icnt)
+
 
 
 
