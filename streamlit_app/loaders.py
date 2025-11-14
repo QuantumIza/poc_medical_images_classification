@@ -128,19 +128,19 @@ def load_model_ictn():
 #         st.stop()
 
 
-import tensorflow as tf
-
+# ------------------------------
+# CHARGEMENT DU MODELE IIV3
+# ------------------------------
 @st.cache_resource
 def load_model_iiv3():
-    """Charge le modèle Improved InceptionV3 depuis HuggingFace ou local."""
-    local_path = HF_RESOURCES["models"]["iiv3"]["local"]
-    url = HF_RESOURCES["models"]["iiv3"]["url"]
+    try:
+        res = HF_RESOURCES["models"]["iiv3"]
+        download_from_huggingface(res["local"], res["url"])
+        return load_model(res["local"])
+    except Exception as e:
+        st.error(f"Erreur de chargement du modèle IIV3 : {e}")
+        st.stop()
 
-    if not os.path.exists(local_path):
-        os.makedirs(os.path.dirname(local_path), exist_ok=True)
-        download_file(url, local_path)
-
-    return tf.keras.models.load_model(local_path)
 
 # ------------------------------
 # CHARGEMENT DES DATASETS
