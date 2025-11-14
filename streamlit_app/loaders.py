@@ -71,6 +71,24 @@ def preprocess_image_icnt(img, target_size=(224, 224)):
     img_array = preprocess_convnext(img_array)  # ⚡ même prétraitement que pendant l'entraînement
     img_batch = np.expand_dims(img_array, axis=0)
     return img_batch
+# ------------------------
+# --- PRETRAITEMENT IIV3
+# -----------------------
+from tensorflow.keras.applications.inception_v3 import preprocess_input as preprocess_inception
+
+def preprocess_image_iiv3(img, target_size=(224, 224)):
+    """
+    Prétraitement pour le modèle Improved InceptionV3.
+    - Resize à la taille attendue (224x224 dans ton entraînement)
+    - Conversion en RGB
+    - Normalisation avec preprocess_input (pixels dans [-1, 1])
+    - Ajout d'une dimension batch
+    """
+    img = img.resize(target_size).convert("RGB")
+    img_array = np.array(img)
+    img_array = preprocess_inception(img_array)  # ⚡ normalisation [-1, 1]
+    img_batch = np.expand_dims(img_array, axis=0)
+    return img_batch
 
 
 
