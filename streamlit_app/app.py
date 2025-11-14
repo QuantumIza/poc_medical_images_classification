@@ -197,26 +197,16 @@ st.subheader("APERÇU D'IMAGES PAR CLASSE")
 col_normal, col_benign, col_malignant = st.columns(3)
 
 with col_normal:
-    show_normal = st.checkbox(
-        f"Classe normal",
-        value=True,
-        key="cb_normal"
-    )
-    st.markdown(f"<span style='color:{class_colors['normal']};'>⬤ Couleur normal</span>", unsafe_allow_html=True)
+    st.markdown(f"<span style='color:{class_colors['normal']}; font-weight:bold;'>Classe normal</span>", unsafe_allow_html=True)
+    show_normal = st.checkbox("", value=True, key="cb_normal")
 
 with col_benign:
-    show_benign = st.checkbox(
-        f"Classe benign",
-        key="cb_benign"
-    )
-    st.markdown(f"<span style='color:{class_colors['benign']};'>⬤ Couleur benign</span>", unsafe_allow_html=True)
+    st.markdown(f"<span style='color:{class_colors['benign']}; font-weight:bold;'>Classe benign</span>", unsafe_allow_html=True)
+    show_benign = st.checkbox("", key="cb_benign")
 
 with col_malignant:
-    show_malignant = st.checkbox(
-        f"Classe malignant",
-        key="cb_malignant"
-    )
-    st.markdown(f"<span style='color:{class_colors['malignant']};'>⬤ Couleur malignant</span>", unsafe_allow_html=True)
+    st.markdown(f"<span style='color:{class_colors['malignant']}; font-weight:bold;'>Classe malignant</span>", unsafe_allow_html=True)
+    show_malignant = st.checkbox("", key="cb_malignant")
 
 # Mapping des checkboxes
 checkbox_map = {
@@ -241,6 +231,7 @@ for selected_class, is_checked in checkbox_map.items():
                 cols[i].image(img, caption=selected_class, use_column_width=False)
             else:
                 cols[i].warning(f"Image introuvable : {url}")
+
 
 
 # ----------------------------------------------------
