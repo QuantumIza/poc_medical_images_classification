@@ -5,14 +5,12 @@ import streamlit as st
 import numpy as np
 import pandas as pd
 from PIL import Image
-import os
-import requests
-from io import BytesIO
-from tensorflow.keras.models import load_model
-import plotly.express as px
 import matplotlib.pyplot as plt
+import plotly.express as px
 import requests
 import json
+from io import BytesIO
+
 # -------------------------
 # --- IMPORTS DES MODULES
 # -------------------------
@@ -28,17 +26,7 @@ from loaders import (
     preprocess_image_icnt
 )
 
-from loaders import (
-    MODEL_CNN_PATH,
-    MODEL_ICNT_PATH,
-    HF_MODEL_CNN_URL,
-    HF_MODEL_ICNT_URL,
-    HF_CSV_URL,
-    HF_SAMPLE_CSV_URL,
-    HF_HISTORY_CNN_URL ,
-    HF_HISTORY_ICNT_URL 
-)
-import streamlit as st
+# Nettoyage du cache Streamlit au démarrage
 st.cache_resource.clear()
 st.cache_data.clear()
 
@@ -48,31 +36,30 @@ st.cache_data.clear()
 model = load_model_cnn()
 df = load_dataframe()
 df_sample = load_sample_dataframe()
-# classes = sorted(df["class"].unique())
+
 # -----------------------------------------------------------------------------
 # --- CHARGEMENT DU FICHIER CORRESPONDANCE CLASSES ET PRED POUR BASELINE CNN
 # ------------------------------------------------------------------------------
 json_url_cnn = "https://huggingface.co/QuantumIza/poc-baseline-cnn/resolve/main/class_labels_cnn.json"
-response_cnn = requests.get(json_url_cnn)
-classes_cnn = json.loads(response_cnn.text)
+classes_cnn = json.loads(requests.get(json_url_cnn).text)
+
 # -----------------------------------------------------------------------------
-# --- CHARGEMENT DU FICHIER CORRESPONDANCE CLASSES ET PRED POUR modele ICNT
+# --- CHARGEMENT DU FICHIER CORRESPONDANCE CLASSES ET PRED POUR MODELE ICNT
 # ------------------------------------------------------------------------------
 json_url_icnt = "https://huggingface.co/QuantumIza/poc-baseline-cnn/resolve/main/class_labels_icnt.json"
-response_icnt = requests.get(json_url_icnt)
-classes_icnt = json.loads(response_icnt.text)
-
-
-
-
+classes_icnt = json.loads(requests.get(json_url_icnt).text)
 
 # -------------------------------------------------------------- #
 # --- GENERATION DES COMPOSANTS DE L'INTERFACE IHM STREAMLIT --- #
 # -------------------------------------------------------------- #
+
 # -------------------------------
 # --- 1. CONFIGURATION DE LA PAGE
 # -------------------------------
-st.set_page_config(page_title="Dashboard POC – Projet 7", layout="wide")
+st.set_page_config(
+    page_title="Dashboard POC – Projet 7",
+    layout="wide"
+)
 st.title("DASHBOARD – BASELINE CNN VS MODELE ICNT LS")
 
 # ---------------------------
@@ -84,34 +71,37 @@ tab1, tab2, tab3, tab4 = st.tabs([
     "PERFORMANCES",
     "COMPARAISON MODELES"
 ])
+
 # ----------------------------------
 # --- 3. DEFINITION DES CODES COULEURS
 # ----------------------------------
 class_colors = {
-    "normal": "#A6CEE3",
-    "benign": "#B2DF8A",
-    "malignant": "#FB9A99"
+    "normal": "#A6CEE3",     # Bleu clair
+    "benign": "#B2DF8A",     # Vert doux
+    "malignant": "#FB9A99"   # Rouge rosé
 }
+
 color_map = {
-    "normal": "#5B8FA8",
-    "benign": "#A1C181",
-    "malignant": "#D95F02"
+    "normal": "#5B8FA8",     # Bleu plus foncé
+    "benign": "#A1C181",     # Vert olive
+    "malignant": "#D95F02"   # Orange soutenu
 }
+
 
 # ------------------------------------------------------
 # 4. COMPOSANT GRAPHIQUE ONGLET 1 : ANALYSE EXPLORATOIRE
 # ------------------------------------------------------
 with tab1:
     st.header("ANALYSE EXPLORATOIRE")
-    st.subheader("REPRÉSENTATION EQUILIBRÉE DES CLASSES")
+    st.subheader("REPRÉSENTATION ÉQUILIBRÉE DES CLASSES")
     st.info("""
     ℹ️ Les images du dataset Kaggle sont déjà prétraitées : resize, normalisation, CLAHE (Contrast Limited Adaptive Histogram Equalization).
     Seule une data augmentation a été appliquée sur la classe *normal* afin de corriger sa sous-représentation.
     """)
-    # --- CHARGEMENT DU DATAFRAME DE STATS DEPUIS HUGGINGFACE
-    stats_url = "https://huggingface.co/QuantumIza/poc-baseline-cnn/resolve/main/eda/dataset_stats.csv"
+
+    # --- CHARGEMENT DU DATAFRAME DE STATS VIA LOADER
     try:
-        df_stats = pd.read_csv(stats_url)
+        df_stats = load_dataset_stats()
         st.subheader("Statistiques du dataset")
         st.dataframe(df_stats)
 
@@ -132,8 +122,7 @@ with tab1:
     except Exception as e:
         st.warning(f"Impossible de charger les stats : {e}")
 
-
-
+    # --- DISTRIBUTION DES CLASSES
     class_counts = df["class"].value_counts()
     labels = class_counts.index.tolist()
     sizes = class_counts.values.tolist()
@@ -154,7 +143,7 @@ with tab1:
     col1.plotly_chart(fig_bar, use_container_width=True)
 
     fig, ax = plt.subplots()
-    wedges, texts, autotexts = ax.pie(
+    ax.pie(
         sizes,
         labels=labels,
         autopct='%1.1f%%',
@@ -163,10 +152,9 @@ with tab1:
         textprops={'color': "black", 'fontsize': 12}
     )
     ax.axis('equal')
-    plt.setp(autotexts, size=12, weight="bold")
     col2.pyplot(fig)
 
-    # --- APERÇU D'IMAGES PAR CLASSE
+# --- APERÇU D'IMAGES PAR CLASSE
 st.subheader("APERÇU D'IMAGES PAR CLASSE")
 
 # Création de 3 colonnes pour les checkboxes côte à côte
@@ -209,7 +197,6 @@ for selected_class, is_checked in checkbox_map.items():
                 cols[i].warning(f"Image introuvable : {url}")
 
 
-
 # ----------------------------------------------------
 # COMPOSANT GRAPHIQUE ONGLET  2 : PREDICTIONS
 # ----------------------------------------------------
@@ -220,20 +207,19 @@ with tab2:
     if uploaded_file:
         import altair as alt
 
+        # --- Prétraitement de l'image
         img = Image.open(uploaded_file).convert("RGB")
         img = img.resize((250, 250))
-        # img_batch = preprocess_image(img)
         img_batch_cnn = preprocess_image_cnn(img, target_size=(227, 227))
         img_batch_ictn = preprocess_image_icnt(img, target_size=(224, 224))
 
-
-        # 🔹 COULEURS ACCESSIBLES TEMPÉRÉES
+        # 🔹 Couleurs pour les modèles
         model_colors = {
             "BASELINE CNN": "#3B82F6",  # Bleu doux
             "ICTN": "#A78BFA"           # Lavande foncée
         }
 
-        # 🔹 LIGNE 1 : IMAGE À GAUCHE, CHECKBOX À DROITE
+        # 🔹 Ligne 1 : Image + choix des modèles
         row1_col1, row1_col2 = st.columns([1, 2])
 
         with row1_col1:
@@ -258,16 +244,12 @@ with tab2:
                 )
                 use_ictn = st.checkbox("")
 
-        # 🔹 LIGNE 2 : PRÉDICTIONS PAR MODÈLE
+        # 🔹 Ligne 2 : Prédictions par modèle
         row2_col1, row2_col2 = st.columns(2)
 
         if use_baseline:
-            # y_pred_base = model.predict(img_batch)
-            y_pred_base = model.predict(img_batch_cnn)
+            y_pred_base = model.predict(img)
             pred_base = classes_cnn[np.argmax(y_pred_base)]
-            st.write("Raw prediction CNN:", y_pred_base)
-            st.write("Argmax index:", np.argmax(y_pred_base))
-            st.write("Classes:", classes_cnn)
 
             with row2_col1:
                 st.markdown(
@@ -285,13 +267,10 @@ with tab2:
 
         if use_ictn:
             try:
-                ictn_model = load_model_ictn()  # à définir dans loaders.py
-                # y_pred_ictn = ictn_model.predict(img_batch)
-                y_pred_ictn = ictn_model.predict(img_batch_ictn)
+                ictn_model = load_model_ictn()
+                y_pred_ictn = ictn_model.predict(img)
                 pred_ictn = classes_icnt[np.argmax(y_pred_ictn)]
-                st.write("Raw prediction ICNT:", y_pred_ictn)
-                st.write("Argmax index:", np.argmax(y_pred_ictn))
-                st.write("Classes:", classes_icnt)
+
                 with row2_col2:
                     st.markdown(
                         f"<h4 style='color:{model_colors['ICTN']};'>PRÉDICTION – ICTN</h4>",
@@ -309,13 +288,14 @@ with tab2:
                 with row2_col2:
                     st.warning(f"ERREUR DE CHARGEMENT DU MODÈLE ICTN : {e}")
 
-        # 🔹 LIGNE 3 : PROBABILITÉS PAR MODÈLE
+        # 🔹 Ligne 3 : Probabilités par modèle
         row3_col1, row3_col2 = st.columns(2)
 
         if use_baseline:
             probas_base = pd.Series(y_pred_base[0], index=classes_cnn).sort_values(ascending=False)
             df_base = probas_base.reset_index()
             df_base.columns = ["Classe", "Probabilité"]
+
             with row3_col1:
                 st.markdown(
                     f"<h4 style='color:{model_colors['BASELINE CNN']};'>PROBABILITÉS – BASELINE CNN</h4>",
@@ -329,10 +309,9 @@ with tab2:
 
         if use_ictn:
             probas_ictn = pd.Series(y_pred_ictn[0], index=classes_icnt).sort_values(ascending=False)
-
-
             df_ictn = probas_ictn.reset_index()
             df_ictn.columns = ["Classe", "Probabilité"]
+
             with row3_col2:
                 st.markdown(
                     f"<h4 style='color:{model_colors['ICTN']};'>PROBABILITÉS – ICTN</h4>",
@@ -347,27 +326,51 @@ with tab2:
 
 
 
-
-
-
-
 # -------------------------------------------------------
 # COMPOSANT GRAPHIQUE ONGLET  3 : COURBES D'ENTRAINEMENT
 # -------------------------------------------------------
 with tab3:
-    st.header("COURBES ENTRAINEMENT")
+    st.header("COURBES D'ENTRAINEMENT")
+
+    # --- Historique Baseline CNN
     try:
         history_cnn = load_training_history_cnn()
         df_hist_cnn = pd.DataFrame(history_cnn)
+        st.subheader("Baseline CNN")
         st.line_chart(df_hist_cnn[["accuracy", "val_accuracy"]])
         st.line_chart(df_hist_cnn[["loss", "val_loss"]])
     except Exception as e:
-        st.warning(f"Historique cnn non disponible : {e}")
+        st.warning(f"Historique CNN non disponible : {e}")
+
+    # --- Historique ICNT
+    try:
+        history_icnt = load_training_history_ictn()
+        df_hist_icnt = pd.DataFrame(history_icnt)
+        st.subheader("ICNT")
+        st.line_chart(df_hist_icnt[["accuracy", "val_accuracy"]])
+        st.line_chart(df_hist_icnt[["loss", "val_loss"]])
+    except Exception as e:
+        st.warning(f"Historique ICNT non disponible : {e}")
+
+    # --- Historique InceptionV3 (si disponible)
+    try:
+        from loaders import load_training_history_iiv3
+        history_iiv3 = load_training_history_iiv3()
+        df_hist_iiv3 = pd.DataFrame(history_iiv3)
+        st.subheader("InceptionV3")
+        st.line_chart(df_hist_iiv3[["accuracy", "val_accuracy"]])
+        st.line_chart(df_hist_iiv3[["loss", "val_loss"]])
+    except Exception as e:
+        st.info("Historique InceptionV3 non disponible ou pas encore entraîné.")
 
 # ----------------------------------------------------
 # COMPOSANT GRAPHIQUE ONGLET  4 : COMPARAISON MODELES
 # ----------------------------------------------------
 with tab4:
     st.header("COMPARAISON MODELES")
-    st.info("Le modèle ICN-T sera intégré ici dès qu'il sera entraîné.")
+    st.info("""
+    Ici, vous pourrez comparer les performances des différents modèles (Baseline CNN, ICNT, InceptionV3).
+    Le modèle ICNT et InceptionV3 seront intégrés dès qu'ils auront été entraînés et leurs historiques disponibles.
+    """)
+
 
