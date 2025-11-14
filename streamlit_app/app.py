@@ -11,12 +11,8 @@ from io import BytesIO
 from tensorflow.keras.models import load_model
 import plotly.express as px
 import matplotlib.pyplot as plt
-
-
-
-
-
-
+import requests
+import json
 # -------------------------
 # --- IMPORTS DES MODULES
 # -------------------------
@@ -46,17 +42,6 @@ import streamlit as st
 st.cache_resource.clear()
 st.cache_data.clear()
 
-
-
-
-
-
-
-
-
-
-
-
 # ------------------------------
 # INITIALISATION DES DONNÉES
 # ------------------------------
@@ -67,22 +52,13 @@ df_sample = load_sample_dataframe()
 # -----------------------------------------------------------------------------
 # --- CHARGEMENT DU FICHIER CORRESPONDANCE CLASSES ET PRED POUR BASELINE CNN
 # ------------------------------------------------------------------------------
-import requests
-import json
-# URL FICHIER JSON HEBERGE SUR HuggingFace
 json_url_cnn = "https://huggingface.co/QuantumIza/poc-baseline-cnn/resolve/main/class_labels_cnn.json"
-# Chargement du contenu
 response_cnn = requests.get(json_url_cnn)
 classes_cnn = json.loads(response_cnn.text)
-
 # -----------------------------------------------------------------------------
 # --- CHARGEMENT DU FICHIER CORRESPONDANCE CLASSES ET PRED POUR modele ICNT
 # ------------------------------------------------------------------------------
-import requests
-import json
-# URL FICHIER JSON HEBERGE SUR HuggingFace
 json_url_icnt = "https://huggingface.co/QuantumIza/poc-baseline-cnn/resolve/main/class_labels_icnt.json"
-# Chargement du contenu
 response_icnt = requests.get(json_url_icnt)
 classes_icnt = json.loads(response_icnt.text)
 
@@ -90,17 +66,17 @@ classes_icnt = json.loads(response_icnt.text)
 
 
 
-# ------------------------------------------
-# COMPOSANTS DE L'INTERFACE IHM STREAMLIT
-# ------------------------------------------
+# -------------------------------------------------------------- #
+# --- GENERATION DES COMPOSANTS DE L'INTERFACE IHM STREAMLIT --- #
+# -------------------------------------------------------------- #
 # -------------------------------
-# --- CONFIGURATION DE LA PAGE
+# --- 1. CONFIGURATION DE LA PAGE
 # -------------------------------
 st.set_page_config(page_title="Dashboard POC – Projet 7", layout="wide")
 st.title("DASHBOARD – BASELINE CNN VS MODELE ICNT LS")
 
 # ---------------------------
-# --- DEFINITION DES ONGLETS
+# --- 2. DEFINITION DES ONGLETS
 # ---------------------------
 tab1, tab2, tab3, tab4 = st.tabs([
     "ANALYSE EXPLORATOIRE",
@@ -109,7 +85,7 @@ tab1, tab2, tab3, tab4 = st.tabs([
     "COMPARAISON MODELES"
 ])
 # ----------------------------------
-# --- DEFINITION DES CODES COULEURS
+# --- 3. DEFINITION DES CODES COULEURS
 # ----------------------------------
 class_colors = {
     "normal": "#A6CEE3",
@@ -123,7 +99,7 @@ color_map = {
 }
 
 # ------------------------------------------------------
-# COMPOSANT GRAPHIQUE ONGLET 1 : ANALYSE EXPLORATOIRE
+# 4. COMPOSANT GRAPHIQUE ONGLET 1 : ANALYSE EXPLORATOIRE
 # ------------------------------------------------------
 with tab1:
     st.header("ANALYSE EXPLORATOIRE")
