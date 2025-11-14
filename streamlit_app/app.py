@@ -132,6 +132,26 @@ with tab1:
     ℹ️ Les images du dataset Kaggle sont déjà prétraitées : resize, normalisation, CLAHE (Contrast Limited Adaptive Histogram Equalization).
     Seule une data augmentation a été appliquée sur la classe *normal* afin de corriger sa sous-représentation.
     """)
+        # --- CHARGEMENT DU DATAFRAME DE STATS DEPUIS HUGGINGFACE
+    stats_url = "https://huggingface.co/QuantumIza/poc-baseline-cnn/resolve/main/eda/dataset_stats.csv"
+    try:
+        df_stats = pd.read_csv(stats_url)
+        st.subheader("📊 Statistiques du dataset")
+        st.dataframe(df_stats)
+
+        # --- BARPLOT COMPARATIF
+        fig_stats = px.bar(
+            df_stats,
+            x="Classe",
+            y="Nombre d'images",
+            color="Dataset",
+            barmode="group",
+            title="Répartition des images par dataset et par classe"
+        )
+        st.plotly_chart(fig_stats, use_container_width=True)
+    except Exception as e:
+        st.warning(f"Impossible de charger les stats : {e}")
+
 
 
     class_counts = df["class"].value_counts()
