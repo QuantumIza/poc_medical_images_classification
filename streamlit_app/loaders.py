@@ -12,22 +12,51 @@ from tensorflow.keras.models import load_model
 import plotly.express as px
 import matplotlib.pyplot as plt
 import gdown
-# ------------------------------
-# CHEMINS LOCAUX ET URLS HF
-# ------------------------------
-MODEL_CNN_PATH = "model/best_model_baseline_cnn.keras"
-MODEL_ICNT_PATH = "model/best_model_icnt.keras"
-
-CSV_PATH = "data/my_df_full.csv"
-SAMPLE_CSV_PATH = "data/my_df_sample.csv"
-HISTORY_PATH = "outputs/history_baseline_cnn.json"
-
+# ------------------------------------------------------- #
+# --- ACCES AUX RESSOURCES STOCKEES DANS HUGGING FACE --- #
+# ------------------------------------------------------- #
+# -------------------------
+# --- MODELE BASELINE CNN
+# -------------------------
+MODEL_CNN_PATH = "src/outputs/baseline_cnn/model/best_model_baseline_cnn.keras"
 HF_MODEL_CNN_URL = "https://huggingface.co/QuantumIza/poc-baseline-cnn/resolve/main/best_model_baseline_cnn.keras"
+# ------------------------------------
+# --- MODELE IMPROVED CONVNEXT TINY
+# ------------------------------------
+MODEL_ICNT_PATH = "src/outputs/icnt/model/best_model_icnt.keras"
 HF_MODEL_ICNT_URL = "https://huggingface.co/QuantumIza/poc-baseline-cnn/resolve/main/best_model_icnt.keras"
+# ------------------------------------
+# --- MODELE IMPROVED INCEPTIONV3
+# ------------------------------------
+MODEL_IIV3_PATH = "src/outputs/iiv3/model/best_model_iiv3.keras"
+HF_MODEL_IIV3_PATH = "https://huggingface.co/QuantumIza/poc-baseline-cnn/resolve/main/iiv3/model/best_model_iiv3.keras"
+
+# ------------------------------------
+# --- 
+# ------------------------------------
+CSV_PATH = "data/my_df_full.csv"
 HF_CSV_URL = "https://huggingface.co/QuantumIza/poc-baseline-cnn/resolve/main/df_full.csv"
+# ------------------------------------
+# --- 
+# ------------------------------------
+SAMPLE_CSV_PATH = "data/my_df_sample.csv"
 HF_SAMPLE_CSV_URL = "https://huggingface.co/QuantumIza/poc-baseline-cnn/resolve/main/df_sample.csv"
-HF_HISTORY_CNN_URL = "https://huggingface.co/QuantumIza/poc-baseline-cnn/resolve/main/history_baseline_cnn.json"
+# ------------------------------------
+# --- 
+# ------------------------------------
+HISTORY_BASELINE_CNN_PATH = "outputs/history_baseline_cnn.json"
+HF_HISTORY_BASELINE_CNN_URL = "https://huggingface.co/QuantumIza/poc-baseline-cnn/resolve/main/history_baseline_cnn.json"
+# ------------------------------------
+# --- 
+# ------------------------------------
+HISTORY_ICNT_PATH = "outputs/history_baseline_cnn.json"
 HF_HISTORY_ICNT_URL = "https://huggingface.co/QuantumIza/poc-baseline-cnn/resolve/main/history_icnt.json"
+
+HISTORY_IIV3_PATH = "outputs/history_baseline_cnn.json"
+
+
+
+
 
 # ------------------------------
 # FONCTIONS UTILITAIRES
