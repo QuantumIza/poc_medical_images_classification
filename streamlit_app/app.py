@@ -17,10 +17,12 @@ from io import BytesIO
 from loaders import (
     load_model_cnn,
     load_model_ictn,
+    load_model_iiv3,
     load_dataframe,
     load_sample_dataframe,
     load_training_history_cnn,
     load_training_history_ictn,
+    load_training_history_iiv3,
     load_image_from_url,
     preprocess_image_cnn,
     preprocess_image_icnt,
