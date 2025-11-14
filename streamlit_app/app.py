@@ -413,14 +413,25 @@ with tab5:
 
         # Ligne 3 : Probabilités
         row3_col1, row3_col2 = st.columns(2)
-
+        
         if use_baseline:
-            probas_base = pd.Series(y_pred_base[0], index=classes_cnn).sort_values(ascending=False)
-            st.bar_chart(probas_base)
-
+            with row3_col1:
+                st.markdown(
+                    f"<h4 style='color:{model_colors['BASELINE CNN']};'>Probabilités – CNN</h4>",
+                    unsafe_allow_html=True
+                )
+                probas_base = pd.Series(y_pred_base[0], index=classes_cnn).sort_values(ascending=False)
+                st.bar_chart(probas_base)
+        
         if use_iiv3:
-            probas_iiv3 = pd.Series(y_pred_iiv3[0], index=classes_iiv3).sort_values(ascending=False)
-            st.bar_chart(probas_iiv3)
+            with row3_col2:
+                st.markdown(
+                    f"<h4 style='color:{model_colors['IIV3']};'>Probabilités – IIV3</h4>",
+                    unsafe_allow_html=True
+                )
+                probas_iiv3 = pd.Series(y_pred_iiv3[0], index=classes_iiv3).sort_values(ascending=False)
+                st.bar_chart(probas_iiv3)
+
 
 
 # -------------------------------------------------------
