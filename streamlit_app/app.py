@@ -128,6 +128,11 @@ color_map = {
 with tab1:
     st.header("ANALYSE EXPLORATOIRE")
     st.subheader("REPRÉSENTATION EQUILIBRÉE DES CLASSES")
+    st.info("""
+    ℹ️ Les images du dataset Kaggle sont déjà prétraitées (resize, normalisation).
+    Seule une data augmentation a été appliquée sur la classe *normal* afin de corriger son sous-représentation.
+    """)
+
 
     class_counts = df["class"].value_counts()
     labels = class_counts.index.tolist()
