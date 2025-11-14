@@ -117,16 +117,30 @@ def load_model_ictn():
         st.stop()
 
 
+# @st.cache_resource
+# def load_model_iiv3():
+#     try:
+#         res = HF_RESOURCES["models"]["iiv3"]
+#         download_from_huggingface(res["local"], res["url"])
+#         return load_model(res["local"])
+#     except Exception as e:
+#         st.error(f"Erreur de chargement du modèle InceptionV3 : {e}")
+#         st.stop()
+
+
+import tensorflow as tf
+
 @st.cache_resource
 def load_model_iiv3():
-    try:
-        res = HF_RESOURCES["models"]["iiv3"]
-        download_from_huggingface(res["local"], res["url"])
-        return load_model(res["local"])
-    except Exception as e:
-        st.error(f"Erreur de chargement du modèle InceptionV3 : {e}")
-        st.stop()
+    """Charge le modèle Improved InceptionV3 depuis HuggingFace ou local."""
+    local_path = HF_RESOURCES["models"]["iiv3"]["local"]
+    url = HF_RESOURCES["models"]["iiv3"]["url"]
 
+    if not os.path.exists(local_path):
+        os.makedirs(os.path.dirname(local_path), exist_ok=True)
+        download_file(url, local_path)
+
+    return tf.keras.models.load_model(local_path)
 
 # ------------------------------
 # CHARGEMENT DES DATASETS
@@ -168,8 +182,23 @@ def load_training_history_ictn():
     return pd.read_json(res["local"])
 
 
+# @st.cache_data
+# def load_training_history_iiv3():
+#     res = HF_RESOURCES["history"]["iiv3"]
+#     download_from_huggingface(res["local"], res["url"])
+#     return pd.read_json(res["local"])
+
 @st.cache_data
 def load_training_history_iiv3():
-    res = HF_RESOURCES["history"]["iiv3"]
-    download_from_huggingface(res["local"], res["url"])
-    return pd.read_json(res["local"])
+    """Charge l’historique d’entraînement du modèle IIV3."""
+    local_path = HF_RESOURCES["history"]["iiv3"]["local"]
+    url = HF_RESOURCES["history"]["iiv3"]["url"]
+
+    if not os.path.exists(local_path):
+        os.makedirs(os.path.dirname(local_path), exist_ok=True)
+        download_file(url, local_path)
+
+    with open(local_path, "r") as f:
+        history = json.load(f)
+    return history
+
