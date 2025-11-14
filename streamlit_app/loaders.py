@@ -122,6 +122,12 @@ def load_sample_dataframe():
     download_from_huggingface(res["local"], res["url"])
     return pd.read_csv(res["local"])
 
+@st.cache_data
+def load_dataset_stats():
+    res = HF_RESOURCES["datasets"]["stats"]
+    download_from_huggingface(res["local"], res["url"])
+    return pd.read_csv(res["local"])
+
 
 # ------------------------------
 # CHARGEMENT DES HISTORIQUES
