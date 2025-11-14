@@ -136,19 +136,23 @@ with tab1:
     stats_url = "https://huggingface.co/QuantumIza/poc-baseline-cnn/resolve/main/eda/dataset_stats.csv"
     try:
         df_stats = pd.read_csv(stats_url)
-        st.subheader("📊 Statistiques du dataset")
+        st.subheader("Statistiques du dataset")
         st.dataframe(df_stats)
 
         # --- BARPLOT COMPARATIF
         fig_stats = px.bar(
             df_stats,
-            x="Classe",
+            x="Dataset",
             y="Nombre d'images",
-            color="Dataset",
+            color="Classe",
+            text="Proportion (%)",
+            color_discrete_map=class_colors,
             barmode="group",
             title="Répartition des images par dataset et par classe"
         )
+        fig_stats.update_traces(textposition="outside")
         st.plotly_chart(fig_stats, use_container_width=True)
+
     except Exception as e:
         st.warning(f"Impossible de charger les stats : {e}")
 
