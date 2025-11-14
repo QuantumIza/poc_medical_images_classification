@@ -1,7 +1,3 @@
-# ------------------------------------------------------- #
-# --- ACCES AUX RESSOURCES STOCKEES DANS HUGGING FACE --- #
-# ------------------------------------------------------- #
-
 HF_RESOURCES = {
     "models": {
         "baseline_cnn": {
@@ -25,6 +21,10 @@ HF_RESOURCES = {
         "sample": {
             "local": "data/my_df_sample.csv",
             "url": "https://huggingface.co/QuantumIza/poc-baseline-cnn/resolve/main/df_sample.csv"
+        },
+        "stats": {   
+            "local": "src/outputs/eda/dataset_stats.csv",
+            "url": "https://huggingface.co/QuantumIza/poc-baseline-cnn/resolve/main/eda/dataset_stats.csv"
         }
     },
     "history": {
