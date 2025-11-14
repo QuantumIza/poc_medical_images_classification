@@ -63,11 +63,15 @@ def preprocess_image_cnn(img, target_size=(227, 227)):
 # ------------------------
 # --- PRETRAITEMENT ICNT
 # -----------------------
+from tensorflow.keras.applications.convnext import preprocess_input as preprocess_convnext
+
 def preprocess_image_icnt(img, target_size=(224, 224)):
     img = img.resize(target_size).convert("RGB")
-    img_array = np.array(img) / 255.0
+    img_array = np.array(img)
+    img_array = preprocess_convnext(img_array)  # ⚡ même prétraitement que pendant l'entraînement
     img_batch = np.expand_dims(img_array, axis=0)
     return img_batch
+
 
 
 # ------------------------------
