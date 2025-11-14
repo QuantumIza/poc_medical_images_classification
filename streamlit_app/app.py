@@ -67,12 +67,14 @@ st.title("DASHBOARD – BASELINE CNN VS MODELE ICNT LS")
 # ---------------------------
 # --- 2. DEFINITION DES ONGLETS
 # ---------------------------
-tab1, tab2, tab3, tab4 = st.tabs([
+tab1, tab2, tab5, tab3, tab4 = st.tabs([
     "ANALYSE EXPLORATOIRE",
-    "PREDICTIONS",
+    "PREDICTIONS (CNN vs ICNT)",
+    "PREDICTIONS (CNN vs IIV3)",   # placé juste après ICNT
     "PERFORMANCES",
     "COMPARAISON MODELES"
 ])
+
 
 # ----------------------------------
 # --- 3. DEFINITION DES CODES COULEURS
@@ -327,10 +329,94 @@ with tab2:
                 st.altair_chart(chart_ictn, use_container_width=True)
 
 
+# ----------------------------------------------------
+# COMPOSANT GRAPHIQUE ONGLET 3 : PREDICTIONS CNN vs IIV3
+# ----------------------------------------------------
+with tab5:
+    st.header("PREDICTIONS (CNN vs IIV3)")
+    uploaded_file = st.file_uploader("CHOISISSEZ UNE IMAGE", type=["jpg", "jpeg", "png"], key="upload_cnn_iiv3")
+
+    if uploaded_file:
+        import altair as alt
+
+        img = Image.open(uploaded_file).convert("RGB")
+        img = img.resize((250, 250))
+        img_batch_cnn = preprocess_image_cnn(img, target_size=(227, 227))
+        img_batch_iiv3 = preprocess_image_iiv3(img, target_size=(224, 224))
+
+        # 🔹 Couleurs
+        model_colors = {
+            "BASELINE CNN": "#3B82F6",
+            "IIV3": "#F59E0B"
+        }
+
+        # Ligne 1 : Image + choix des modèles
+        row1_col1, row1_col2 = st.columns([1, 2])
+
+        with row1_col1:
+            st.subheader("IMAGE CHARGÉE")
+            st.image(img, caption="IMAGE CHARGÉE", use_column_width=False)
+
+        with row1_col2:
+            st.subheader("CHOISISSEZ LE(S) MODÈLE(S) À UTILISER")
+            cb_col1, cb_col2 = st.columns(2)
+
+            with cb_col1:
+                st.markdown(
+                    f"<h5 style='color:{model_colors['BASELINE CNN']}; font-size:18px;'>BASELINE CNN</h5>",
+                    unsafe_allow_html=True
+                )
+                use_baseline = st.checkbox("", value=True, key="cb_cnn_iiv3")
+
+            with cb_col2:
+                st.markdown(
+                    f"<h5 style='color:{model_colors['IIV3']}; font-size:18px;'>IIV3</h5>",
+                    unsafe_allow_html=True
+                )
+                use_iiv3 = st.checkbox("", key="cb_iiv3")
+
+        # Ligne 2 : Prédictions
+        row2_col1, row2_col2 = st.columns(2)
+
+        if use_baseline:
+            y_pred_base = model.predict(img_batch_cnn)
+            pred_base = classes_cnn[np.argmax(y_pred_base)]
+            with row2_col1:
+                st.markdown(
+                    f"<h4 style='color:{model_colors['BASELINE CNN']};'>PRÉDICTION – BASELINE CNN</h4>",
+                    unsafe_allow_html=True
+                )
+                st.success(f"Classe prédite : {pred_base.upper()}")
+
+        if use_iiv3:
+            try:
+                iiv3_model = load_model_iiv3()
+                y_pred_iiv3 = iiv3_model.predict(img_batch_iiv3)
+                pred_iiv3 = classes_iiv3[np.argmax(y_pred_iiv3)]
+                with row2_col2:
+                    st.markdown(
+                        f"<h4 style='color:{model_colors['IIV3']};'>PRÉDICTION – IIV3</h4>",
+                        unsafe_allow_html=True
+                    )
+                    st.success(f"Classe prédite : {pred_iiv3.upper()}")
+            except Exception as e:
+                with row2_col2:
+                    st.warning(f"Erreur de chargement du modèle IIV3 : {e}")
+
+        # Ligne 3 : Probabilités
+        row3_col1, row3_col2 = st.columns(2)
+
+        if use_baseline:
+            probas_base = pd.Series(y_pred_base[0], index=classes_cnn).sort_values(ascending=False)
+            st.bar_chart(probas_base)
+
+        if use_iiv3:
+            probas_iiv3 = pd.Series(y_pred_iiv3[0], index=classes_iiv3).sort_values(ascending=False)
+            st.bar_chart(probas_iiv3)
 
 
 # -------------------------------------------------------
-# COMPOSANT GRAPHIQUE ONGLET  3 : COURBES D'ENTRAINEMENT
+# COMPOSANT GRAPHIQUE ONGLET  4 : COURBES D'ENTRAINEMENT
 # -------------------------------------------------------
 with tab3:
     st.header("COURBES D'ENTRAINEMENT")
@@ -367,7 +453,7 @@ with tab3:
         st.info("Historique InceptionV3 non disponible ou pas encore entraîné.")
 
 # ----------------------------------------------------
-# COMPOSANT GRAPHIQUE ONGLET  4 : COMPARAISON MODELES
+# COMPOSANT GRAPHIQUE ONGLET  5 : COMPARAISON MODELES
 # ----------------------------------------------------
 with tab4:
     st.header("COMPARAISON MODELES")
