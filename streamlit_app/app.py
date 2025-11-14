@@ -155,47 +155,48 @@ with tab1:
     ax.axis('equal')
     col2.pyplot(fig)
 
-# --- APERÇU D'IMAGES PAR CLASSE
-st.subheader("APERÇU D'IMAGES PAR CLASSE")
+    # --- APERÇU D'IMAGES PAR CLASSE
+    st.subheader("APERÇU D'IMAGES PAR CLASSE")
 
-# Création de 3 colonnes pour les checkboxes côte à côte
-col_normal, col_benign, col_malignant = st.columns(3)
+    # Création de 3 colonnes pour les checkboxes côte à côte
+    col_normal, col_benign, col_malignant = st.columns(3)
 
-with col_normal:
-    st.markdown(f"<span style='color:{class_colors['normal']}; font-weight:bold;'>Classe normal</span>", unsafe_allow_html=True)
-    show_normal = st.checkbox("", value=True, key="cb_normal")
+    with col_normal:
+        st.markdown(f"<span style='color:{class_colors['normal']}; font-weight:bold;'>Classe normal</span>", unsafe_allow_html=True)
+        show_normal = st.checkbox("", value=True, key="cb_normal")
 
-with col_benign:
-    st.markdown(f"<span style='color:{class_colors['benign']}; font-weight:bold;'>Classe benign</span>", unsafe_allow_html=True)
-    show_benign = st.checkbox("", key="cb_benign")
+    with col_benign:
+        st.markdown(f"<span style='color:{class_colors['benign']}; font-weight:bold;'>Classe benign</span>", unsafe_allow_html=True)
+        show_benign = st.checkbox("", key="cb_benign")
 
-with col_malignant:
-    st.markdown(f"<span style='color:{class_colors['malignant']}; font-weight:bold;'>Classe malignant</span>", unsafe_allow_html=True)
-    show_malignant = st.checkbox("", key="cb_malignant")
+    with col_malignant:
+        st.markdown(f"<span style='color:{class_colors['malignant']}; font-weight:bold;'>Classe malignant</span>", unsafe_allow_html=True)
+        show_malignant = st.checkbox("", key="cb_malignant")
 
-# Mapping des checkboxes
-checkbox_map = {
-    "normal": show_normal,
-    "benign": show_benign,
-    "malignant": show_malignant
-}
+    # Mapping des checkboxes
+    checkbox_map = {
+        "normal": show_normal,
+        "benign": show_benign,
+        "malignant": show_malignant
+    }
 
-# Affichage des images selon les cases cochées
-for selected_class, is_checked in checkbox_map.items():
-    if is_checked:
-        st.markdown(
-            f"<h4 style='color:{class_colors[selected_class]};'>Classe : {selected_class}</h4>",
-            unsafe_allow_html=True
-        )
-        sample_urls = df_sample[df_sample["class"] == selected_class]["image_url"].sample(3)
-        cols = st.columns(3)
-        for i, url in enumerate(sample_urls):
-            img = load_image_from_url(url)
-            if img:
-                img = img.resize((250, 250))
-                cols[i].image(img, caption=selected_class, use_column_width=False)
-            else:
-                cols[i].warning(f"Image introuvable : {url}")
+    # Affichage des images selon les cases cochées
+    for selected_class, is_checked in checkbox_map.items():
+        if is_checked:
+            st.markdown(
+                f"<h4 style='color:{class_colors[selected_class]};'>Classe : {selected_class}</h4>",
+                unsafe_allow_html=True
+            )
+            sample_urls = df_sample[df_sample["class"] == selected_class]["image_url"].sample(3)
+            cols = st.columns(3)
+            for i, url in enumerate(sample_urls):
+                img = load_image_from_url(url)
+                if img:
+                    img = img.resize((250, 250))
+                    cols[i].image(img, caption=selected_class, use_column_width=False)
+                else:
+                    cols[i].warning(f"Image introuvable : {url}")
+
 
 
 # ----------------------------------------------------
