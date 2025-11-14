@@ -129,8 +129,8 @@ with tab1:
     st.header("ANALYSE EXPLORATOIRE")
     st.subheader("REPRÉSENTATION EQUILIBRÉE DES CLASSES")
     st.info("""
-    ℹ️ Les images du dataset Kaggle sont déjà prétraitées (resize, normalisation).
-    Seule une data augmentation a été appliquée sur la classe *normal* afin de corriger son sous-représentation.
+    ℹ️ Les images du dataset Kaggle sont déjà prétraitées : resize, normalisation, CLAHE (Contrast Limited Adaptive Histogram Equalization).
+    Seule une data augmentation a été appliquée sur la classe *normal* afin de corriger sa sous-représentation.
     """)
 
 
