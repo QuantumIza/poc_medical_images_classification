@@ -132,7 +132,7 @@ with tab1:
     ℹ️ Les images du dataset Kaggle sont déjà prétraitées : resize, normalisation, CLAHE (Contrast Limited Adaptive Histogram Equalization).
     Seule une data augmentation a été appliquée sur la classe *normal* afin de corriger sa sous-représentation.
     """)
-        # --- CHARGEMENT DU DATAFRAME DE STATS DEPUIS HUGGINGFACE
+    # --- CHARGEMENT DU DATAFRAME DE STATS DEPUIS HUGGINGFACE
     stats_url = "https://huggingface.co/QuantumIza/poc-baseline-cnn/resolve/main/eda/dataset_stats.csv"
     try:
         df_stats = pd.read_csv(stats_url)
