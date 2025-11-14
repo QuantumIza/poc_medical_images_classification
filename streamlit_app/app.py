@@ -23,7 +23,8 @@ from loaders import (
     load_training_history_ictn,
     load_image_from_url,
     preprocess_image_cnn,
-    preprocess_image_icnt
+    preprocess_image_icnt,
+    load_dataset_stats
 )
 
 # Nettoyage du cache Streamlit au démarrage
