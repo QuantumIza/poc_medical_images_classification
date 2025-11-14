@@ -24,7 +24,7 @@ from loaders import (
     load_image_from_url,
     preprocess_image_cnn,
     preprocess_image_icnt,
-    preprocess_image_iiv3
+    preprocess_image_iiv3,
     load_dataset_stats
 )
 
