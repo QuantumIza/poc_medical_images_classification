@@ -11,6 +11,7 @@ import requests
 import json
 from io import BytesIO
 from config import HF_PERFORMANCES
+from config import HF_COMPARAISON 
 
 # -------------------------
 # --- IMPORTS DES MODULES
@@ -506,10 +507,41 @@ with tab4:
 # COMPOSANT GRAPHIQUE ONGLET  5 : COMPARAISON MODELES
 # ----------------------------------------------------
 with tab5:
-    st.header("COMPARAISON MODELES")
-    st.info("""
-    Ici, vous pourrez comparer les performances des différents modèles (Baseline CNN, ICNT, InceptionV3).
-    Le modèle ICNT et InceptionV3 seront intégrés dès qu'ils auront été entraînés et leurs historiques disponibles.
-    """)
+    st.header("Comparaison des modèles")
+
+    # --- Bloc dynamique d'apprentissage
+    st.subheader("Comparaison des courbes d'apprentissage")
+    st.image(HF_COMPARAISON["apprentissage"]["learning_curves"])
+
+    # --- Bloc équité des modèles
+    st.subheader("Équité des modèles (F1 & Recall)")
+    stats_df = pd.read_csv(HF_COMPARAISON["equilibre"]["stats"])
+    st.dataframe(stats_df)
+
+    col1, col2 = st.columns(2)
+    with col1:
+        st.image(HF_COMPARAISON["equilibre"]["bar_recall"], caption="Recall moyen avec écart-types")
+    with col2:
+        st.image(HF_COMPARAISON["equilibre"]["bar_f1"], caption="F1 moyen avec écart-types")
+
+    st.image(HF_COMPARAISON["equilibre"]["scatter"], caption="Scatter plot F1 vs Recall")
+    st.image(HF_COMPARAISON["equilibre"]["matrices_confusion"], caption="Matrices de confusion comparatives")
+
+    # --- Bloc métriques globales
+    st.subheader("Métriques globales")
+    metrics_df = pd.read_csv(HF_COMPARAISON["metrics"]["csv"])
+    st.dataframe(metrics_df)
+
+    st.image(HF_COMPARAISON["metrics"]["scatter"], caption="Scatter plots de comparaison par couple de métriques")
+
+    col3, col4, col5 = st.columns(3)
+    with col3:
+        st.image(HF_COMPARAISON["metrics"]["radar_classes"], caption="Couverture des classes")
+    with col4:
+        st.image(HF_COMPARAISON["metrics"]["radar_perf"], caption="Performances globales")
+    with col5:
+        st.image(HF_COMPARAISON["metrics"]["radar_overfit"], caption="Sur-apprentissage relatif")
+
+    st.image(HF_COMPARAISON["metrics"]["roc_curves"], caption="Courbes ROC comparatives")
 
 
