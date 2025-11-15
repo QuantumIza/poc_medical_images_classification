@@ -250,7 +250,7 @@ with tab2:
 
         with row1_col1:
             st.subheader("IMAGE CHARGÉE")
-            st.image(img, caption="IMAGE CHARGÉE", use_column_width=False)
+            # st.image(img, caption="IMAGE CHARGÉE", use_column_width=False)
 
         with row1_col2:
             st.subheader("CHOISISSEZ LE(S) MODÈLE(S) À UTILISER")
