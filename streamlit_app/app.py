@@ -462,42 +462,42 @@ with tab5:
 
 
 
-# -------------------------------------------------------
-# COMPOSANT GRAPHIQUE ONGLET  4 : COURBES D'ENTRAINEMENT
-# -------------------------------------------------------
-with tab3:
-    st.header("COURBES D'ENTRAINEMENT")
+with tab_perf:
+    st.header("Performances des modèles")
 
-    # --- Historique Baseline CNN
-    try:
-        history_cnn = load_training_history_cnn()
-        df_hist_cnn = pd.DataFrame(history_cnn)
-        st.subheader("Baseline CNN")
-        st.line_chart(df_hist_cnn[["accuracy", "val_accuracy"]])
-        st.line_chart(df_hist_cnn[["loss", "val_loss"]])
-    except Exception as e:
-        st.warning(f"Historique CNN non disponible : {e}")
+    selected_model = st.selectbox("Choisissez un modèle", ["baseline_cnn", "icnt", "iiv3"], key="perf_select")
 
-    # --- Historique ICNT
-    try:
-        history_icnt = load_training_history_ictn()
-        df_hist_icnt = pd.DataFrame(history_icnt)
-        st.subheader("ICNT")
-        st.line_chart(df_hist_icnt[["accuracy", "val_accuracy"]])
-        st.line_chart(df_hist_icnt[["loss", "val_loss"]])
-    except Exception as e:
-        st.warning(f"Historique ICNT non disponible : {e}")
+    res = HF_PERFORMANCES[selected_model]
 
-    # --- Historique InceptionV3 (si disponible)
-    try:
-        from loaders import load_training_history_iiv3
-        history_iiv3 = load_training_history_iiv3()
-        df_hist_iiv3 = pd.DataFrame(history_iiv3)
-        st.subheader("InceptionV3")
-        st.line_chart(df_hist_iiv3[["accuracy", "val_accuracy"]])
-        st.line_chart(df_hist_iiv3[["loss", "val_loss"]])
-    except Exception as e:
-        st.info("Historique InceptionV3 non disponible ou pas encore entraîné.")
+    # --- Bloc résumé
+    st.subheader("Résumé des métriques")
+    metrics_df = pd.read_csv(res["metrics"])
+    st.dataframe(metrics_df)
+
+    with st.expander("Résumé du modèle"):
+        summary_df = pd.read_csv(res["summary"])
+        st.dataframe(summary_df)
+
+    # --- Bloc courbes apprentissage
+    st.subheader("Courbes d'apprentissage (Loss & Accuracy)")
+    st.image(res["learning_curves"])
+
+    # --- Bloc évaluation
+    st.subheader("Évaluation sur le jeu de test")
+    col1, col2 = st.columns(2)
+    with col1:
+        st.image(res["confusion_matrix"])
+    with col2:
+        st.image(res["roc_curve"])
+
+    report_df = pd.read_csv(res["classification_report"])
+    st.dataframe(report_df)
+
+    # --- Bloc analyse qualitative
+    st.subheader("Analyse qualitative")
+    st.components.v1.html(requests.get(res["pca"]).text, height=600)
+    st.image(res["gradcam_success"], caption="GradCAM - prédiction correcte")
+    st.image(res["gradcam_error"], caption="GradCAM - erreur critique")
 
 # ----------------------------------------------------
 # COMPOSANT GRAPHIQUE ONGLET  5 : COMPARAISON MODELES
