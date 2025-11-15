@@ -223,7 +223,8 @@ with tab2:
     # Sélecteur d'image
     selected_row = st.selectbox(
         "Choisissez une image du blind test",
-        df_blind["source_path"].tolist()
+        df_blind["source_path"].tolist(),
+        key="selectbox_cnn_vs_icnt"
     )
 
     if selected_row:
@@ -363,7 +364,8 @@ with tab5:
     # Sélecteur d'image
     selected_row = st.selectbox(
         "Choisissez une image du blind test",
-        df_blind["source_path"].tolist()
+        df_blind["source_path"].tolist(),
+        key="selectbox_cnn_vs_iiv3"
     )
 
     if selected_row:
