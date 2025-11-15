@@ -81,4 +81,24 @@ HF_PERFORMANCES = {
         "gradcam_error": "https://huggingface.co/QuantumIza/poc-baseline-cnn/resolve/main/iiv3/critical_errors/gradcam_error_malignant_to_benign_true_malignant_pred_benign_conf_0.99_idx_5400.png"
     }
 }
+HF_COMPARAISON = {
+    "apprentissage": {
+        "learning_curves": "https://huggingface.co/QuantumIza/poc-baseline-cnn/resolve/main/comparaison/apprentissage/learning_curves_comparaison.png"
+    },
+    "equilibre": {
+        "stats": "https://huggingface.co/QuantumIza/poc-baseline-cnn/resolve/main/comparaison/models_equilibre/models_equilibre_stats.csv",
+        "scatter": "https://huggingface.co/QuantumIza/poc-baseline-cnn/resolve/main/comparaison/models_equilibre/scatterplot_f1_vs_recall.png",
+        "bar_recall": "https://huggingface.co/QuantumIza/poc-baseline-cnn/resolve/main/comparaison/models_equilibre/barplot_recall_mean.png",
+        "bar_f1": "https://huggingface.co/QuantumIza/poc-baseline-cnn/resolve/main/comparaison/models_equilibre/barplot_f1_mean.png",
+        "matrices_confusion": "https://huggingface.co/QuantumIza/poc-baseline-cnn/resolve/main/comparaison/models_equilibre/matrices_confusion_comparaison.png"
+    },
+    "metrics": {
+        "csv": "https://huggingface.co/QuantumIza/poc-baseline-cnn/resolve/main/comparaison/models_metrics/models_metrics_comparaison.csv",
+        "scatter": "https://huggingface.co/QuantumIza/poc-baseline-cnn/resolve/main/comparaison/models_metrics/scatter_plots_comparaison.png",
+        "radar_classes": "https://huggingface.co/QuantumIza/poc-baseline-cnn/resolve/main/comparaison/models_metrics/radar_couverture_des_classes_relatif.png",
+        "radar_perf": "https://huggingface.co/QuantumIza/poc-baseline-cnn/resolve/main/comparaison/models_metrics/radar_performance_globale_brut.png",
+        "radar_overfit": "https://huggingface.co/QuantumIza/poc-baseline-cnn/resolve/main/comparaison/models_metrics/radar_sur-apprentissage_relatif.png",
+        "roc_curves": "https://huggingface.co/QuantumIza/poc-baseline-cnn/resolve/main/comparaison/models_metrics/roc_curves_comparaison.png"
+    }
+}
 
