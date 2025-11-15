@@ -163,7 +163,18 @@ def load_dataset_stats():
     res = HF_RESOURCES["datasets"]["stats"]
     download_from_huggingface(res["local"], res["url"])
     return pd.read_csv(res["local"])
+# ------------------------------------------------
+# --- CHARGEMENT CSV DATAFRAE IMAGES BLIND TEST
+# -----------------------------------------------
+import pandas as pd
+import requests
 
+@st.cache_data
+def load_blind_test_sample():
+    """Charge le CSV blind test depuis HuggingFace et retourne un DataFrame."""
+    url = "https://huggingface.co/QuantumIza/poc-baseline-cnn/resolve/main/df_blind_test.csv"
+    df = pd.read_csv(url)
+    return df
 
 # ------------------------------
 # CHARGEMENT DES HISTORIQUES
