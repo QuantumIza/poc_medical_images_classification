@@ -28,7 +28,7 @@ HF_RESOURCES = {
         },
         "blind_test": {
             "local": "src/outputs/eda/df_blind_test.csv",
-            "url": "https://huggingface.co/QuantumIza/poc-baseline-cnn/resolve/main/df_blind_test.csv"
+            "url": "https://huggingface.co/QuantumIza/poc-baseline-cnn/resolve/main/eda/df_blind_test.csv"
         }
     },
     "history": {
