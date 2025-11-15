@@ -462,7 +462,7 @@ with tab5:
 
 
 
-with tab_perf:
+with tab4:
     st.header("Performances des modèles")
 
     selected_model = st.selectbox("Choisissez un modèle", ["baseline_cnn", "icnt", "iiv3"], key="perf_select")
