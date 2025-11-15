@@ -356,13 +356,25 @@ with tab2:
 # ----------------------------------------------------
 with tab5:
     st.header("PREDICTIONS (CNN vs IIV3)")
-    uploaded_file = st.file_uploader("CHOISISSEZ UNE IMAGE", type=["jpg", "jpeg", "png"], key="upload_cnn_iiv3")
 
-    if uploaded_file:
+    # Charger le CSV blind test
+    df_blind = load_blind_test_sample()
+
+    # Sélecteur d'image
+    selected_row = st.selectbox(
+        "Choisissez une image du blind test",
+        df_blind["source_path"].tolist()
+    )
+
+    if selected_row:
         import altair as alt
 
-        img = Image.open(uploaded_file).convert("RGB")
+        # Charger l'image depuis HuggingFace
+        img_url = selected_row
+        img = Image.open(requests.get(img_url, stream=True).raw).convert("RGB")
         img = img.resize((250, 250))
+
+        # Prétraitement
         img_batch_cnn = preprocess_image_cnn(img, target_size=(227, 227))
         img_batch_iiv3 = preprocess_image_iiv3(img, target_size=(224, 224))
 
@@ -427,7 +439,7 @@ with tab5:
 
         # Ligne 3 : Probabilités
         row3_col1, row3_col2 = st.columns(2)
-        
+
         if use_baseline:
             with row3_col1:
                 st.markdown(
@@ -436,7 +448,7 @@ with tab5:
                 )
                 probas_base = pd.Series(y_pred_base[0], index=classes_cnn).sort_values(ascending=False)
                 st.bar_chart(probas_base)
-        
+
         if use_iiv3:
             with row3_col2:
                 st.markdown(
