@@ -10,6 +10,7 @@ import plotly.express as px
 import requests
 import json
 from io import BytesIO
+from config import HF_PERFORMANCES
 
 # -------------------------
 # --- IMPORTS DES MODULES
