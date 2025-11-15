@@ -77,7 +77,7 @@ st.title("DASHBOARD – BASELINE CNN VS MODELE ICNT LS")
 # ---------------------------
 # --- 2. DEFINITION DES ONGLETS
 # ---------------------------
-tab1, tab2, tab5, tab3, tab4 = st.tabs([
+tab1, tab2, tab3, tab4, tab5 = st.tabs([
     "ANALYSE EXPLORATOIRE",
     "PREDICTIONS (CNN vs ICNT)",
     "PREDICTIONS (CNN vs IIV3)",   # placé juste après ICNT
@@ -356,7 +356,7 @@ with tab2:
 # ----------------------------------------------------
 # COMPOSANT GRAPHIQUE ONGLET 3 : PREDICTIONS CNN vs IIV3
 # ----------------------------------------------------
-with tab5:
+with tab3:
     st.header("PREDICTIONS (CNN vs IIV3)")
 
     # Charger le CSV blind test
@@ -462,7 +462,9 @@ with tab5:
                 st.bar_chart(probas_iiv3)
 
 
-
+# ----------------------------------------------------
+# COMPOSANT GRAPHIQUE ONGLET 4 : PERFORMANCES
+# ----------------------------------------------------
 with tab4:
     st.header("Performances des modèles")
 
@@ -503,7 +505,7 @@ with tab4:
 # ----------------------------------------------------
 # COMPOSANT GRAPHIQUE ONGLET  5 : COMPARAISON MODELES
 # ----------------------------------------------------
-with tab4:
+with tab5:
     st.header("COMPARAISON MODELES")
     st.info("""
     Ici, vous pourrez comparer les performances des différents modèles (Baseline CNN, ICNT, InceptionV3).
