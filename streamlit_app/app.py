@@ -211,18 +211,30 @@ with tab1:
 
 
 # ----------------------------------------------------
-# COMPOSANT GRAPHIQUE ONGLET  2 : PREDICTIONS
+# COMPOSANT GRAPHIQUE ONGLET 2 : PREDICTIONS
 # ----------------------------------------------------
 with tab2:
     st.header("PREDICTIONS")
-    uploaded_file = st.file_uploader("CHOISISSEZ UNE IMAGE", type=["jpg", "jpeg", "png"])
 
-    if uploaded_file:
+    # Charger l'échantillon blind test
+    df_blind = load_blind_test_sample()
+
+    # Sélecteur d'image
+    selected_row = st.selectbox(
+        "Choisissez une image du blind test",
+        df_blind["source_path"].tolist()
+    )
+
+    if selected_row:
         import altair as alt
 
-        # --- Prétraitement de l'image
-        img = Image.open(uploaded_file).convert("RGB")
+        # --- Charger l'image depuis HuggingFace
+        img_url = selected_row
+        img = Image.open(requests.get(img_url, stream=True).raw).convert("RGB")
         img = img.resize((250, 250))
+        st.image(img, caption="Image sélectionnée", use_column_width=False)
+
+        # --- Prétraitement de l'image
         img_batch_cnn = preprocess_image_cnn(img, target_size=(227, 227))
         img_batch_ictn = preprocess_image_icnt(img, target_size=(224, 224))
 
@@ -335,6 +347,7 @@ with tab2:
                     y=alt.Y("Probabilité", title="PROBABILITÉ")
                 ).properties(height=300)
                 st.altair_chart(chart_ictn, use_container_width=True)
+
 
 
 # ----------------------------------------------------
