@@ -164,17 +164,30 @@ def load_dataset_stats():
     download_from_huggingface(res["local"], res["url"])
     return pd.read_csv(res["local"])
 # ------------------------------------------------
-# --- CHARGEMENT CSV DATAFRAE IMAGES BLIND TEST
+# --- CHARGEMENT CSV DATAFRAME IMAGES BLIND TEST
 # -----------------------------------------------
 import pandas as pd
 import requests
 
+
+from io import StringIO
+from config import HF_RESOURCES
+import streamlit as st
+
 @st.cache_data
 def load_blind_test_sample():
-    """Charge le CSV blind test depuis HuggingFace et retourne un DataFrame."""
-    url = "https://huggingface.co/QuantumIza/poc-baseline-cnn/resolve/main/df_blind_test.csv"
-    df = pd.read_csv(url)
+    res = HF_RESOURCES["datasets"]["blind_test"]
+    try:
+        # Télécharger le CSV depuis HuggingFace
+        response = requests.get(res["url"])
+        response.raise_for_status()  # lève une erreur si le téléchargement échoue
+        df = pd.read_csv(StringIO(response.text))
+    except Exception as e:
+        # Fallback : charger en local si HuggingFace échoue
+        st.warning(f"Impossible de charger le CSV depuis HuggingFace ({e}), utilisation du fichier local.")
+        df = pd.read_csv(res["local"])
     return df
+
 
 # ------------------------------
 # CHARGEMENT DES HISTORIQUES
