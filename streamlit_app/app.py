@@ -20,6 +20,7 @@ from loaders import (
     load_model_iiv3,
     load_dataframe,
     load_sample_dataframe,
+    load_blind_test_sample(),
     load_training_history_cnn,
     load_training_history_ictn,
     load_training_history_iiv3,
