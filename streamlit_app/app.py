@@ -708,7 +708,7 @@ with tab3:
         import altair as alt
         # --- Prétraitement
         img_batch_cnn = preprocess_image_cnn(img, target_size=(227, 227))
-        img_batch_iiv3 = preprocess_image_iiv3(img, target_size=(299, 299))
+        img_batch_iiv3 = preprocess_image_iiv3(img, target_size=(224, 224))
 
         # --- Bloc 2 : Choix des modèles
         st.markdown(
