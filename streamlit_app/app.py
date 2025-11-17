@@ -558,110 +558,296 @@ st.markdown("</div>", unsafe_allow_html=True)
 # ----------------------------------------------------
 # COMPOSANT GRAPHIQUE ONGLET 3 : PREDICTIONS CNN vs IIV3
 # ----------------------------------------------------
-with tab3:
-    st.header("PREDICTIONS BASELINE CNN VS IMPROVED INCEPTIONV3")
+# with tab3:
+#     st.header("PREDICTIONS BASELINE CNN VS IMPROVED INCEPTIONV3")
 
-    # Charger le CSV blind test
+#     # Charger le CSV blind test
+#     df_blind = load_blind_test_sample()
+
+#     # Sélecteur d'image
+#     selected_row_iiv3  = st.selectbox(
+#         "Choisissez une image du blind test",
+#         df_blind["source_path"].tolist(),
+#         key="selectbox_cnn_vs_iiv3"
+#     )
+
+#     if selected_row_iiv3 :
+#         import altair as alt
+
+#         # Charger l'image depuis HuggingFace
+#         img_url = selected_row_iiv3 
+#         img = Image.open(requests.get(img_url, stream=True).raw).convert("RGB")
+#         img = img.resize((250, 250))
+
+#         # Prétraitement
+#         img_batch_cnn = preprocess_image_cnn(img, target_size=(227, 227))
+#         img_batch_iiv3 = preprocess_image_iiv3(img, target_size=(224, 224))
+
+#         # 🔹 Couleurs
+#         model_colors = {
+#             "BASELINE CNN": "#3B82F6",
+#             "IIV3": "#F59E0B"
+#         }
+
+#         # Ligne 1 : Image + choix des modèles
+#         row1_col1, row1_col2 = st.columns([1, 2])
+
+#         with row1_col1:
+#             st.subheader("IMAGE CHARGÉE")
+#             st.image(img, caption="IMAGE CHARGÉE", use_column_width=False)
+
+#         with row1_col2:
+#             st.subheader("CHOISISSEZ LE(S) MODÈLE(S) À UTILISER")
+#             cb_col1, cb_col2 = st.columns(2)
+
+#             with cb_col1:
+#                 st.markdown(
+#                     f"<h5 style='color:{model_colors['BASELINE CNN']}; font-size:18px;'>BASELINE CNN</h5>",
+#                     unsafe_allow_html=True
+#                 )
+#                 use_baseline = st.checkbox("", value=True, key="cb_cnn_iiv3")
+
+#             with cb_col2:
+#                 st.markdown(
+#                     f"<h5 style='color:{model_colors['IIV3']}; font-size:18px;'>IIV3</h5>",
+#                     unsafe_allow_html=True
+#                 )
+#                 use_iiv3 = st.checkbox("", key="cb_iiv3")
+
+#         # Ligne 2 : Prédictions
+#         row2_col1, row2_col2 = st.columns(2)
+
+#         if use_baseline:
+#             y_pred_base = model.predict(img_batch_cnn)
+#             pred_base = classes_cnn[np.argmax(y_pred_base)]
+#             with row2_col1:
+#                 st.markdown(
+#                     f"<h4 style='color:{model_colors['BASELINE CNN']};'>PRÉDICTION – BASELINE CNN</h4>",
+#                     unsafe_allow_html=True
+#                 )
+#                 st.success(f"Classe prédite : {pred_base.upper()}")
+
+#         if use_iiv3:
+#             try:
+#                 iiv3_model = load_model_iiv3()
+#                 y_pred_iiv3 = iiv3_model.predict(img_batch_iiv3)
+#                 pred_iiv3 = classes_iiv3[np.argmax(y_pred_iiv3)]
+#                 with row2_col2:
+#                     st.markdown(
+#                         f"<h4 style='color:{model_colors['IIV3']};'>PRÉDICTION – IIV3</h4>",
+#                         unsafe_allow_html=True
+#                     )
+#                     st.success(f"Classe prédite : {pred_iiv3.upper()}")
+#             except Exception as e:
+#                 with row2_col2:
+#                     st.warning(f"Erreur de chargement du modèle IIV3 : {e}")
+
+#         # Ligne 3 : Probabilités
+#         row3_col1, row3_col2 = st.columns(2)
+
+#         if use_baseline:
+#             with row3_col1:
+#                 st.markdown(
+#                     f"<h4 style='color:{model_colors['BASELINE CNN']};'>Probabilités – CNN</h4>",
+#                     unsafe_allow_html=True
+#                 )
+#                 probas_base = pd.Series(y_pred_base[0], index=classes_cnn).sort_values(ascending=False)
+#                 st.bar_chart(probas_base)
+
+#         if use_iiv3:
+#             with row3_col2:
+#                 st.markdown(
+#                     f"<h4 style='color:{model_colors['IIV3']};'>Probabilités – IIV3</h4>",
+#                     unsafe_allow_html=True
+#                 )
+#                 probas_iiv3 = pd.Series(y_pred_iiv3[0], index=classes_iiv3).sort_values(ascending=False)
+#                 st.bar_chart(probas_iiv3)
+# ----------------------------------------------------
+# COMPOSANT GRAPHIQUE ONGLET 3 : PREDICTIONS CNN vs IIV3
+# ----------------------------------------------------
+with tab3:
+    st.header("COMPARAISON DES PRÉDICTIONS : BASELINE CNN VS INCEPTIONV3")
+
+    # --- Palette harmonisée
+    model_colors = {
+        "BASELINE CNN": "#4E79A7",   # Bleu doux/grisé
+        "IIV3": "#E07B7B"            # Corail feutré
+    }
+
+    # --- Bloc 1 : Sélection d'image
+    st.markdown(
+        """
+        <div style="border:2px solid #5A2D82; border-radius:8px;
+                    padding:12px; background-color:#F9F6FB; margin:20px 0;">
+            <div style="font-size:20px; font-weight:600; color:#5A2D82; margin-bottom:8px;">
+                Sélectionnez une image du blind test pour comparer les prédictions des deux modèles.
+            </div>
+        """,
+        unsafe_allow_html=True
+    )
     df_blind = load_blind_test_sample()
 
-    # Sélecteur d'image
-    selected_row_iiv3  = st.selectbox(
-        "Choisissez une image du blind test",
-        df_blind["source_path"].tolist(),
+    # Créer une colonne "label" plus lisible
+    df_blind["label"] = df_blind["source_path"].apply(lambda x: x.split("/")[-1])
+
+    # Selectbox avec labels lisibles
+    selected_label = st.selectbox(
+        "Image du blind test",
+        df_blind["label"].tolist(),
         key="selectbox_cnn_vs_iiv3"
     )
 
-    if selected_row_iiv3 :
-        import altair as alt
+    # Récupérer l’URL correspondant au label choisi
+    selected_url = df_blind.loc[df_blind["label"] == selected_label, "source_path"].values[0]
 
-        # Charger l'image depuis HuggingFace
-        img_url = selected_row_iiv3 
-        img = Image.open(requests.get(img_url, stream=True).raw).convert("RGB")
+    if selected_url:
+        img = Image.open(requests.get(selected_url, stream=True).raw).convert("RGB")
         img = img.resize((250, 250))
+        st.image(img, caption="Image sélectionnée", use_column_width=False)
 
-        # Prétraitement
+        import altair as alt
+        # --- Prétraitement
         img_batch_cnn = preprocess_image_cnn(img, target_size=(227, 227))
-        img_batch_iiv3 = preprocess_image_iiv3(img, target_size=(224, 224))
+        img_batch_iiv3 = preprocess_image_iiv3(img, target_size=(299, 299))
 
-        # 🔹 Couleurs
-        model_colors = {
-            "BASELINE CNN": "#3B82F6",
-            "IIV3": "#F59E0B"
-        }
+        # --- Bloc 2 : Choix des modèles
+        st.markdown(
+            """
+            <div style="border:2px solid #5A2D82; border-radius:8px;
+                        padding:12px; background-color:#F9F6FB; margin:20px 0;">
+                <div style="font-size:20px; font-weight:600; color:#5A2D82; margin-bottom:8px;">
+                    ⚙️ Choisissez les modèles à comparer
+                </div>
+            """,
+            unsafe_allow_html=True
+        )
+        cb_col1, cb_col2 = st.columns(2)
+        with cb_col1:
+            st.markdown(
+                f"<h5 style='color:{model_colors['BASELINE CNN']}; font-size:18px;'>BASELINE CNN</h5>",
+                unsafe_allow_html=True
+            )
+            use_baseline = st.checkbox("PREDIRE AVEC BASELINE CNN", value=True, key="checkbox_baseline_iiv3")
+        with cb_col2:
+            st.markdown(
+                f"<h5 style='color:{model_colors['IIV3']}; font-size:18px;'>INCEPTIONV3</h5>",
+                unsafe_allow_html=True
+            )
+            use_iiv3 = st.checkbox("PREDIRE AVEC INCEPTIONV3", value=True, key="checkbox_iiv3")
+        st.markdown("</div>", unsafe_allow_html=True)
 
-        # Ligne 1 : Image + choix des modèles
-        row1_col1, row1_col2 = st.columns([1, 2])
-
-        with row1_col1:
-            st.subheader("IMAGE CHARGÉE")
-            st.image(img, caption="IMAGE CHARGÉE", use_column_width=False)
-
-        with row1_col2:
-            st.subheader("CHOISISSEZ LE(S) MODÈLE(S) À UTILISER")
-            cb_col1, cb_col2 = st.columns(2)
-
-            with cb_col1:
-                st.markdown(
-                    f"<h5 style='color:{model_colors['BASELINE CNN']}; font-size:18px;'>BASELINE CNN</h5>",
-                    unsafe_allow_html=True
-                )
-                use_baseline = st.checkbox("", value=True, key="cb_cnn_iiv3")
-
-            with cb_col2:
-                st.markdown(
-                    f"<h5 style='color:{model_colors['IIV3']}; font-size:18px;'>IIV3</h5>",
-                    unsafe_allow_html=True
-                )
-                use_iiv3 = st.checkbox("", key="cb_iiv3")
-
-        # Ligne 2 : Prédictions
+        # --- Bloc 3 : Prédictions
         row2_col1, row2_col2 = st.columns(2)
+        pred_base, pred_iiv3 = None, None
 
         if use_baseline:
             y_pred_base = model.predict(img_batch_cnn)
             pred_base = classes_cnn[np.argmax(y_pred_base)]
+        
             with row2_col1:
                 st.markdown(
                     f"<h4 style='color:{model_colors['BASELINE CNN']};'>PRÉDICTION – BASELINE CNN</h4>",
                     unsafe_allow_html=True
                 )
-                st.success(f"Classe prédite : {pred_base.upper()}")
+                st.markdown(
+                    f"""
+                    <div style="border:2px solid {model_colors['BASELINE CNN']};
+                                border-radius:8px; padding:12px; background:#FAFAFA;">
+                        <h5 style="color:{model_colors['BASELINE CNN']}; text-align:center; margin:0;">
+                            CLASSE PRÉDITE : {pred_base.upper()}
+                        </h5>
+                    </div>
+                    """,
+                    unsafe_allow_html=True
+                )
 
         if use_iiv3:
             try:
                 iiv3_model = load_model_iiv3()
                 y_pred_iiv3 = iiv3_model.predict(img_batch_iiv3)
                 pred_iiv3 = classes_iiv3[np.argmax(y_pred_iiv3)]
+        
                 with row2_col2:
                     st.markdown(
-                        f"<h4 style='color:{model_colors['IIV3']};'>PRÉDICTION – IIV3</h4>",
+                        f"<h4 style='color:{model_colors['IIV3']};'>PRÉDICTION – INCEPTIONV3</h4>",
                         unsafe_allow_html=True
                     )
-                    st.success(f"Classe prédite : {pred_iiv3.upper()}")
+                    st.markdown(
+                        f"""
+                        <div style="border:2px solid {model_colors['IIV3']};
+                                    border-radius:8px; padding:12px; background:#FAFAFA;">
+                            <h5 style="color:{model_colors['IIV3']}; text-align:center; margin:0;">
+                                CLASSE PRÉDITE : {pred_iiv3.upper()}
+                            </h5>
+                        </div>
+                        """,
+                        unsafe_allow_html=True
+                    )
             except Exception as e:
                 with row2_col2:
                     st.warning(f"Erreur de chargement du modèle IIV3 : {e}")
 
-        # Ligne 3 : Probabilités
+        # --- Bloc 4 : Probabilités
         row3_col1, row3_col2 = st.columns(2)
-
         if use_baseline:
+            probas_base = pd.Series(y_pred_base[0], index=classes_cnn).sort_values(ascending=False)
+            df_base = probas_base.reset_index()
+            df_base.columns = ["Classe", "Probabilité"]
             with row3_col1:
                 st.markdown(
-                    f"<h4 style='color:{model_colors['BASELINE CNN']};'>Probabilités – CNN</h4>",
+                    f"<h4 style='color:{model_colors['BASELINE CNN']};'> PROBABILITÉS – BASELINE CNN</h4>",
                     unsafe_allow_html=True
                 )
-                probas_base = pd.Series(y_pred_base[0], index=classes_cnn).sort_values(ascending=False)
-                st.bar_chart(probas_base)
+                chart_base = alt.Chart(df_base).mark_bar(color=model_colors["BASELINE CNN"]).encode(
+                    x=alt.X("Classe", title="CLASSE"),
+                    y=alt.Y("Probabilité", title="PROBABILITÉ")
+                ).properties(height=300)
+                st.altair_chart(chart_base, use_container_width=True)
 
         if use_iiv3:
+            probas_iiv3 = pd.Series(y_pred_iiv3[0], index=classes_iiv3).sort_values(ascending=False)
+            df_iiv3 = probas_iiv3.reset_index()
+            df_iiv3.columns = ["Classe", "Probabilité"]
             with row3_col2:
                 st.markdown(
-                    f"<h4 style='color:{model_colors['IIV3']};'>Probabilités – IIV3</h4>",
+                    f"<h4 style='color:{model_colors['IIV3']};'> PROBABILITÉS – INCEPTIONV3</h4>",
                     unsafe_allow_html=True
                 )
-                probas_iiv3 = pd.Series(y_pred_iiv3[0], index=classes_iiv3).sort_values(ascending=False)
-                st.bar_chart(probas_iiv3)
+                chart_iiv3 = alt.Chart(df_iiv3).mark_bar(color=model_colors["IIV3"]).encode(
+                    x=alt.X("Classe", title="CLASSE"),
+                    y=alt.Y("Probabilité", title="PROBABILITÉ")
+                ).properties(height=300)
+                st.altair_chart(chart_iiv3, use_container_width=True)
+
+        # --- Bloc 5 : Synthèse finale
+        def format_pct(x):
+            return f"{int(round(float(x) * 100))}%"
+
+        epsilon = 1e-3
+        pred_base_str, pred_iiv3_str = None, None
+        conf_base, conf_iiv3 = None, None
+
+        if use_baseline and pred_base is not None:
+            pred_base_str = pred_base.upper()
+            conf_base = float(np.max(y_pred_base[0]))
+
+        if use_iiv3 and pred_iiv3 is not None:
+            pred_iiv3_str = pred_iiv3.upper()
+            conf_iiv3 = float(np.max(y_pred_iiv3[0]))
+
+        st.markdown(
+            """
+            <div style="border:2px solid #5A2D82; border-radius:8px;
+                        padding:12px; background-color:#F9F6FB; margin:20px 0;">
+                <div style="font-size:20px; font-weight:600; color:#5A2D82; margin-bottom:8px;">
+                    SYNTHESE COMPARATIVE
+                </div>
+            """,
+            unsafe_allow_html=True
+        )
+
+        if pred_base_str and pred_iiv3_str:
+            if pred_base_str == pred_iiv3
 
 
     # ----------------------------------------------------
