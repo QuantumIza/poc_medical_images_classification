@@ -486,22 +486,43 @@ with tab2:
         row2_col1, row2_col2 = st.columns(2)
         pred_base, pred_ictn = None, None
 
+        # if use_baseline:
+        #     y_pred_base = model.predict(img_batch_cnn)
+        #     pred_base = classes_cnn[np.argmax(y_pred_base)]
+        #     with row2_col1:
+        #         st.markdown(
+        #             f"<h4 style='color:{model_colors['BASELINE CNN']};'> PRÉDICTION – BASELINE CNN</h4>",
+        #             unsafe_allow_html=True
+        #         )
+        #         st.markdown(
+        #             f"""
+        #             <div style='background-color:{model_colors["BASELINE CNN"]}; padding:10px; border-radius:8px;'>
+        #                 <h5 style='color:white; text-align:center;'>CLASSE PRÉDITE : {pred_base.upper()}</h5>
+        #             </div>
+        #             """,
+        #             unsafe_allow_html=True
+        #         )
         if use_baseline:
             y_pred_base = model.predict(img_batch_cnn)
             pred_base = classes_cnn[np.argmax(y_pred_base)]
+        
             with row2_col1:
                 st.markdown(
-                    f"<h4 style='color:{model_colors['BASELINE CNN']};'> PRÉDICTION – BASELINE CNN</h4>",
+                    f"<h4 style='color:{model_colors['BASELINE CNN']};'>PRÉDICTION – BASELINE CNN</h4>",
                     unsafe_allow_html=True
                 )
                 st.markdown(
                     f"""
-                    <div style='background-color:{model_colors["BASELINE CNN"]}; padding:10px; border-radius:8px;'>
-                        <h5 style='color:white; text-align:center;'>CLASSE PRÉDITE : {pred_base.upper()}</h5>
+                    <div style="background: linear-gradient(135deg, {model_colors['BASELINE CNN']} 0%, #6A9BCF 100%);
+                                padding:12px; border-radius:8px;">
+                        <h5 style="color:white; text-align:center; margin:0;">
+                            CLASSE PRÉDITE : {pred_base.upper()}
+                        </h5>
                     </div>
                     """,
                     unsafe_allow_html=True
                 )
+
 
         if use_ictn:
             try:
