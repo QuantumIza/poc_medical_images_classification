@@ -771,6 +771,12 @@ with tab3:
         # --------------------------------------------
         # --- Sélecteur dynamique avec libellé custom
         # --------------------------------------------
+        # Dictionnaire de correspondance valeur technique -> label lisible
+        model_labels = {
+            "baseline_cnn": "BASELINE CNN",
+            "icnt": "IMPROVED CONVNEXT-TINY",
+            "iiv3": "IMPROVED INCEPTIONV3"
+        }
         st.markdown(
             """
             <div style="font-size:18px; font-weight:600; color:#005A9C; margin-bottom:12px;margin-top:50px;">
@@ -797,7 +803,7 @@ with tab3:
         st.markdown(
             f"""
             <div style="margin-top:12px; font-size:16px; font-weight:600; color:#005A9C;">
-                ✅ Modèle sélectionné : <span style="color:#222;">{selected_model.upper()}</span>
+                ✅ Modèle sélectionné : <span style="color:#222;">{model_labels[selected_model]}</span>
             </div>
             """,
             unsafe_allow_html=True
