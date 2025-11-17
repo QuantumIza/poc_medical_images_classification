@@ -506,7 +506,7 @@ with tab3:
 # COMPOSANT GRAPHIQUE ONGLET 4 : PERFORMANCES
 # ----------------------------------------------------
 with tab4:
-    st.header("Performances des modèles")
+    st.header("APERÇU DES PERFORMANCES DES MODELES")
 
     # --- Sélecteur dynamique
     selected_model = st.selectbox(
@@ -554,9 +554,9 @@ with tab4:
     with col_center:
         grad_col1, grad_col2 = st.columns([1,1])
         with grad_col1:
-            st.image(res["gradcam_success"], caption="GradCAM - prédiction correcte")
+            st.image(res["gradcam_success"], caption="GradCAM - prédiction correcte", width=500)
         with grad_col2:
-            st.image(res["gradcam_error"], caption="GradCAM - prédiction en erreur")
+            st.image(res["gradcam_error"], caption="GradCAM - prédiction en erreur", width=500)
 
     # --- Bloc 5 : Synthèse technique
     st.subheader("5. Synthèse technique")
