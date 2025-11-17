@@ -679,14 +679,6 @@ with tab3:
             """,
             unsafe_allow_html=True
         )
-        # col_left, col_center, col_right = st.columns([2,6,2])
-        # with col_center:
-        #     grad_col1, grad_col2 = st.columns([1,1])
-        #     with grad_col1:
-        #         st.image(res["gradcam_success"], caption="GradCAM - prédiction correcte", width=400)
-        #     with grad_col2:
-        #         st.image(res["gradcam_error"], caption="GradCAM - prédiction en erreur", width=400)
-        # st.markdown("</div>", unsafe_allow_html=True)
         col_left, col_center, col_right = st.columns([2,6,2])
         with col_center:
             grad_col1, grad_col2 = st.columns([1,1])
@@ -702,10 +694,7 @@ with tab3:
                     "<div style='text-align:left; font-size:18px; font-weight:600; color:#444;'>GradCAM - prédiction en erreur</div>",
                     unsafe_allow_html=True
                 )
-        st.markdown("</div>", unsafe_allow_html=True)
-
-    
-    
+        st.markdown("</div>", unsafe_allow_html=True)    
         # ----------------------------------------------
         # --- Bloc 5 : ARCHITECTURE DU MODELE technique
         # -----------------------------------------------
@@ -722,21 +711,18 @@ with tab3:
             st.dataframe(summary_df, use_container_width=False)
 
 
-
-
-
 # ----------------------------------------------------
 # COMPOSANT GRAPHIQUE ONGLET  5 : COMPARAISON MODELES
 # ----------------------------------------------------
 with tab5:
-    st.header("Comparaison des modèles")
+    st.header("COMPARAISON DES MODELES")
 
     # --- Bloc dynamique d'apprentissage
-    st.subheader("Comparaison des courbes d'apprentissage")
+    st.subheader("DYNAMIQUE D'ENTRAINEMENT DES MODELES")
     st.image(HF_COMPARAISON["apprentissage"]["learning_curves"])
 
     # --- Bloc équité des modèles
-    st.subheader("Équité des modèles (F1 & Recall)")
+    st.subheader("EQUILIBRE DES PREDICTIONS - DISPERSION DES METRIQUES F1 & Recall")
     stats_df = pd.read_csv(HF_COMPARAISON["equilibre"]["stats"])
     st.dataframe(stats_df)
 
@@ -747,10 +733,10 @@ with tab5:
         st.image(HF_COMPARAISON["equilibre"]["bar_f1"], caption="F1 moyen avec écart-types")
 
     st.image(HF_COMPARAISON["equilibre"]["scatter"], caption="Scatter plot F1 vs Recall")
-    st.image(HF_COMPARAISON["equilibre"]["matrices_confusion"], caption="Matrices de confusion comparatives")
+    st.image(HF_COMPARAISON["equilibre"]["matrices_confusion"], caption="Matrices de confusion")
 
     # --- Bloc métriques globales
-    st.subheader("Métriques globales")
+    st.subheader("METRIQUES GLOBALES")
     metrics_df = pd.read_csv(HF_COMPARAISON["metrics"]["csv"])
     st.dataframe(metrics_df)
 
