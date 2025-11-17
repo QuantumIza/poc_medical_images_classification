@@ -817,7 +817,7 @@ with tab5:
     # Création de colonnes pour centrer l'image
     col1, col2, col3 = st.columns([1,2,1])
     with col2:
-        st.image(HF_COMPARAISON["metrics"]["radar_perf"], use_column_width=True)
+        st.image(HF_COMPARAISON["metrics"]["radar_perf"])
         st.markdown(
             "<div style='text-align:center; font-size:16px; font-weight:600;'>Radar plot des performances globales</div>",
             unsafe_allow_html=True
