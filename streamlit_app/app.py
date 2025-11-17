@@ -562,7 +562,7 @@ with tab4:
     col1, col2, col3 = st.columns(3)
     
     with col1:
-        if st.button("baseline_cnn", key="btn_cnn"):
+        if st.button("BASELINE CNN", key="btn_cnn"):
             st.session_state["perf_select"] = "baseline_cnn"
     
     with col2:
