@@ -454,6 +454,21 @@ with tab2:
         unsafe_allow_html=True
     )
     df_blind = load_blind_test_sample()
+    # --- ON CUSTOMISE LES LIBELLES DE LA LISTE DEROULANTE
+    # Créer une colonne "label" plus lisible
+    df_blind["label"] = df_blind["source_path"].apply(lambda x: x.split("/")[-1])
+    
+    # Utiliser cette colonne comme affichage dans la selectbox
+    selected_label = st.selectbox(
+        "Image du blind test",
+        df_blind["label"].tolist(),
+        key="selectbox_cnn_vs_icnt"
+    )
+    
+    # Récupérer l’URL correspondant au label choisi
+    selected_row = df_blind.loc[df_blind["label"] == selected_label, "source_path"].values[0]
+
+    # ----------------------------------------------------
     selected_row = st.selectbox(
         "Image du blind test",
         df_blind["source_path"].tolist(),
