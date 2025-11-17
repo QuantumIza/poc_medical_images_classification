@@ -302,6 +302,9 @@ with tab1:
 # ----------------------------------------------------
 with tab2:
     st.header("COMPARAISON DES PRÉDICTIONS : BASELINE CNN VS CONVNEXT-TINY")
+    import psutil
+    st.write(f"RAM utilisée : {psutil.virtual_memory().percent}%")
+
     ictn_model = load_model_ictn()
     # Libérer IIV3 si présent
     if "iiv3_model" in globals():
@@ -469,6 +472,9 @@ with tab2:
                     y=alt.Y("Probabilité", title="PROBABILITÉ")
                 ).properties(height=300)
                 st.altair_chart(chart_ictn, use_container_width=True)
+            # ✅ Libération mémoire après affichage
+            del y_pred_ictn, probas_ictn, df_ictn, chart_ictn
+            gc.collect()
 
        
 
