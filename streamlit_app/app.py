@@ -622,15 +622,18 @@ with tab4:
     report_df = pd.read_csv(res["classification_report"])
     # with st.expander("RAPPORT DE CLASSIFICATION DETAILLE"):
     #     st.dataframe(report_df, use_container_width=False)
-    with st.expander(
+    st.markdown(
     """
-    <div style="background-color:#E6F0FA; padding:6px; border-radius:6px; font-size:18px; font-weight:600; color:#005A9C;">
+    <div style="color:#005A9C; font-weight:600; font-size:18px; margin-bottom:6px;">
         RAPPORT DE CLASSIFICATION DÉTAILLÉ
     </div>
     """,
     unsafe_allow_html=True
-    ):
+)
+
+    with st.expander("Voir le rapport détaillé", expanded=False):
         st.dataframe(report_df, use_container_width=False)
+
 
 
     # -----------------------------------------------------
