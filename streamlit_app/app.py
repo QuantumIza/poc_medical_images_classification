@@ -513,15 +513,16 @@ with tab2:
                 )
                 st.markdown(
                     f"""
-                    <div style="background: linear-gradient(135deg, {model_colors['BASELINE CNN']} 0%, #6A9BCF 100%);
-                                padding:12px; border-radius:8px;">
-                        <h5 style="color:white; text-align:center; margin:0;">
+                    <div style="border:2px solid {model_colors['BASELINE CNN']};
+                                border-radius:8px; padding:12px; background:#FAFAFA;">
+                        <h5 style="color:{model_colors['BASELINE CNN']}; text-align:center; margin:0;">
                             CLASSE PRÉDITE : {pred_base.upper()}
                         </h5>
                     </div>
                     """,
                     unsafe_allow_html=True
                 )
+
 
 
         if use_ictn:
