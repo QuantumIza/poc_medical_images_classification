@@ -626,7 +626,7 @@ with tab4:
     # ------------------------------------
     # --- Bloc 3 : Performance par classe
     # -------------------------------------
-    # st.subheader("3. Performance par classe")
+    # --- st.subheader("3. Performance par classe")
     st.markdown(
     """
     <div style="font-size:22px; font-weight:600; color:#005A9C; margin-top:16px;">
@@ -637,9 +637,9 @@ with tab4:
     )
     col1, col2 = st.columns(2)
     with col1:
-        st.image(res["confusion_matrix"], caption="Matrice de confusion", width=600)
+        st.image(res["confusion_matrix"], caption="Matrice de confusion")
     with col2:
-        st.image(res["roc_curve"], caption="Courbe ROC", width=600)
+        st.image(res["roc_curve"], caption="Courbe ROC")
 
     report_df = pd.read_csv(res["classification_report"])
     with st.expander("Rapport de classification détaillé"):
