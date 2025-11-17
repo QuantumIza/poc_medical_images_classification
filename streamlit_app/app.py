@@ -712,6 +712,8 @@ with tab3:
                         """,
                         unsafe_allow_html=True
                     )
+               
+                    
             except Exception as e:
                 with row2_col2:
                     st.warning(f"Erreur de chargement du modèle IIV3 : {e}")
@@ -734,7 +736,8 @@ with tab3:
                 st.altair_chart(chart_base, use_container_width=True)
 
         if use_iiv3:
-            probas_iiv3 = pd.Series(y_pred_iiv3[0], index=classes_iiv3).sort_values(ascending=False)
+            probs_iiv3 = y_pred_iiv3[0]
+            probas_iiv3 = pd.Series(probs_iiv3, index=classes_iiv3).sort_values(ascending=False)
             df_iiv3 = probas_iiv3.reset_index()
             df_iiv3.columns = ["Classe", "Probabilité"]
             with row3_col2:
@@ -747,6 +750,9 @@ with tab3:
                     y=alt.Y("Probabilité", title="PROBABILITÉ")
                 ).properties(height=300)
                 st.altair_chart(chart_iiv3, use_container_width=True)
+                 # ---ON LIBERE LA MEMOIRE APRES PREDICTION DE LA CLASSE: 
+                del y_pred_iiv3, probs_iiv3, probas_iiv3, df_iiv3, chart_iiv3
+                gc.collect()
 
         
 
