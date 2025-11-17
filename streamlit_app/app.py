@@ -525,20 +525,45 @@ with tab2:
 
 
 
+        # if use_ictn:
+        #     try:
+        #         ictn_model = load_model_ictn()
+        #         y_pred_ictn = ictn_model.predict(img_batch_ictn)
+        #         pred_ictn = classes_icnt[np.argmax(y_pred_ictn)]
+        #         with row2_col2:
+        #             st.markdown(
+        #                 f"<h4 style='color:{model_colors['ICTN']};'> PRÉDICTION – ICTN</h4>",
+        #                 unsafe_allow_html=True
+        #             )
+        #             st.markdown(
+        #                 f"""
+        #                 <div style='background-color:{model_colors["ICTN"]}; padding:10px; border-radius:8px;'>
+        #                     <h5 style='color:white; text-align:center;'>CLASSE PRÉDITE : {pred_ictn.upper()}</h5>
+        #                 </div>
+        #                 """,
+        #                 unsafe_allow_html=True
+        #             )
+        #     except Exception as e:
+        #         with row2_col2:
+        #             st.warning(f"Erreur de chargement du modèle ICTN : {e}")
         if use_ictn:
             try:
                 ictn_model = load_model_ictn()
                 y_pred_ictn = ictn_model.predict(img_batch_ictn)
                 pred_ictn = classes_icnt[np.argmax(y_pred_ictn)]
+        
                 with row2_col2:
                     st.markdown(
-                        f"<h4 style='color:{model_colors['ICTN']};'> PRÉDICTION – ICTN</h4>",
+                        f"<h4 style='color:{model_colors['ICTN']};'>PRÉDICTION – ICTN</h4>",
                         unsafe_allow_html=True
                     )
                     st.markdown(
                         f"""
-                        <div style='background-color:{model_colors["ICTN"]}; padding:10px; border-radius:8px;'>
-                            <h5 style='color:white; text-align:center;'>CLASSE PRÉDITE : {pred_ictn.upper()}</h5>
+                        <div style="border:2px solid {model_colors['ICTN']};
+                                    border-radius:8px; padding:12px; background:#FAFAFA;">
+                            <h5 style="color:{model_colors['ICTN']}; text-align:center; margin:0;">
+                                CLASSE PRÉDITE : {pred_ictn.upper()}
+                            </h5>
                         </div>
                         """,
                         unsafe_allow_html=True
@@ -546,6 +571,7 @@ with tab2:
             except Exception as e:
                 with row2_col2:
                     st.warning(f"Erreur de chargement du modèle ICTN : {e}")
+
 
         # --- Bloc 4 : Probabilités
         row3_col1, row3_col2 = st.columns(2)
