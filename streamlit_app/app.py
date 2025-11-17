@@ -573,28 +573,39 @@ with tab4:
     # --- Bloc 1 : METRIQUES GLOBALES
     # ---------------------------------
     st.markdown(
-    """
-    <div style="border:2px solid #5A2D82; border-radius:8px; padding:12px; background-color:#F9F6FB; margin:20px 0;">
-        <div style="font-size:22px; font-weight:600; color:#5A2D82; margin-bottom:12px;">
-            METRIQUES GLOBALES
-        </div>
-    """,
-    unsafe_allow_html=True
+        """
+        <div style="border:2px solid #5A2D82; border-radius:8px; padding:12px; background-color:#F9F6FB; margin:20px 0;">
+            <div style="font-size:22px; font-weight:600; color:#5A2D82; margin-bottom:12px;">
+                📊 METRIQUES GLOBALES
+            </div>
+        """,
+        unsafe_allow_html=True
     )
-    metrics_df = pd.read_csv(res["metrics"])
+    
+    # CSS robuste pour augmenter la taille de police des cellules et des en-têtes
     st.markdown(
         """
         <style>
-        .stDataFrame div[data-testid="stDataFrame"] table {
-            font-size: (50x; /* augmente la taille du texte */
+        /* cellules */
+        div[data-testid="stDataFrame"] div[role="gridcell"] {
+            font-size: 16px !important;
+            line-height: 1.4 !important;
+        }
+        /* en-têtes */
+        div[data-testid="stDataFrame"] div[role="columnheader"] {
+            font-size: 16px !important;
+            font-weight: 600 !important;
         }
         </style>
         """,
         unsafe_allow_html=True
     )
-
-    st.dataframe(metrics_df, use_container_width=False)
+    
+    metrics_df = pd.read_csv(res["metrics"])
+    st.dataframe(metrics_df, use_container_width=True, height=420)
+    
     st.markdown("</div>", unsafe_allow_html=True)
+
 
     # -------------------------------------
     # --- Bloc 2 : APPRENTISSAGE DU MODÈLE
