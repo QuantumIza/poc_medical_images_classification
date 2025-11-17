@@ -618,13 +618,13 @@ with tab4:
     with col_center:
         st.markdown(
             """
-            <div style="
-                border: 2px solid #4CAF50;
-                border-radius: 8px;
-                background-color: #f9f9f9;
-                padding: 12px;
-                margin-bottom: 20px;
-            ">
+           <div style="
+            border: 1px solid #000;  /* bordure noire */
+            border-radius: 8px;
+            background-color: #f9f9f9;
+            padding: 12px;
+            margin-bottom: 20px;
+        ">
             """,
             unsafe_allow_html=True
         )
