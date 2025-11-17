@@ -648,7 +648,7 @@ with tab4:
     # -----------------------------------------------------
     # --- Bloc 4 : Analyse qualitative et interprétabilité
     # --------------------------------------------------------
-    # st.subheader("4. Analyse qualitative et interprétabilité")
+    # --- st.subheader("4. Analyse qualitative et interprétabilité")
     st.markdown(
     """
     <div style="font-size:22px; font-weight:600; color:#005A9C; margin-top:16px;">
@@ -671,13 +671,20 @@ with tab4:
         unsafe_allow_html=True
     )
 
-    st.markdown("<div style='font-size:20px; font-weight:600; color:#000;'>ACP 3D INTERACTIVE (CNN)</div>", unsafe_allow_html=True)
-
-
+    st.markdown("<div style='font-size:20px; font-weight:600; color:#000;'>ACP 3D INTERACTIVE (CNN)</div>", unsafe_allow_html=True)    
     col_left, col_center, col_right = st.columns([2,6,2])
     with col_center:
         st.components.v1.html(requests.get(res["pca"]).text, height=450)
+        
     # Transition GradCAM
+    st.markdown(
+    """
+    <div style="font-size:22px; font-weight:600; color:#005A9C; margin-top:16px;">
+        EXPLICABILITE
+    </div>
+    """,
+    unsafe_allow_html=True
+    )
     st.markdown("Les visualisations GradCAM ci-dessous illustrent les zones activées par le modèle lors de ses prédictions.")
     # GradCAM côte à côte et centrées
     col_left, col_center, col_right = st.columns([2,6,2])
@@ -688,6 +695,11 @@ with tab4:
         with grad_col2:
             st.image(res["gradcam_error"], caption="GradCAM - prédiction en erreur", width=350)
 
+    col1, col2 = st.columns(2)
+    with col1:
+        st.image(res["gradcam_success"], caption="GradCAM - prédiction correcte")
+    with col2:
+        st.image(res["gradcam_error"], caption="GradCAM - prédiction en erreu")
     # ----------------------------------------------
     # --- Bloc 5 : ARCHITECTURE DU MODELE technique
     # -----------------------------------------------
