@@ -565,8 +565,8 @@ st.markdown(
         margin: 8px 0 4px 0;
     }
     .widget-caption {
-        font-size: 18px;
-        color: #333;
+        font-size: 22px;
+        color: #005A9C;
         margin: 4px 0 12px 0;
     }
     </style>
