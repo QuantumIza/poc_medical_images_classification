@@ -590,6 +590,7 @@ with tab3:
     iiv3_model = load_model_iiv3()
     # Libérer ICNT si présent
     if "icnt_model" in globals():
+        st.write("ICNT était présent, on enleve")
         del icnt_model
         gc.collect()
 
@@ -598,6 +599,9 @@ with tab3:
         "BASELINE CNN": "#4E79A7",   # Bleu doux/grisé
         "IIV3": "#A67C7C"            # Corail feutré
     }
+    import psutil
+    st.write(f"RAM utilisée : {psutil.virtual_memory().percent}%")
+
 
     # --- BLOC 1 : SELECTION IMAGE
     st.markdown(
