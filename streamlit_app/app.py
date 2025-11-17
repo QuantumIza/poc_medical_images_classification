@@ -609,7 +609,15 @@ with tab4:
     # ---------------------------------
     # --- Bloc 2 : Performance globale
     # ---------------------------------
-    st.subheader("2. Performance globale")
+    # st.subheader("2. Performance globale")
+    st.markdown(
+    """
+    <div style="font-size:22px; font-weight:600; color:#005A9C; margin-top:16px;">
+        PERFORMANCES GLOBALES
+    </div>
+    """,
+    unsafe_allow_html=True
+    )
     metrics_df = pd.read_csv(res["metrics"])
     col_left, col_center, col_right = st.columns([2,6,2])
     with col_center:
@@ -618,7 +626,15 @@ with tab4:
     # ------------------------------------
     # --- Bloc 3 : Performance par classe
     # -------------------------------------
-    st.subheader("3. Performance par classe")
+    # st.subheader("3. Performance par classe")
+    st.markdown(
+    """
+    <div style="font-size:22px; font-weight:600; color:#005A9C; margin-top:16px;">
+        PERFORMANCE PAR CLASSE
+    </div>
+    """,
+    unsafe_allow_html=True
+    )
     col1, col2 = st.columns(2)
     with col1:
         st.image(res["confusion_matrix"], caption="Matrice de confusion", width=600)
@@ -632,7 +648,15 @@ with tab4:
     # -----------------------------------------------------
     # --- Bloc 4 : Analyse qualitative et interprétabilité
     # --------------------------------------------------------
-    st.subheader("4. Analyse qualitative et interprétabilité")
+    # st.subheader("4. Analyse qualitative et interprétabilité")
+    st.markdown(
+    """
+    <div style="font-size:22px; font-weight:600; color:#005A9C; margin-top:16px;">
+        SEPARABILITE DES CLASSES
+    </div>
+    """,
+    unsafe_allow_html=True
+    )
     st.markdown("<div class='widget-caption'>Projection PCA et visualisations GradCAM pour comprendre les décisions du modèle.</div>", unsafe_allow_html=True)
     # Introduction PCA avec taille lisible
     st.markdown(
@@ -667,8 +691,16 @@ with tab4:
     # ----------------------------------------------
     # --- Bloc 5 : ARCHITECTURE DU MODELE technique
     # -----------------------------------------------
-    st.subheader("5. Synthèse technique")
-    with st.expander("Résumé du modèle"):
+    # st.subheader("5. Synthèse technique")
+    st.markdown(
+    """
+    <div style="font-size:22px; font-weight:600; color:#5A2D82; margin-top:16px;">
+        DESIGN DU MODÈLE
+    </div>
+    """,
+    unsafe_allow_html=True
+    )
+    with st.expander("DESIGN DU MODELE"):
         summary_df = pd.read_csv(res["summary"])
         st.dataframe(summary_df, use_container_width=False)
 
