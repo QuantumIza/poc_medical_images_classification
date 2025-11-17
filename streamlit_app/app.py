@@ -600,7 +600,7 @@ with tab4:
     st.markdown("<div class='widget-caption'>Ces courbes montrent la progression de l'entraînement et permettent de vérifier la convergence.</div>", unsafe_allow_html=True)
     col_left, col_center, col_right = st.columns([2,6,2])
     with col_center:
-        st.image(res["learning_curves"], caption="Courbes Loss & Accuracy", width=1000)    
+        st.image(res["learning_curves"], caption="Courbes Loss & Accuracy")    
 
     # ------------------------------------
     # --- Bloc 3 : Performance par classe
