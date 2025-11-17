@@ -568,20 +568,43 @@ with tab3:
 # ----------------------------------------------------
 # COMPOSANT GRAPHIQUE ONGLET 4 : PERFORMANCES
 # ----------------------------------------------------
-with tab4:
-    st.header("APERÇU DES PERFORMANCES DES MODELES")
 
-    # --- Sélecteur dynamique
+# --- Styles globaux pour homogénéiser les consignes et labels
+st.markdown(
+    """
+    <style>
+    .widget-label-strong {
+        font-size: 22px;
+        font-weight: 600;
+        color: #222;
+        margin: 8px 0 4px 0;
+    }
+    .widget-caption {
+        font-size: 18px;
+        color: #333;
+        margin: 4px 0 12px 0;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
+with tab4:
+    st.header("APERÇU DES PERFORMANCES DES MODÈLES")
+
+    # --- Sélecteur dynamique avec libellé custom
+    st.markdown("<div class='widget-label-strong'>Choisissez un modèle à analyser</div>", unsafe_allow_html=True)
     selected_model = st.selectbox(
-        "Choisissez un modèle à analyser",
-        ["baseline_cnn", "icnt", "iiv3"],
-        key="perf_select"
+        label="",  # pas de texte natif
+        options=["baseline_cnn", "icnt", "iiv3"],
+        key="perf_select",
+        label_visibility="collapsed"  # masque le label Streamlit
     )
     res = HF_PERFORMANCES[selected_model]
 
     # --- Bloc 1 : Courbes d'apprentissage
     st.subheader("1. Apprentissage du modèle")
-    st.caption("Ces courbes montrent la progression de l'entraînement et permettent de vérifier la convergence.")
+    st.markdown("<div class='widget-caption'>Ces courbes montrent la progression de l'entraînement et permettent de vérifier la convergence.</div>", unsafe_allow_html=True)
     col_left, col_center, col_right = st.columns([2,6,2])
     with col_center:
         st.image(res["learning_curves"], caption="Courbes Loss & Accuracy", width=1000)
@@ -597,9 +620,9 @@ with tab4:
     st.subheader("3. Performance par classe")
     col1, col2 = st.columns(2)
     with col1:
-        st.image(res["confusion_matrix"], caption="Matrice de confusion")
+        st.image(res["confusion_matrix"], caption="Matrice de confusion", width=400)
     with col2:
-        st.image(res["roc_curve"], caption="Courbe ROC")
+        st.image(res["roc_curve"], caption="Courbe ROC", width=400)
 
     report_df = pd.read_csv(res["classification_report"])
     with st.expander("Rapport de classification détaillé"):
@@ -607,7 +630,7 @@ with tab4:
 
     # --- Bloc 4 : Analyse qualitative et interprétabilité
     st.subheader("4. Analyse qualitative et interprétabilité")
-    st.caption("Projection PCA et visualisations GradCAM pour comprendre les décisions du modèle.")
+    st.markdown("<div class='widget-caption'>Projection PCA et visualisations GradCAM pour comprendre les décisions du modèle.</div>", unsafe_allow_html=True)
     col_left, col_center, col_right = st.columns([2,6,2])
     with col_center:
         st.components.v1.html(requests.get(res["pca"]).text, height=600)
@@ -617,15 +640,16 @@ with tab4:
     with col_center:
         grad_col1, grad_col2 = st.columns([1,1])
         with grad_col1:
-            st.image(res["gradcam_success"], caption="GradCAM - prédiction correcte", width=350)
+            st.image(res["gradcam_success"], caption="GradCAM - prédiction correcte", width=500)
         with grad_col2:
-            st.image(res["gradcam_error"], caption="GradCAM - prédiction en erreur", width=350)
+            st.image(res["gradcam_error"], caption="GradCAM - prédiction en erreur", width=500)
 
     # --- Bloc 5 : Synthèse technique
     st.subheader("5. Synthèse technique")
     with st.expander("Résumé du modèle"):
         summary_df = pd.read_csv(res["summary"])
         st.dataframe(summary_df, use_container_width=False)
+
 
 
 
