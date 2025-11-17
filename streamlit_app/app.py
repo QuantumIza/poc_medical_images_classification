@@ -509,38 +509,268 @@ with tab3:
                 st.bar_chart(probas_iiv3)
 
 
-# ----------------------------------------------------
-# COMPOSANT GRAPHIQUE ONGLET 4 : PERFORMANCES
-# ----------------------------------------------------
-# --------------------------------------------------------------
-# --- Styles globaux pour homogénéiser les consignes et labels
-# --------------------------------------------------------------
-st.markdown(
-    """
-    <style>
-    .widget-label-strong {
-        font-size: 22px;
-        font-weight: 600;
-        color: #005A9C;
-        margin: 8px 0 4px 0;
-    }
-    .widget-caption {
-        font-size: 22px;
-        color: #222;
-        margin: 4px 0 50px 0;
-    }
-    </style>
-    """,
-    unsafe_allow_html=True
-)
+# # ----------------------------------------------------
+# # COMPOSANT GRAPHIQUE ONGLET 4 : PERFORMANCES
+# # ----------------------------------------------------
+# # --------------------------------------------------------------
+# # --- Styles globaux pour homogénéiser les consignes et labels
+# # --------------------------------------------------------------
+# st.markdown(
+#     """
+#     <style>
+#     .widget-label-strong {
+#         font-size: 22px;
+#         font-weight: 600;
+#         color: #005A9C;
+#         margin: 8px 0 4px 0;
+#     }
+#     .widget-caption {
+#         font-size: 22px;
+#         color: #222;
+#         margin: 4px 0 50px 0;
+#     }
+#     </style>
+#     """,
+#     unsafe_allow_html=True
+# )
 
-with tab4:
+# with tab4:
+#     st.header("APERÇU DES PERFORMANCES")
+
+#     # --------------------------------------------
+#     # --- Sélecteur dynamique avec libellé custom
+#     # --------------------------------------------
+#     # --- Libellé personnalisé
+#     st.markdown(
+#         """
+#         <div style="font-size:18px; font-weight:600; color:#005A9C; margin-bottom:12px;margin-top:50px;">
+#             Choisissez un modèle à analyser
+#         </div>
+#         """,
+#         unsafe_allow_html=True
+#     )
+    
+#     # --- Trois colonnes avec boutons radio simulés
+#     col1, col2, col3 = st.columns(3)
+    
+#     with col1:
+#         if st.button("BASELINE CNN", key="btn_cnn"):
+#             st.session_state["perf_select"] = "baseline_cnn"
+    
+#     with col2:
+#         if st.button("IMPROVED CONVNEXT-TINY", key="btn_icnt"):
+#             st.session_state["perf_select"] = "icnt"
+    
+#     with col3:
+#         if st.button("IMPROVED INCEPTIONV3", key="btn_iiv3"):
+#             st.session_state["perf_select"] = "iiv3"
+    
+#     # --- Valeur sélectionnée
+#     selected_model = st.session_state.get("perf_select", "baseline_cnn")
+#     res = HF_PERFORMANCES[selected_model]
+    
+#     # ---------------------------------
+#     # --- Bloc 1 : METRIQUES GLOBALES
+#     # ---------------------------------
+#     st.markdown(
+#         """
+#         <div style="border:2px solid #5A2D82; border-radius:8px; padding:12px; background-color:#F9F6FB; margin:20px 0;">
+#             <div style="font-size:22px; font-weight:600; color:#5A2D82; margin-bottom:12px;">
+#                 METRIQUES GLOBALES
+#             </div>
+#         """,
+#         unsafe_allow_html=True
+#     )
+    
+#     # Lecture du CSV
+#     metrics_df = pd.read_csv(res["metrics"])
+#     # --- SUPPRESSION DE COLONNE INUTILE model_path
+#     if "model_path" in metrics_df.columns:
+#         metrics_df = metrics_df.drop(columns=["model_path"])
+    
+#     # Version stylisée en HTML pour agrandir la police
+#     styled_df = metrics_df.style.set_table_styles([
+#         {'selector': 'th', 'props': [('font-size', '18pt'), ('font-weight', 'bold'), ('text-align', 'center')]},
+#         {'selector': 'td', 'props': [('font-size', '18pt'), ('text-align', 'center')]}
+#     ])
+    
+#     # Affichage du tableau stylisé
+#     st.markdown(styled_df.to_html(), unsafe_allow_html=True)
+    
+#     st.markdown("</div>", unsafe_allow_html=True)
+
+
+
+#     # -------------------------------------
+#     # --- Bloc 2 : APPRENTISSAGE DU MODÈLE
+#     # -------------------------------------
+#     # st.subheader("APPRENTISSAGE DU MODELE")
+#     st.markdown(
+#     """
+#     <div style="font-size:22px; font-weight:600; color:#5A2D82; margin-top:16px;">
+#         APPRENTISSAGE DU MODÈLE
+#     </div>
+#     """,
+#     unsafe_allow_html=True
+#     )
+#     st.markdown("<div class='widget-caption'>Ces courbes montrent la progression de l'entraînement et permettent de vérifier la convergence.</div>", unsafe_allow_html=True)
+#     col_left, col_center, col_right = st.columns([2,6,2])
+#     with col_center:
+#         st.image(res["learning_curves"], caption="Courbes Loss & Accuracy")    
+
+#     # ---------------------------------------------------------
+#     # --- Bloc 3 : REPARTITION DES PREDICTIONS DANS LES CLASSES
+#     # ---------------------------------------------------------
+#     st.markdown(
+#     """
+#     <div style="font-size:22px; font-weight:600; color:#5A2D82; margin-top:16px;">
+#         RÉPARTITION DES PRÉDICTIONS DANS LES CLASSES
+#     </div>
+#     """,
+#     unsafe_allow_html=True
+#     )
+#     # ----------------------------------------
+#     # --- MATRICE DE CONFUSION ET COURBES ROC (AUC)
+#     # ----------------------------------------
+#     col1, col2 = st.columns(2)
+#     with col1:
+#         # st.image(res["confusion_matrix"], caption="MATRICE DE CONFUSION")
+#         st.markdown("<div style='text-align:center;'>", unsafe_allow_html=True)
+#         st.image(res["confusion_matrix"], caption="MATRICE DE CONFUSION")
+#         st.markdown("</div>", unsafe_allow_html=True)
+#     with col2:
+#         # st.image(res["roc_curve"], caption="COURBES ROC - AUC")
+#         st.markdown("<div style='text-align:center;'>", unsafe_allow_html=True)
+#         st.image(res["roc_curve"], caption="COURBES ROC - AUC")
+#         st.markdown("</div>", unsafe_allow_html=True)
+#     # ----------------------------------------
+#     # --- RAPPORT DE CLASSIFICATION DETAILLE
+#     # ----------------------------------------
+#     report_df = pd.read_csv(res["classification_report"])
+#     st.markdown(
+#     """
+#     <div style="color:#005A9C; font-weight:600; font-size:16px; margin-bottom:6px;">
+#         RAPPORT DE CLASSIFICATION DÉTAILLÉ
+#     </div>
+#     """,
+#     unsafe_allow_html=True
+# )
+#     with st.expander("Voir le rapport détaillé", expanded=False):
+#         st.dataframe(report_df, use_container_width=False)
+
+#     # -----------------------------------------------------
+#     # --- Bloc 4 : SEPARABILITE DES CLASSES
+#     # --------------------------------------------------------
+#     st.markdown(
+#     """
+#     <div style="font-size:22px; font-weight:600; color:#5A2D82; margin-top:16px;">
+#         SEPARABILITE DES CLASSES
+#     </div>
+#     """,
+#     unsafe_allow_html=True
+#     )
+#     st.markdown(
+#         """
+#         <div style="font-size:18px; color:#222; margin-bottom:8px;margin-top:16px;">
+#             Cette projection PCA en 3D permet de visualiser la séparation des classes à partir des features extraits par le modèle.
+#         </div>
+#         """,
+#         unsafe_allow_html=True
+#     )
+#     # Ligne 1
+#     row1_col1, row1_col2 = st.columns(2)
+#     with row1_col1:
+#         st.components.v1.html(requests.get(res["pca"]).text, height=490)
+#         st.markdown(
+#         """
+#         <div style="font-size:16px; font-weight:600; color:#005A9C; margin-bottom:4px;margin-left:10px">
+#             Vue A
+#         </div>
+#         <div style="font-size:16px; color:#444; margin-top:0; margin-left:20px">
+#             <strong>LEGENDE :</strong> 
+#             <span style="color:blue;">Benign</span>, 
+#             <span style="color:orange;">Malignant</span>, 
+#             <span style="color:green;">Normal</span>
+#         </div>
+#         """,
+#         unsafe_allow_html=True
+#     )
+#     with row1_col2:
+#         st.components.v1.html(requests.get(res["pca"]).text, height=490)
+#         st.markdown(
+#         """
+#         <div style="font-size:16px; font-weight:600; color:#005A9C; margin-bottom:4px;margin-left:10px">
+#             Vue B
+#         </div>
+#         <div style="font-size:16px; color:#444; margin-top:0;margin-left:20px">
+#             <strong>LEGENDE :</strong> 
+#             <span style="color:blue;">Benign</span>, 
+#             <span style="color:orange;">Malignant</span>, 
+#             <span style="color:green;">Normal</span>
+#         </div>
+#         """,
+#         unsafe_allow_html=True
+#     )
+    
+#     # Ligne 2
+#     row2_col1, row2_col2 = st.columns(2)
+#     with row2_col1:
+#         st.components.v1.html(requests.get(res["pca"]).text, height=490)
+#         st.markdown(
+#         """
+#         <div style="font-size:16px; font-weight:600; color:#005A9C; margin-bottom:4px;margin-left:10px">
+#             Vue C
+#         </div>
+#         <div style="font-size:16px; color:#444; margin-top:0;margin-left:20px">
+#             <strong>LEGENDE :</strong> 
+#             <span style="color:blue;">Benign</span>, 
+#             <span style="color:orange;">Malignant</span>, 
+#             <span style="color:green;">Normal</span>
+#         </div>
+#         """,
+#         unsafe_allow_html=True
+#     )
+#     with row2_col2:
+#         st.components.v1.html(requests.get(res["pca"]).text, height=490)
+#         st.markdown(
+#         """
+#         <div style="font-size:16px; font-weight:600; color:#005A9C; margin-bottom:4px;margin-left:10px">
+#             Vue D
+#         </div>
+#         <div style="font-size:16px; color:#444; margin-top:0;margin-left:20px">
+#             <strong>LEGENDE :</strong> 
+#             <span style="color:blue;">Benign</span>, 
+#             <span style="color:orange;">Malignant</span>, 
+#             <span style="color:green;">Normal</span>
+#         </div>
+#         """,
+#         unsafe_allow_html=True
+#     )
+#     # -----------------------------------------------------
+#     # --- Bloc 5 : EXPLICABILITE
+#     # --------------------------------------------------------    
+#     st.markdown(
+#     """
+#     <div style="font-size:22px; font-weight:600; color:#5A2D82; margin-top:16px;">
+#         EXPLICABILITE
+#     </div>
+#     """,
+#     unsafe_allow_html=True
+#     )
+#     st.markdown("<div class='widget-caption'>Les visualisations GradCAM ci-dessous illustrent les zones activées par le modèle lors de ses prédictions.</div>", unsafe_allow_html=True)
+#     col_left, col_center, col_right = st.columns([2,6,2])
+#     with col_center:
+#         grad_col1, grad_col2 = st.columns([1,1])
+#         with grad_col1:
+#             st.image(res["gradcam_success"], caption="GradCAM - prédiction correcte", width=400)
+#         with grad_col2:
+#             st.image(res["gradcam_error"], caption="GradCAM - prédiction en erreur", width=400)
+    with tab4:
     st.header("APERÇU DES PERFORMANCES")
 
     # --------------------------------------------
     # --- Sélecteur dynamique avec libellé custom
     # --------------------------------------------
-    # --- Libellé personnalisé
     st.markdown(
         """
         <div style="font-size:18px; font-weight:600; color:#005A9C; margin-bottom:12px;margin-top:50px;">
@@ -550,25 +780,20 @@ with tab4:
         unsafe_allow_html=True
     )
     
-    # --- Trois colonnes avec boutons radio simulés
     col1, col2, col3 = st.columns(3)
-    
     with col1:
         if st.button("BASELINE CNN", key="btn_cnn"):
             st.session_state["perf_select"] = "baseline_cnn"
-    
     with col2:
         if st.button("IMPROVED CONVNEXT-TINY", key="btn_icnt"):
             st.session_state["perf_select"] = "icnt"
-    
     with col3:
         if st.button("IMPROVED INCEPTIONV3", key="btn_iiv3"):
             st.session_state["perf_select"] = "iiv3"
-    
-    # --- Valeur sélectionnée
+
     selected_model = st.session_state.get("perf_select", "baseline_cnn")
     res = HF_PERFORMANCES[selected_model]
-    
+
     # ---------------------------------
     # --- Bloc 1 : METRIQUES GLOBALES
     # ---------------------------------
@@ -576,188 +801,122 @@ with tab4:
         """
         <div style="border:2px solid #5A2D82; border-radius:8px; padding:12px; background-color:#F9F6FB; margin:20px 0;">
             <div style="font-size:22px; font-weight:600; color:#5A2D82; margin-bottom:12px;">
-                METRIQUES GLOBALES
+                📊 METRIQUES GLOBALES
             </div>
         """,
         unsafe_allow_html=True
     )
-    
-    # Lecture du CSV
     metrics_df = pd.read_csv(res["metrics"])
-    # --- SUPPRESSION DE COLONNE INUTILE model_path
     if "model_path" in metrics_df.columns:
         metrics_df = metrics_df.drop(columns=["model_path"])
-    
-    # Version stylisée en HTML pour agrandir la police
     styled_df = metrics_df.style.set_table_styles([
         {'selector': 'th', 'props': [('font-size', '18pt'), ('font-weight', 'bold'), ('text-align', 'center')]},
-        {'selector': 'td', 'props': [('font-size', '18pt'), ('text-align', 'center')]}
+        {'selector': 'td', 'props': [('font-size', '16pt'), ('text-align', 'center')]}
     ])
-    
-    # Affichage du tableau stylisé
     st.markdown(styled_df.to_html(), unsafe_allow_html=True)
-    
     st.markdown("</div>", unsafe_allow_html=True)
-
-
 
     # -------------------------------------
     # --- Bloc 2 : APPRENTISSAGE DU MODÈLE
     # -------------------------------------
-    # st.subheader("APPRENTISSAGE DU MODELE")
     st.markdown(
-    """
-    <div style="font-size:22px; font-weight:600; color:#5A2D82; margin-top:16px;">
-        APPRENTISSAGE DU MODÈLE
-    </div>
-    """,
-    unsafe_allow_html=True
+        """
+        <div style="border:2px solid #5A2D82; border-radius:8px; padding:12px; background-color:#F9F6FB; margin:20px 0;">
+            <div style="font-size:22px; font-weight:600; color:#5A2D82; margin-bottom:8px;">
+                📈 APPRENTISSAGE DU MODÈLE
+            </div>
+            <div style="font-size:16px; color:#444; margin-bottom:12px;">
+                Ces courbes montrent la progression de l'entraînement et permettent de vérifier la convergence.
+            </div>
+        """,
+        unsafe_allow_html=True
     )
-    st.markdown("<div class='widget-caption'>Ces courbes montrent la progression de l'entraînement et permettent de vérifier la convergence.</div>", unsafe_allow_html=True)
     col_left, col_center, col_right = st.columns([2,6,2])
     with col_center:
-        st.image(res["learning_curves"], caption="Courbes Loss & Accuracy")    
+        st.image(res["learning_curves"], caption="Courbes Loss & Accuracy")
+    st.markdown("</div>", unsafe_allow_html=True)
 
     # ---------------------------------------------------------
     # --- Bloc 3 : REPARTITION DES PREDICTIONS DANS LES CLASSES
     # ---------------------------------------------------------
     st.markdown(
-    """
-    <div style="font-size:22px; font-weight:600; color:#5A2D82; margin-top:16px;">
-        RÉPARTITION DES PRÉDICTIONS DANS LES CLASSES
-    </div>
-    """,
-    unsafe_allow_html=True
+        """
+        <div style="border:2px solid #5A2D82; border-radius:8px; padding:12px; background-color:#F9F6FB; margin:20px 0;">
+            <div style="font-size:22px; font-weight:600; color:#5A2D82; margin-bottom:8px;">
+                📊 RÉPARTITION DES PRÉDICTIONS DANS LES CLASSES
+            </div>
+        """,
+        unsafe_allow_html=True
     )
-    # ----------------------------------------
-    # --- MATRICE DE CONFUSION ET COURBES ROC (AUC)
-    # ----------------------------------------
     col1, col2 = st.columns(2)
     with col1:
-        # st.image(res["confusion_matrix"], caption="MATRICE DE CONFUSION")
         st.markdown("<div style='text-align:center;'>", unsafe_allow_html=True)
         st.image(res["confusion_matrix"], caption="MATRICE DE CONFUSION")
         st.markdown("</div>", unsafe_allow_html=True)
     with col2:
-        # st.image(res["roc_curve"], caption="COURBES ROC - AUC")
         st.markdown("<div style='text-align:center;'>", unsafe_allow_html=True)
         st.image(res["roc_curve"], caption="COURBES ROC - AUC")
         st.markdown("</div>", unsafe_allow_html=True)
-    # ----------------------------------------
-    # --- RAPPORT DE CLASSIFICATION DETAILLE
-    # ----------------------------------------
+
     report_df = pd.read_csv(res["classification_report"])
     st.markdown(
-    """
-    <div style="color:#005A9C; font-weight:600; font-size:16px; margin-bottom:6px;">
-        RAPPORT DE CLASSIFICATION DÉTAILLÉ
-    </div>
-    """,
-    unsafe_allow_html=True
-)
+        """
+        <div style="color:#005A9C; font-weight:600; font-size:16px; margin-bottom:6px;">
+            RAPPORT DE CLASSIFICATION DÉTAILLÉ
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
     with st.expander("Voir le rapport détaillé", expanded=False):
         st.dataframe(report_df, use_container_width=False)
+    st.markdown("</div>", unsafe_allow_html=True)
 
     # -----------------------------------------------------
     # --- Bloc 4 : SEPARABILITE DES CLASSES
-    # --------------------------------------------------------
-    st.markdown(
-    """
-    <div style="font-size:22px; font-weight:600; color:#5A2D82; margin-top:16px;">
-        SEPARABILITE DES CLASSES
-    </div>
-    """,
-    unsafe_allow_html=True
-    )
+    # -----------------------------------------------------
     st.markdown(
         """
-        <div style="font-size:18px; color:#222; margin-bottom:8px;margin-top:16px;">
-            Cette projection PCA en 3D permet de visualiser la séparation des classes à partir des features extraits par le modèle.
-        </div>
+        <div style="border:2px solid #5A2D82; border-radius:8px; padding:12px; background-color:#F9F6FB; margin:20px 0;">
+            <div style="font-size:22px; font-weight:600; color:#5A2D82; margin-bottom:8px;">
+                🔍 SÉPARABILITÉ DES CLASSES
+            </div>
+            <div style="font-size:16px; color:#444; margin-bottom:12px;">
+                Cette projection PCA en 3D permet de visualiser la séparation des classes à partir des features extraits par le modèle.
+            </div>
         """,
         unsafe_allow_html=True
     )
-    # Ligne 1
     row1_col1, row1_col2 = st.columns(2)
     with row1_col1:
         st.components.v1.html(requests.get(res["pca"]).text, height=490)
-        st.markdown(
-        """
-        <div style="font-size:16px; font-weight:600; color:#005A9C; margin-bottom:4px;margin-left:10px">
-            Vue A
-        </div>
-        <div style="font-size:16px; color:#444; margin-top:0; margin-left:20px">
-            <strong>LEGENDE :</strong> 
-            <span style="color:blue;">Benign</span>, 
-            <span style="color:orange;">Malignant</span>, 
-            <span style="color:green;">Normal</span>
-        </div>
-        """,
-        unsafe_allow_html=True
-    )
+        st.markdown("<div style='text-align:center; font-size:16px; font-weight:600; color:#005A9C;'>Vue A</div>", unsafe_allow_html=True)
     with row1_col2:
         st.components.v1.html(requests.get(res["pca"]).text, height=490)
-        st.markdown(
-        """
-        <div style="font-size:16px; font-weight:600; color:#005A9C; margin-bottom:4px;margin-left:10px">
-            Vue B
-        </div>
-        <div style="font-size:16px; color:#444; margin-top:0;margin-left:20px">
-            <strong>LEGENDE :</strong> 
-            <span style="color:blue;">Benign</span>, 
-            <span style="color:orange;">Malignant</span>, 
-            <span style="color:green;">Normal</span>
-        </div>
-        """,
-        unsafe_allow_html=True
-    )
-    
-    # Ligne 2
+        st.markdown("<div style='text-align:center; font-size:16px; font-weight:600; color:#005A9C;'>Vue B</div>", unsafe_allow_html=True)
     row2_col1, row2_col2 = st.columns(2)
     with row2_col1:
         st.components.v1.html(requests.get(res["pca"]).text, height=490)
-        st.markdown(
-        """
-        <div style="font-size:16px; font-weight:600; color:#005A9C; margin-bottom:4px;margin-left:10px">
-            Vue C
-        </div>
-        <div style="font-size:16px; color:#444; margin-top:0;margin-left:20px">
-            <strong>LEGENDE :</strong> 
-            <span style="color:blue;">Benign</span>, 
-            <span style="color:orange;">Malignant</span>, 
-            <span style="color:green;">Normal</span>
-        </div>
-        """,
-        unsafe_allow_html=True
-    )
+        st.markdown("<div style='text-align:center; font-size:16px; font-weight:600; color:#005A9C;'>Vue C</div>", unsafe_allow_html=True)
     with row2_col2:
         st.components.v1.html(requests.get(res["pca"]).text, height=490)
-        st.markdown(
+        st.markdown("<div style='text-align:center; font-size:16px; font-weight:600; color:#005A9C;'>Vue D</div>", unsafe_allow_html=True)
+    st.markdown("</div>", unsafe_allow_html=True)
+
+    # -----------------------------------------------------
+    # --- Bloc 5 : EXPLICABILITE
+    # -----------------------------------------------------
+    st.markdown(
         """
-        <div style="font-size:16px; font-weight:600; color:#005A9C; margin-bottom:4px;margin-left:10px">
-            Vue D
-        </div>
-        <div style="font-size:16px; color:#444; margin-top:0;margin-left:20px">
-            <strong>LEGENDE :</strong> 
-            <span style="color:blue;">Benign</span>, 
-            <span style="color:orange;">Malignant</span>, 
-            <span style="color:green;">Normal</span>
-        </div>
+        <div style="border:2px solid #5A2D82; border-radius:8px; padding:12px; background-color:#F9F6FB; margin:20px 0;">
+            <div style="font-size:22px; font-weight:600; color:#5A2D82; margin-bottom:8px;">
+                🔎 EXPLICABILITÉ
+            </div>
+            <div style="font-size:16px; color:#444; margin-bottom:12px;">
+                Les visualisations GradCAM ci-dessous illustrent les zones activées par le modèle lors de ses prédictions.
+            </div>
         """,
         unsafe_allow_html=True
     )
-    # -----------------------------------------------------
-    # --- Bloc 5 : EXPLICABILITE
-    # --------------------------------------------------------    
-    st.markdown(
-    """
-    <div style="font-size:22px; font-weight:600; color:#5A2D82; margin-top:16px;">
-        EXPLICABILITE
-    </div>
-    """,
-    unsafe_allow_html=True
-    )
-    st.markdown("<div class='widget-caption'>Les visualisations GradCAM ci-dessous illustrent les zones activées par le modèle lors de ses prédictions.</div>", unsafe_allow_html=True)
     col_left, col_center, col_right = st.columns([2,6,2])
     with col_center:
         grad_col1, grad_col2 = st.columns([1,1])
@@ -765,6 +924,8 @@ with tab4:
             st.image(res["gradcam_success"], caption="GradCAM - prédiction correcte", width=400)
         with grad_col2:
             st.image(res["gradcam_error"], caption="GradCAM - prédiction en erreur", width=400)
+    st.markdown("</div>", unsafe_allow_html=True)
+
 
     # ----------------------------------------------
     # --- Bloc 5 : ARCHITECTURE DU MODELE technique
