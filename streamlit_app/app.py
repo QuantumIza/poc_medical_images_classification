@@ -71,7 +71,7 @@ classes_iiv3 = json.loads(requests.get(json_url_iiv3).text)
 # -------------------------------
 st.set_page_config(
     page_title="Dashboard POC – Projet 7",
-    layout="wide"
+    layout="centered"
 )
 st.title("DASHBOARD – BASELINE CNN VS MODELE ICNT LS")
 
