@@ -613,15 +613,24 @@ with tab4:
     """,
     unsafe_allow_html=True
     )
+    # ----------------------------------------
+    # --- MATRICE DE CONFUSION ET COURBES ROC (AUC)
+    # ----------------------------------------
     col1, col2 = st.columns(2)
     with col1:
-        st.image(res["confusion_matrix"], caption="MATRICE DE CONFUSION")
+        # st.image(res["confusion_matrix"], caption="MATRICE DE CONFUSION")
+        st.markdown("<div style='text-align:center;'>", unsafe_allow_html=True)
+        st.image(res["confusion_matrix"], caption="MATRICE DE CONFUSION", use_column_width=True)
+        st.markdown("</div>", unsafe_allow_html=True)
     with col2:
-        st.image(res["roc_curve"], caption="COURBES ROC - AUC")
-
+        # st.image(res["roc_curve"], caption="COURBES ROC - AUC")
+        st.markdown("<div style='text-align:center;'>", unsafe_allow_html=True)
+        st.image(res["roc_curve"], caption="COURBES ROC - AUC", use_column_width=True)
+        st.markdown("</div>", unsafe_allow_html=True)
+    # ----------------------------------------
+    # --- RAPPORT DE CLASSIFICATION DETAILLE
+    # ----------------------------------------
     report_df = pd.read_csv(res["classification_report"])
-    # with st.expander("RAPPORT DE CLASSIFICATION DETAILLE"):
-    #     st.dataframe(report_df, use_container_width=False)
     st.markdown(
     """
     <div style="color:#005A9C; font-weight:600; font-size:16px; margin-bottom:6px;">
@@ -630,11 +639,8 @@ with tab4:
     """,
     unsafe_allow_html=True
 )
-
     with st.expander("Voir le rapport détaillé", expanded=False):
         st.dataframe(report_df, use_container_width=False)
-
-
 
     # -----------------------------------------------------
     # --- Bloc 4 : SEPARABILITE DES CLASSES
