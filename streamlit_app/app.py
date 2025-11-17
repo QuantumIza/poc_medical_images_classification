@@ -757,6 +757,9 @@ with tab3:
 # ----------------------------------------------------
 # COMPOSANT GRAPHIQUE ONGLET 5 : COMPARAISON MODELES
 # ----------------------------------------------------
+# ----------------------------------------------------
+# COMPOSANT GRAPHIQUE ONGLET 5 : COMPARAISON MODELES
+# ----------------------------------------------------
 with tab5:
     st.header("COMPARAISON DES MODÈLES")
 
@@ -812,43 +815,40 @@ with tab5:
     st.markdown("</div>", unsafe_allow_html=True)
 
     # ---------------------------------
-    # --- Bloc 4 : Scatter F1_mean vs Recall_mean
+    # --- Bloc 4 : Scatter + Barplots (équilibre inter-classes)
     # ---------------------------------
     st.markdown(
         """
         <div style="border:2px solid #5A2D82; border-radius:8px;
                     padding:12px; background-color:#F9F6FB; margin:20px 0;">
             <div style="font-size:22px; font-weight:600; color:#5A2D82; margin-bottom:8px;">
-                ⚖️ ÉQUILIBRE INTER-CLASSES : F1_mean vs Recall_mean
+                ⚖️ ÉQUILIBRE INTER-CLASSES : F1_mean vs Recall_mean & DISPERSION
+            </div>
+            <div style="font-size:16px; color:#444; margin-bottom:12px;">
+                Le scatter plot suggère que ICNT est meilleur que le baseline CNN. 
+                Mais les barplots avec barres d'erreur révèlent une dispersion plus forte, 
+                donc une équité moindre.
             </div>
         """,
         unsafe_allow_html=True
     )
-    st.image(HF_COMPARAISON["equilibre"]["scatter"], width=600)
-    st.markdown("<div style='text-align:center; font-size:16px; font-weight:600;'>Scatter plot F1_mean vs Recall_mean</div>", unsafe_allow_html=True)
+
+    col1, col2, col3 = st.columns([2,2,2])
+
+    with col1:
+        st.image(HF_COMPARAISON["equilibre"]["scatter"], width=380)
+        st.markdown("<div style='text-align:center; font-size:16px; font-weight:600;'>Scatter F1_mean vs Recall_mean</div>", unsafe_allow_html=True)
+
+    with col2:
+        st.image(HF_COMPARAISON["equilibre"]["bar_recall"], width=380)
+        st.markdown("<div style='text-align:center; font-size:16px; font-weight:600;'>Recall moyen ± écart-type</div>", unsafe_allow_html=True)
+
+    with col3:
+        st.image(HF_COMPARAISON["equilibre"]["bar_f1"], width=380)
+        st.markdown("<div style='text-align:center; font-size:16px; font-weight:600;'>F1 moyen ± écart-type</div>", unsafe_allow_html=True)
+
     st.markdown("</div>", unsafe_allow_html=True)
 
-    # ---------------------------------
-    # --- Bloc 5 : Bar plots avec barres d'erreur
-    # ---------------------------------
-    st.markdown(
-        """
-        <div style="border:2px solid #5A2D82; border-radius:8px;
-                    padding:12px; background-color:#F9F6FB; margin:20px 0;">
-            <div style="font-size:22px; font-weight:600; color:#5A2D82; margin-bottom:8px;">
-                📊 DISPERSION DES MÉTRIQUES
-            </div>
-        """,
-        unsafe_allow_html=True
-    )
-    col1, col2 = st.columns(2)
-    with col1:
-        st.image(HF_COMPARAISON["equilibre"]["bar_recall"], width=400)
-        st.markdown("<div style='text-align:center; font-size:16px; font-weight:600;'>Recall moyen ± écart-type</div>", unsafe_allow_html=True)
-    with col2:
-        st.image(HF_COMPARAISON["equilibre"]["bar_f1"], width=400)
-        st.markdown("<div style='text-align:center; font-size:16px; font-weight:600;'>F1 moyen ± écart-type</div>", unsafe_allow_html=True)
-    st.markdown("</div>", unsafe_allow_html=True)
 
 
 
