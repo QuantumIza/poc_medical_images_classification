@@ -754,58 +754,14 @@ with tab3:
 # ----------------------------------------------------
 # COMPOSANT GRAPHIQUE ONGLET 5 : COMPARAISON MODELES
 # ----------------------------------------------------
+# ----------------------------------------------------
+# COMPOSANT GRAPHIQUE ONGLET 5 : COMPARAISON MODELES
+# ----------------------------------------------------
 with tab5:
     st.header("COMPARAISON DES MODÈLES")
 
     # ---------------------------------
-    # --- Bloc 1 : Dynamique d'apprentissage
-    # ---------------------------------
-    st.markdown(
-        """
-        <div style="border:2px solid #5A2D82; border-radius:8px;
-                    padding:12px; background-color:#F9F6FB; margin:20px 0;">
-            <div style="font-size:22px; font-weight:600; color:#5A2D82; margin-bottom:8px;">
-                📈 DYNAMIQUE D'ENTRAÎNEMENT DES MODÈLES
-            </div>
-        """,
-        unsafe_allow_html=True
-    )
-    st.image(HF_COMPARAISON["apprentissage"]["learning_curves"])
-    st.markdown("</div>", unsafe_allow_html=True)
-
-    # ---------------------------------
-    # --- Bloc 2 : Équité des modèles
-    # ---------------------------------
-    st.markdown(
-        """
-        <div style="border:2px solid #5A2D82; border-radius:8px;
-                    padding:12px; background-color:#F9F6FB; margin:20px 0;">
-            <div style="font-size:22px; font-weight:600; color:#5A2D82; margin-bottom:8px;">
-                ⚖️ ÉQUILIBRE DES PRÉDICTIONS - DISPERSION DES MÉTRIQUES F1 & Recall
-            </div>
-        """,
-        unsafe_allow_html=True
-    )
-    stats_df = pd.read_csv(HF_COMPARAISON["equilibre"]["stats"])
-    st.dataframe(stats_df, use_container_width=True)
-
-    col1, col2 = st.columns(2)
-    with col1:
-        st.image(HF_COMPARAISON["equilibre"]["bar_recall"], width=400)
-        st.markdown("<div style='text-align:center; font-size:16px; font-weight:600;'>Recall moyen avec écart-types</div>", unsafe_allow_html=True)
-    with col2:
-        st.image(HF_COMPARAISON["equilibre"]["bar_f1"], width=400)
-        st.markdown("<div style='text-align:center; font-size:16px; font-weight:600;'>F1 moyen avec écart-types</div>", unsafe_allow_html=True)
-
-    st.image(HF_COMPARAISON["equilibre"]["scatter"], width=600)
-    st.markdown("<div style='text-align:center; font-size:16px; font-weight:600;'>Scatter plot F1 vs Recall</div>", unsafe_allow_html=True)
-
-    st.image(HF_COMPARAISON["equilibre"]["matrices_confusion"])
-    st.markdown("<div style='text-align:center; font-size:16px; font-weight:600;'>Matrices de confusion comparatives</div>", unsafe_allow_html=True)
-    st.markdown("</div>", unsafe_allow_html=True)
-
-    # ---------------------------------
-    # --- Bloc 3 : Métriques globales
+    # --- Bloc 1 : Métriques globales
     # ---------------------------------
     st.markdown(
         """
@@ -819,24 +775,81 @@ with tab5:
     )
     metrics_df = pd.read_csv(HF_COMPARAISON["metrics"]["csv"])
     st.dataframe(metrics_df, use_container_width=True)
-
-    st.image(HF_COMPARAISON["metrics"]["scatter"], width=600)
-    st.markdown("<div style='text-align:center; font-size:16px; font-weight:600;'>Scatter plots de comparaison par couple de métriques</div>", unsafe_allow_html=True)
-
-    col3, col4, col5 = st.columns(3)
-    with col3:
-        st.image(HF_COMPARAISON["metrics"]["radar_classes"], width=300)
-        st.markdown("<div style='text-align:center; font-size:16px; font-weight:600;'>Couverture des classes</div>", unsafe_allow_html=True)
-    with col4:
-        st.image(HF_COMPARAISON["metrics"]["radar_perf"], width=300)
-        st.markdown("<div style='text-align:center; font-size:16px; font-weight:600;'>Performances globales</div>", unsafe_allow_html=True)
-    with col5:
-        st.image(HF_COMPARAISON["metrics"]["radar_overfit"], width=300)
-        st.markdown("<div style='text-align:center; font-size:16px; font-weight:600;'>Sur-apprentissage relatif</div>", unsafe_allow_html=True)
-
-    st.image(HF_COMPARAISON["metrics"]["roc_curves"], width=800)
-    st.markdown("<div style='text-align:center; font-size:16px; font-weight:600;'>Courbes ROC comparatives</div>", unsafe_allow_html=True)
     st.markdown("</div>", unsafe_allow_html=True)
+
+    # ---------------------------------
+    # --- Bloc 2 : Scatter plots multi-métriques
+    # ---------------------------------
+    st.markdown(
+        """
+        <div style="border:2px solid #5A2D82; border-radius:8px;
+                    padding:12px; background-color:#F9F6FB; margin:20px 0;">
+            <div style="font-size:22px; font-weight:600; color:#5A2D82; margin-bottom:8px;">
+                📈 SCATTER PLOTS DE COMPARAISON
+            </div>
+        """,
+        unsafe_allow_html=True
+    )
+    st.image(HF_COMPARAISON["metrics"]["scatter"], width=700)
+    st.markdown("<div style='text-align:center; font-size:16px; font-weight:600;'>Comparaison par couples de métriques</div>", unsafe_allow_html=True)
+    st.markdown("</div>", unsafe_allow_html=True)
+
+    # ---------------------------------
+    # --- Bloc 3 : Radar performances globales
+    # ---------------------------------
+    st.markdown(
+        """
+        <div style="border:2px solid #5A2D82; border-radius:8px;
+                    padding:12px; background-color:#F9F6FB; margin:20px 0;">
+            <div style="font-size:22px; font-weight:600; color:#5A2D82; margin-bottom:8px;">
+                🕸️ PERFORMANCES GLOBALES (valeurs brutes)
+            </div>
+        """,
+        unsafe_allow_html=True
+    )
+    st.image(HF_COMPARAISON["metrics"]["radar_perf"], width=500)
+    st.markdown("<div style='text-align:center; font-size:16px; font-weight:600;'>Radar plot des performances globales</div>", unsafe_allow_html=True)
+    st.markdown("</div>", unsafe_allow_html=True)
+
+    # ---------------------------------
+    # --- Bloc 4 : Scatter F1_mean vs Recall_mean
+    # ---------------------------------
+    st.markdown(
+        """
+        <div style="border:2px solid #5A2D82; border-radius:8px;
+                    padding:12px; background-color:#F9F6FB; margin:20px 0;">
+            <div style="font-size:22px; font-weight:600; color:#5A2D82; margin-bottom:8px;">
+                ⚖️ ÉQUILIBRE INTER-CLASSES : F1_mean vs Recall_mean
+            </div>
+        """,
+        unsafe_allow_html=True
+    )
+    st.image(HF_COMPARAISON["equilibre"]["scatter"], width=600)
+    st.markdown("<div style='text-align:center; font-size:16px; font-weight:600;'>Scatter plot F1_mean vs Recall_mean</div>", unsafe_allow_html=True)
+    st.markdown("</div>", unsafe_allow_html=True)
+
+    # ---------------------------------
+    # --- Bloc 5 : Bar plots avec barres d'erreur
+    # ---------------------------------
+    st.markdown(
+        """
+        <div style="border:2px solid #5A2D82; border-radius:8px;
+                    padding:12px; background-color:#F9F6FB; margin:20px 0;">
+            <div style="font-size:22px; font-weight:600; color:#5A2D82; margin-bottom:8px;">
+                📊 DISPERSION DES MÉTRIQUES
+            </div>
+        """,
+        unsafe_allow_html=True
+    )
+    col1, col2 = st.columns(2)
+    with col1:
+        st.image(HF_COMPARAISON["equilibre"]["bar_recall"], width=400)
+        st.markdown("<div style='text-align:center; font-size:16px; font-weight:600;'>Recall moyen ± écart-type</div>", unsafe_allow_html=True)
+    with col2:
+        st.image(HF_COMPARAISON["equilibre"]["bar_f1"], width=400)
+        st.markdown("<div style='text-align:center; font-size:16px; font-weight:600;'>F1 moyen ± écart-type</div>", unsafe_allow_html=True)
+    st.markdown("</div>", unsafe_allow_html=True)
+
 
 
 
