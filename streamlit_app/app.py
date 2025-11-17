@@ -554,9 +554,9 @@ with tab4:
     with col_center:
         grad_col1, grad_col2 = st.columns([1,1])
         with grad_col1:
-            st.image(res["gradcam_success"], caption="GradCAM - prédiction correcte", width=500)
+            st.image(res["gradcam_success"], caption="GradCAM - prédiction correcte", width=300)
         with grad_col2:
-            st.image(res["gradcam_error"], caption="GradCAM - prédiction en erreur", width=500)
+            st.image(res["gradcam_error"], caption="GradCAM - prédiction en erreur", width=300)
 
     # --- Bloc 5 : Synthèse technique
     st.subheader("5. Synthèse technique")
