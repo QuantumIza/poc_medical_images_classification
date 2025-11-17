@@ -793,7 +793,7 @@ with tab5:
         """,
         unsafe_allow_html=True
     )
-    st.image(HF_COMPARAISON["metrics"]["scatter"], width=700)
+    st.image(HF_COMPARAISON["metrics"]["scatter"])
     st.markdown("<div style='text-align:center; font-size:16px; font-weight:600;'>Comparaison par couples de métriques</div>", unsafe_allow_html=True)
     st.markdown("</div>", unsafe_allow_html=True)
 
