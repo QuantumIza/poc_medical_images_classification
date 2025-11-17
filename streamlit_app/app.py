@@ -836,7 +836,7 @@ with tab5:
     col1, col2, col3 = st.columns([2,2,2])
 
     with col1:
-        st.image(HF_COMPARAISON["equilibre"]["scatter"])
+        st.image(HF_COMPARAISON["equilibre"]["scatter"], , width=300)
         st.markdown("<div style='text-align:center; font-size:16px; font-weight:600;'>Scatter F1_mean vs Recall_mean</div>", unsafe_allow_html=True)
 
     with col2:
