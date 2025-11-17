@@ -108,6 +108,7 @@ model = load_model_cnn()
 df = load_dataframe()
 df_sample = load_sample_dataframe()
 
+
 # -----------------------------------------------------------------------------
 # --- CHARGEMENT DU FICHIER CORRESPONDANCE CLASSES ET PRED POUR BASELINE CNN
 # ------------------------------------------------------------------------------
@@ -298,6 +299,11 @@ with tab1:
 # ----------------------------------------------------
 with tab2:
     st.header("COMPARAISON DES PRÉDICTIONS : BASELINE CNN VS CONVNEXT-TINY")
+    icnt_model = load_model_ictn()
+    # Libérer IIV3 si présent
+    if "iiv3_model" in globals():
+        del iiv3_model
+        gc.collect()
 
     # --- Palette harmonisée
     model_colors = {
@@ -667,6 +673,11 @@ st.markdown("</div>", unsafe_allow_html=True)
 # ----------------------------------------------------
 with tab3:
     st.header("COMPARAISON DES PRÉDICTIONS : BASELINE CNN VS INCEPTIONV3")
+    iiv3_model = load_model_iiv3()
+    # Libérer ICNT si présent
+    if "icnt_model" in globals():
+        del icnt_model
+        gc.collect()
 
     # --- Palette harmonisée
     model_colors = {
