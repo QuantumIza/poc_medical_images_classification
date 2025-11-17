@@ -742,17 +742,17 @@ with tab3:
     df_blind = load_blind_test_sample()
 
     # Sélecteur d'image
-    selected_row = st.selectbox(
+    selected_row_iiv3  = st.selectbox(
         "Choisissez une image du blind test",
         df_blind["source_path"].tolist(),
         key="selectbox_cnn_vs_iiv3"
     )
 
-    if selected_row:
+    if selected_row_iiv3 :
         import altair as alt
 
         # Charger l'image depuis HuggingFace
-        img_url = selected_row
+        img_url = selected_row_iiv3 
         img = Image.open(requests.get(img_url, stream=True).raw).convert("RGB")
         img = img.resize((250, 250))
 
