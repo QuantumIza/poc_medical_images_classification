@@ -585,7 +585,7 @@ with tab4:
     )
     res = HF_PERFORMANCES[selected_model]
 
-
+    # --- Bloc 3 : Performance par classe
     st.subheader("3. Performance par classe")
     col1, col2 = st.columns(2)
     with col1:
@@ -594,19 +594,17 @@ with tab4:
         st.image(res["roc_curve"], caption="Courbe ROC", width=600)
 
     report_df = pd.read_csv(res["classification_report"])
-with st.expander("Rapport de classification détaillé"):
-    st.dataframe(report_df, use_container_width=False)
+    with st.expander("Rapport de classification détaillé"):
+        st.dataframe(report_df, use_container_width=False)
 
-# Ensuite tu continues avec PCA
-st.markdown("<div class='widget-caption'>Projection PCA et visualisations GradCAM pour comprendre les décisions du modèle.</div>", unsafe_allow_html=True)
-col_left, col_center, col_right = st.columns([2,6,2])
-with col_center:
-    st.components.v1.html(requests.get(res["pca"]).text, height=450)
+    # --- Bloc 4 : Analyse qualitative et interprétabilité
+    st.subheader("4. Analyse qualitative et interprétabilité")
+    st.markdown("<div class='widget-caption'>Projection PCA et visualisations GradCAM pour comprendre les décisions du modèle.</div>", unsafe_allow_html=True)
+    col_left, col_center, col_right = st.columns([2,6,2])
+    with col_center:
+        st.components.v1.html(requests.get(res["pca"]).text, height=450)
 
-
-
-    
- # GradCAM côte à côte et centrées
+    # GradCAM côte à côte et centrées
     col_left, col_center, col_right = st.columns([2,6,2])
     with col_center:
         grad_col1, grad_col2 = st.columns([1,1])
@@ -620,9 +618,6 @@ with col_center:
     with st.expander("Résumé du modèle"):
         summary_df = pd.read_csv(res["summary"])
         st.dataframe(summary_df, use_container_width=False)
-
-
-
 
 
 
