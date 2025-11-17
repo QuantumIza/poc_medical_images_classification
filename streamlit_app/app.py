@@ -416,7 +416,7 @@ with tab1:
 # COMPOSANT GRAPHIQUE ONGLET 2 : PREDICTIONS CNN vs ICTN
 # ----------------------------------------------------
 with tab2:
-    st.header("🔮 COMPARAISON DES PRÉDICTIONS : BASELINE CNN VS CONVNEXT-TINY")
+    st.header("COMPARAISON DES PRÉDICTIONS : BASELINE CNN VS CONVNEXT-TINY")
 
     # --- Palette harmonisée
     model_colors = {
@@ -430,7 +430,7 @@ with tab2:
         <div style="border:2px solid #5A2D82; border-radius:8px;
                     padding:12px; background-color:#F9F6FB; margin:20px 0;">
             <div style="font-size:20px; font-weight:600; color:#5A2D82; margin-bottom:8px;">
-                🖼️ Sélectionnez une image du blind test pour comparer les prédictions des deux modèles.
+                Sélectionnez une image du blind test pour comparer les prédictions des deux modèles.
             </div>
         """,
         unsafe_allow_html=True
@@ -558,32 +558,96 @@ with tab2:
                 st.altair_chart(chart_ictn, use_container_width=True)
 
         # --- Bloc 5 : Synthèse finale
-        if pred_base and pred_ictn:
+        # --- Bloc 5 : Synthèse finale (corrigée)
+def format_pct(x):
+    return f"{int(round(float(x) * 100))}%"
+
+epsilon = 1e-3  # tolérance pour égalité de confiance
+
+# Récupération des prédictions et confiances si disponibles
+pred_base_str, pred_ictn_str = None, None
+conf_base, conf_ictn = None, None
+
+if use_baseline and pred_base is not None:
+    pred_base_str = pred_base.upper()
+    conf_base = float(np.max(y_pred_base[0]))
+
+if use_ictn and pred_ictn is not None:
+    pred_ictn_str = pred_ictn.upper()
+    conf_ictn = float(np.max(y_pred_ictn[0]))
+
+# Affichage de la synthèse
+st.markdown(
+    """
+    <div style="border:2px solid #5A2D82; border-radius:8px;
+                padding:12px; background-color:#F9F6FB; margin:20px 0;">
+        <div style="font-size:20px; font-weight:600; color:#5A2D82; margin-bottom:8px;">
+            🧠 Synthèse comparative
+        </div>
+    """,
+    unsafe_allow_html=True
+)
+
+# Cas 1 : les deux modèles sont disponibles
+if pred_base_str and pred_ictn_str:
+    if pred_base_str == pred_ictn_str:
+        # Même classe prédite : on compare les confiances
+        base_pct = format_pct(conf_base)
+        ictn_pct = format_pct(conf_ictn)
+
+        if abs(conf_base - conf_ictn) < epsilon:
             st.markdown(
-                """
-                <div style="border:2px solid #5A2D82; border-radius:8px;
-                            padding:12px; background-color:#F9F6FB; margin:20px 0;">
-                    <div style="font-size:20px; font-weight:600; color:#5A2D82; margin-bottom:8px;">
-                        🧠 Synthèse comparative
-                    </div>
-                """,
+                f"<p style='font-size:16px;'>Les deux modèles ont prédit <b>{pred_base_str}</b> "
+                f"avec une confiance comparable (CNN {base_pct}, ICTN {ictn_pct}).</p>",
                 unsafe_allow_html=True
             )
-            if pred_base == pred_ictn:
-                confidence_base = round(np.max(y_pred_base[0]), 2)
-                confidence_ictn = round(np.max(y_pred_ictn[0]), 2)
-                st.markdown(
-                    f"<p style='font-size:16px;'>Les deux modèles ont prédit <b>{pred_base.upper()}</b>. "
-                    f"Le modèle ICTN est plus confiant ({confidence_ictn}) que le modèle CNN ({confidence_base}).</p>",
-                    unsafe_allow_html=True
-                )
-            else:
-                st.markdown(
-                    f"<p style='font-size:16px;'>Les modèles sont en désaccord : CNN prédit <b>{pred_base.upper()}</b>, "
-                    f"tandis que ICTN prédit <b>{pred_ictn.upper()}</b>. Cette divergence mérite une analyse approfondie.</p>",
-                    unsafe_allow_html=True
-                )
-            st.markdown("</div>", unsafe_allow_html=True)
+        elif conf_ictn > conf_base:
+            st.markdown(
+                f"<p style='font-size:16px;'>Les deux modèles ont prédit <b>{pred_base_str}</b>. "
+                f"<b>ICTN</b> est plus confiant ({ictn_pct}) que <b>CNN</b> ({base_pct}).</p>",
+                unsafe_allow_html=True
+            )
+        else:
+            st.markdown(
+                f"<p style='font-size:16px;'>Les deux modèles ont prédit <b>{pred_base_str}</b>. "
+                f"<b>CNN</b> est plus confiant ({base_pct}) que <b>ICTN</b> ({ictn_pct}).</p>",
+                unsafe_allow_html=True
+            )
+    else:
+        # Désaccord : on affiche clairement les deux et leurs confiances
+        base_pct = format_pct(conf_base)
+        ictn_pct = format_pct(conf_ictn)
+        st.markdown(
+            f"<p style='font-size:16px;'>Les modèles sont en désaccord : "
+            f"<b>CNN</b> prédit <b>{pred_base_str}</b> ({base_pct}) "
+            f"tandis que <b>ICTN</b> prédit <b>{pred_ictn_str}</b> ({ictn_pct}). "
+            f"Cette divergence mérite une analyse approfondie (examen de l’image, saliences, et cas similaires).</p>",
+            unsafe_allow_html=True
+        )
+
+# Cas 2 : un seul modèle actif
+elif pred_base_str and not pred_ictn_str:
+    base_pct = format_pct(conf_base)
+    st.markdown(
+        f"<p style='font-size:16px;'>Seul <b>CNN</b> est activé : prédiction <b>{pred_base_str}</b> "
+        f"avec une confiance de {base_pct}.</p>",
+        unsafe_allow_html=True
+    )
+elif pred_ictn_str and not pred_base_str:
+    ictn_pct = format_pct(conf_ictn)
+    st.markdown(
+        f"<p style='font-size:16px;'>Seul <b>ICTN</b> est activé : prédiction <b>{pred_ictn_str}</b> "
+        f"avec une confiance de {ictn_pct}.</p>",
+        unsafe_allow_html=True
+    )
+else:
+    st.markdown(
+        "<p style='font-size:16px;'>Aucun modèle activé pour la synthèse.</p>",
+        unsafe_allow_html=True
+    )
+
+st.markdown("</div>", unsafe_allow_html=True)
+
 
 
 
