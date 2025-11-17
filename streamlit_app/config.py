@@ -59,7 +59,7 @@ HF_PERFORMANCES = {
         "gradcam_error": "https://huggingface.co/QuantumIza/poc-baseline-cnn/resolve/main/baseline_cnn/critical_errors/gradcam_error_malignant_to_benign_true_malignant_pred_benign_conf_0.95_idx_7234.png"
     },
     "icnt": {
-        "learning_curves": "https://huggingface.co/QuantumIza/poc-baseline-cnn/resolve/main/icnt/assets/learning_curves_loss_cnn.png",
+        "learning_curves": "https://huggingface.co/QuantumIza/poc-baseline-cnn/resolve/main/icnt/assets/learning_curves_loss_icnt.png",
         "confusion_matrix": "https://huggingface.co/QuantumIza/poc-baseline-cnn/resolve/main/icnt/assets/matrice_confusion_icnt.png",
         "classification_report": "https://huggingface.co/QuantumIza/poc-baseline-cnn/resolve/main/icnt/test_evaluation/classification_report_icnt.csv",
         "roc_curve": "https://huggingface.co/QuantumIza/poc-baseline-cnn/resolve/main/icnt/assets/roc_multiclasse_icnt.png",
