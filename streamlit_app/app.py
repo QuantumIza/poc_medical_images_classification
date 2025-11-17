@@ -534,9 +534,9 @@ with tab4:
     st.subheader("3. Performance par classe")
     col1, col2 = st.columns(2)
     with col1:
-        st.image(res["confusion_matrix"], caption="Matrice de confusion")
+        st.image(res["confusion_matrix"], caption="Matrice de confusion", use_column_width=True)
     with col2:
-        st.image(res["roc_curve"], caption="Courbe ROC")
+        st.image(res["roc_curve"], caption="Courbe ROC", use_column_width=True)
 
     report_df = pd.read_csv(res["classification_report"])
     with st.expander("Rapport de classification détaillé"):
@@ -549,18 +549,21 @@ with tab4:
     with col_center:
         st.components.v1.html(requests.get(res["pca"]).text, height=600)
 
-    # GradCAM côte à côte
-    col1, col2 = st.columns([1,1])
-    with col1:
-        st.image(res["gradcam_success"], caption="GradCAM - prédiction correcte")
-    with col2:
-        st.image(res["gradcam_error"], caption="GradCAM - prédiction en erreur")
+    # GradCAM côte à côte et centrées
+    col_left, col_center, col_right = st.columns([2,6,2])
+    with col_center:
+        grad_col1, grad_col2 = st.columns([1,1])
+        with grad_col1:
+            st.image(res["gradcam_success"], caption="GradCAM - prédiction correcte")
+        with grad_col2:
+            st.image(res["gradcam_error"], caption="GradCAM - prédiction en erreur")
 
     # --- Bloc 5 : Synthèse technique
     st.subheader("5. Synthèse technique")
     with st.expander("Résumé du modèle"):
         summary_df = pd.read_csv(res["summary"])
         st.dataframe(summary_df, use_container_width=False)
+
 
 
 
