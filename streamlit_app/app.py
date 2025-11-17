@@ -613,7 +613,7 @@ with tab4:
             """,
             unsafe_allow_html=True
         )
-        res = HF_PERFORMANCES[selected_model]
+    res = HF_PERFORMANCES[selected_model]
 
     # ---------------------------------
     # --- Bloc 1 : METRIQUES GLOBALES
