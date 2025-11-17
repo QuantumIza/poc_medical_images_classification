@@ -845,66 +845,65 @@ with tab3:
             """,
             unsafe_allow_html=True
         )
-            # Cas 1 : les deux modèles sont disponibles
+        # Cas 1 : les deux modèles sont disponibles
         if pred_base_str and pred_iiv3_str:
-                if pred_base_str == pred_iiv3_str:
-                    # Même classe prédite : on compare les confiances
-                    base_pct = format_pct(conf_base)
-                    iiv3_pct = format_pct(conf_iiv3)
-    
-                    if abs(conf_base - conf_iiv3) < epsilon:
-                        st.markdown(
-                            f"<p style='font-size:16px;'>Les deux modèles ont prédit <b>{pred_base_str}</b> "
-                            f"avec une confiance comparable (CNN {base_pct}, IIV3 {iiv3_pct}).</p>",
-                            unsafe_allow_html=True
-                        )
-                    elif conf_iiv3 > conf_base:
-                        st.markdown(
-                            f"<p style='font-size:16px;'>Les deux modèles ont prédit <b>{pred_base_str}</b>. "
-                            f"<b>IIV3</b> est plus confiant ({iiv3_pct}) que <b>CNN</b> ({base_pct}).</p>",
-                            unsafe_allow_html=True
-                        )
-                    else:
-                        st.markdown(
-                            f"<p style='font-size:16px;'>Les deux modèles ont prédit <b>{pred_base_str}</b>. "
-                            f"<b>CNN</b> est plus confiant ({base_pct}) que <b>IIV3</b> ({iiv3_pct}).</p>",
-                            unsafe_allow_html=True
-                        )
-                else:
-                    # Désaccord : on affiche clairement les deux et leurs confiances
-                    base_pct = format_pct(conf_base)
-                    iiv3_pct = format_pct(conf_iiv3)
-                    st.markdown(
-                        f"<p style='font-size:16px;'>Les modèles sont en désaccord : "
-                        f"<b>CNN</b> prédit <b>{pred_base_str}</b> ({base_pct}) "
-                        f"tandis que <b>IIV3</b> prédit <b>{pred_iiv3_str}</b> ({iiv3_pct}). "
-                        f"Cette divergence mérite une analyse approfondie (examen de l’image, saliences, et cas similaires).</p>",
-                        unsafe_allow_html=True
-                    )
-    
-                # Cas 2 : un seul modèle actif
-                elif pred_base_str and not pred_iiv3_str:
-                    base_pct = format_pct(conf_base)
-                    st.markdown(
-                        f"<p style='font-size:16px;'>Seul <b>CNN</b> est activé : prédiction <b>{pred_base_str}</b> "
-                        f"avec une confiance de {base_pct}.</p>",
-                        unsafe_allow_html=True
-                    )
-                elif pred_iiv3_str and not pred_base_str:
-                    iiv3_pct = format_pct(conf_iiv3)
-                    st.markdown(
-                        f"<p style='font-size:16px;'>Seul <b>IIV3</b> est activé : prédiction <b>{pred_iiv3_str}</b> "
-                        f"avec une confiance de {iiv3_pct}.</p>",
-                        unsafe_allow_html=True
-                    )
-                else:
-                    st.markdown(
-                        "<p style='font-size:16px;'>Aucun modèle activé pour la synthèse.</p>",
-                        unsafe_allow_html=True
-                    )
+            if pred_base_str == pred_iiv3_str:
+                # Même classe prédite : on compare les confiances
+                base_pct = format_pct(conf_base)
+                iiv3_pct = format_pct(conf_iiv3)
         
-                st.markdown("</div>", unsafe_allow_html=True)
-
+                if abs(conf_base - conf_iiv3) < epsilon:
+                    st.markdown(
+                        f"<p style='font-size:16px;'>Les deux modèles ont prédit <b>{pred_base_str}</b> "
+                        f"avec une confiance comparable (CNN {base_pct}, IIV3 {iiv3_pct}).</p>",
+                        unsafe_allow_html=True
+                    )
+                elif conf_iiv3 > conf_base:
+                    st.markdown(
+                        f"<p style='font-size:16px;'>Les deux modèles ont prédit <b>{pred_base_str}</b>. "
+                        f"<b>IIV3</b> est plus confiant ({iiv3_pct}) que <b>CNN</b> ({base_pct}).</p>",
+                        unsafe_allow_html=True
+                    )
+                else:
+                    st.markdown(
+                        f"<p style='font-size:16px;'>Les deux modèles ont prédit <b>{pred_base_str}</b>. "
+                        f"<b>CNN</b> est plus confiant ({base_pct}) que <b>IIV3</b> ({iiv3_pct}).</p>",
+                        unsafe_allow_html=True
+                    )
+            else:
+                # Désaccord : on affiche clairement les deux et leurs confiances
+                base_pct = format_pct(conf_base)
+                iiv3_pct = format_pct(conf_iiv3)
+                st.markdown(
+                    f"<p style='font-size:16px;'>Les modèles sont en désaccord : "
+                    f"<b>CNN</b> prédit <b>{pred_base_str}</b> ({base_pct}) "
+                    f"tandis que <b>IIV3</b> prédit <b>{pred_iiv3_str}</b> ({iiv3_pct}). "
+                    f"Cette divergence mérite une analyse approfondie (examen de l’image, saliences, et cas similaires).</p>",
+                    unsafe_allow_html=True
+                )
+        
+        # Cas 2 : un seul modèle actif
+        elif pred_base_str and not pred_iiv3_str:
+            base_pct = format_pct(conf_base)
+            st.markdown(
+                f"<p style='font-size:16px;'>Seul <b>CNN</b> est activé : prédiction <b>{pred_base_str}</b> "
+                f"avec une confiance de {base_pct}.</p>",
+                unsafe_allow_html=True
+            )
+        elif pred_iiv3_str and not pred_base_str:
+            iiv3_pct = format_pct(conf_iiv3)
+            st.markdown(
+                f"<p style='font-size:16px;'>Seul <b>IIV3</b> est activé : prédiction <b>{pred_iiv3_str}</b> "
+                f"avec une confiance de {iiv3_pct}.</p>",
+                unsafe_allow_html=True
+            )
+        else:
+            st.markdown(
+                "<p style='font-size:16px;'>Aucun modèle activé pour la synthèse.</p>",
+                unsafe_allow_html=True
+            )
+        
+        st.markdown("</div>", unsafe_allow_html=True)
 
 
     # ----------------------------------------------------
