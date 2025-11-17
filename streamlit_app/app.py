@@ -473,13 +473,13 @@ with tab2:
                 f"<h5 style='color:{model_colors['BASELINE CNN']}; font-size:18px;'>BASELINE CNN</h5>",
                 unsafe_allow_html=True
             )
-            use_baseline = st.checkbox("Activer", value=True)
+            use_baseline = st.checkbox("PREDIRE AVEC BASELINE CNN", value=True, key="checkbox_baseline")
         with cb_col2:
             st.markdown(
                 f"<h5 style='color:{model_colors['ICTN']}; font-size:18px;'>ICTN</h5>",
                 unsafe_allow_html=True
             )
-            use_ictn = st.checkbox("Activer", value=True)
+            use_ictn = st.checkbox("PREDIRE AVEC ICNT", value=True, key="checkbox_ictn")
         st.markdown("</div>", unsafe_allow_html=True)
 
         # --- Bloc 3 : Prédictions
