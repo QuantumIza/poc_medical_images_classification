@@ -695,9 +695,25 @@ with tab4:
     with row2_col1:
         st.components.v1.html(requests.get(res["pca"]).text, height=650)
         st.markdown("Vue C")
+        st.markdown(
+        """
+        <div style="font-size:16px; color:#444; margin-top:12px;">
+            <strong>LEGENDE :</strong> <span style="color:blue;">Benign</span>, <span style="color:orange;">Malignant</span>, <span style="color:green;">Normal</span>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
     with row2_col2:
         st.components.v1.html(requests.get(res["pca"]).text, height=650)
         st.markdown("Vue D")
+        st.markdown(
+        """
+        <div style="font-size:16px; color:#444; margin-top:12px;">
+            <strong>LEGENDE :</strong> <span style="color:blue;">Benign</span>, <span style="color:orange;">Malignant</span>, <span style="color:green;">Normal</span>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
     # -----------------------------------------------------
     # --- Bloc 5 : EXPLICABILITE
     # --------------------------------------------------------    
