@@ -676,8 +676,7 @@ with tab4:
     """,
     unsafe_allow_html=True
     )
-    st.markdown("Les visualisations GradCAM ci-dessous illustrent les zones activées par le modèle lors de ses prédictions.")
-    # GradCAM côte à côte et centrées
+    st.markdown("<div class='widget-caption'>Les visualisations GradCAM ci-dessous illustrent les zones activées par le modèle lors de ses prédictions.</div>", unsafe_allow_html=True)
     col_left, col_center, col_right = st.columns([2,6,2])
     with col_center:
         grad_col1, grad_col2 = st.columns([1,1])
