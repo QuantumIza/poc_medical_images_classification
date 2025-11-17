@@ -624,7 +624,7 @@ with tab4:
     #     st.dataframe(report_df, use_container_width=False)
     st.markdown(
     """
-    <div style="color:#005A9C; font-weight:600; font-size:18px; margin-bottom:6px;">
+    <div style="color:#005A9C; font-weight:600; font-size:16px; margin-bottom:6px;">
         RAPPORT DE CLASSIFICATION DÉTAILLÉ
     </div>
     """,
