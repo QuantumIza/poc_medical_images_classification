@@ -622,7 +622,7 @@ with tab4:
     with col1:
         st.image(res["confusion_matrix"], caption="Matrice de confusion", width=600)
     with col2:
-        st.image(res["roc_curve"], caption="Courbe ROC", width=400)
+        st.image(res["roc_curve"], caption="Courbe ROC", width=600)
 
     report_df = pd.read_csv(res["classification_report"])
     with st.expander("Rapport de classification détaillé"):
@@ -640,9 +640,9 @@ with tab4:
     with col_center:
         grad_col1, grad_col2 = st.columns([1,1])
         with grad_col1:
-            st.image(res["gradcam_success"], caption="GradCAM - prédiction correcte", width=500)
+            st.image(res["gradcam_success"], caption="GradCAM - prédiction correcte", width=350)
         with grad_col2:
-            st.image(res["gradcam_error"], caption="GradCAM - prédiction en erreur", width=500)
+            st.image(res["gradcam_error"], caption="GradCAM - prédiction en erreur", width=350)
 
     # --- Bloc 5 : Synthèse technique
     st.subheader("5. Synthèse technique")
