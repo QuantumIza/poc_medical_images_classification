@@ -800,7 +800,7 @@ with tab5:
     st.image(HF_COMPARAISON["equilibre"]["scatter"], width=600)
     st.markdown("<div style='text-align:center; font-size:16px; font-weight:600;'>Scatter plot F1 vs Recall</div>", unsafe_allow_html=True)
 
-    st.image(HF_COMPARAISON["equilibre"]["matrices_confusion"], width=800)
+    st.image(HF_COMPARAISON["equilibre"]["matrices_confusion"])
     st.markdown("<div style='text-align:center; font-size:16px; font-weight:600;'>Matrices de confusion comparatives</div>", unsafe_allow_html=True)
     st.markdown("</div>", unsafe_allow_html=True)
 
