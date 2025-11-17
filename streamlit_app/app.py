@@ -932,14 +932,31 @@ with tab3:
             """,
             unsafe_allow_html=True
         )
+        # col_left, col_center, col_right = st.columns([2,6,2])
+        # with col_center:
+        #     grad_col1, grad_col2 = st.columns([1,1])
+        #     with grad_col1:
+        #         st.image(res["gradcam_success"], caption="GradCAM - prédiction correcte", width=400)
+        #     with grad_col2:
+        #         st.image(res["gradcam_error"], caption="GradCAM - prédiction en erreur", width=400)
+        # st.markdown("</div>", unsafe_allow_html=True)
         col_left, col_center, col_right = st.columns([2,6,2])
         with col_center:
             grad_col1, grad_col2 = st.columns([1,1])
             with grad_col1:
-                st.image(res["gradcam_success"], caption="GradCAM - prédiction correcte", width=400)
+                st.image(res["gradcam_success"], width=400)
+                st.markdown(
+                    "<div style='text-align:center; font-size:18px; font-weight:600; color:#444;'>GradCAM - prédiction correcte</div>",
+                    unsafe_allow_html=True
+                )
             with grad_col2:
-                st.image(res["gradcam_error"], caption="GradCAM - prédiction en erreur", width=400)
+                st.image(res["gradcam_error"], width=400)
+                st.markdown(
+                    "<div style='text-align:center; font-size:18px; font-weight:600; color:#444;'>GradCAM - prédiction en erreur</div>",
+                    unsafe_allow_html=True
+                )
         st.markdown("</div>", unsafe_allow_html=True)
+
     
     
         # ----------------------------------------------
