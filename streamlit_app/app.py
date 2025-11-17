@@ -582,6 +582,17 @@ with tab4:
     unsafe_allow_html=True
     )
     metrics_df = pd.read_csv(res["metrics"])
+    st.markdown(
+        """
+        <style>
+        .stDataFrame div[data-testid="stDataFrame"] table {
+            font-size: 18px; /* augmente la taille du texte */
+        }
+        </style>
+        """,
+        unsafe_allow_html=True
+    )
+
     st.dataframe(metrics_df, use_container_width=False)
     st.markdown("</div>", unsafe_allow_html=True)
 
