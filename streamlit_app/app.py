@@ -614,8 +614,8 @@ with tab4:
             unsafe_allow_html=True
         )
     # res = HF_PERFORMANCES[selected_model]
-selected_model = st.session_state.get("perf_select", "baseline_cnn")
-res = HF_PERFORMANCES[selected_model]
+    selected_model = st.session_state.get("perf_select", "baseline_cnn")
+    res = HF_PERFORMANCES[selected_model]
 
     # ---------------------------------
     # --- Bloc 1 : METRIQUES GLOBALES
