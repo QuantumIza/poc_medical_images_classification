@@ -52,7 +52,7 @@ st.markdown(
 
     /* Liste déroulante (options visibles) */
     div[role="listbox"] div {
-        font-size: 18px !important;
+        font-size: 20px !important;
         color: #333 !important;
     }
     </style>
