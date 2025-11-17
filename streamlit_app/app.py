@@ -37,6 +37,24 @@ st.markdown(
     .stDataFrame {
         font-size: 15px !important;
     }
+    /* Label du widget (ex: "Image du blind test") */
+    label[data-testid="stWidgetLabel"] {
+        font-size: 20px !important;
+        font-weight: 600 !important;
+        color: #222 !important;
+    }
+
+    /* Options de la selectbox */
+    div[data-testid="stMarkdownContainer"] p {
+        font-size: 18px !important;
+        color: #333 !important;
+    }
+
+    /* Liste déroulante (options visibles) */
+    div[role="listbox"] div {
+        font-size: 18px !important;
+        color: #333 !important;
+    }
     </style>
     """,
     unsafe_allow_html=True
