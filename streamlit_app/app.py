@@ -614,6 +614,22 @@ with tab4:
     # --- Bloc 4 : Analyse qualitative et interprétabilité
     st.subheader("4. Analyse qualitative et interprétabilité")
     st.markdown("<div class='widget-caption'>Projection PCA et visualisations GradCAM pour comprendre les décisions du modèle.</div>", unsafe_allow_html=True)
+    # Introduction PCA avec taille lisible
+    st.markdown(
+        """
+        <div style="font-size:18px; color:#222; margin-bottom:8px;">
+            Cette projection PCA en 3D permet de visualiser la séparation des classes à partir des features extraits par le modèle CNN.
+        </div>
+        <div style="font-size:20px; font-weight:600; color:#000; margin-bottom:12px;">
+            ACP 3D INTERACTIVE (CNN)
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+
+    st.markdown("<div style='font-size:20px; font-weight:600; color:#000;'>ACP 3D INTERACTIVE (CNN)</div>", unsafe_allow_html=True)
+
+
     col_left, col_center, col_right = st.columns([2,6,2])
     with col_center:
         st.components.v1.html(requests.get(res["pca"]).text, height=450)
