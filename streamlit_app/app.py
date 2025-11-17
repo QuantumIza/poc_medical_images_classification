@@ -846,7 +846,7 @@ with tab3:
             unsafe_allow_html=True
         )
             # Cas 1 : les deux modèles sont disponibles
-            if pred_base_str and pred_iiv3_str:
+        if pred_base_str and pred_iiv3_str:
                 if pred_base_str == pred_iiv3_str:
                     # Même classe prédite : on compare les confiances
                     base_pct = format_pct(conf_base)
