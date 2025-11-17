@@ -302,7 +302,7 @@ with tab1:
 # ----------------------------------------------------
 with tab2:
     st.header("COMPARAISON DES PRÉDICTIONS : BASELINE CNN VS CONVNEXT-TINY")
-    icnt_model = load_model_ictn()
+    ictn_model = load_model_ictn()
     # Libérer IIV3 si présent
     if "iiv3_model" in globals():
         del iiv3_model
@@ -413,7 +413,7 @@ with tab2:
         
         if use_ictn:
             try:
-                ictn_model = load_model_ictn()
+                # ictn_model = load_model_ictn()
                 y_pred_ictn = ictn_model.predict(img_batch_ictn)
                 pred_ictn = classes_icnt[np.argmax(y_pred_ictn)]
         
@@ -688,7 +688,7 @@ with tab3:
 
         if use_iiv3:
             try:
-                iiv3_model = load_model_iiv3()
+                # iiv3_model = load_model_iiv3()
                 y_pred_iiv3 = iiv3_model.predict(img_batch_iiv3)
                 pred_iiv3 = classes_iiv3[np.argmax(y_pred_iiv3)]
         
