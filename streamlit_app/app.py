@@ -589,8 +589,24 @@ with tab4:
     )
     res = HF_PERFORMANCES[selected_model]
 
+    # ---------------------------------
+    # --- Bloc 1 : METRIQUES GLOBALES
+    # ---------------------------------
+    st.markdown(
+    """
+    <div style="font-size:22px; font-weight:600; color:#005A9C; margin-top:16px;">
+        METRIQUES GLOBALES
+    </div>
+    """,
+    unsafe_allow_html=True
+    )
+    metrics_df = pd.read_csv(res["metrics"])
+    col_left, col_center, col_right = st.columns([2,6,2])
+    with col_center:
+        st.dataframe(metrics_df, use_container_width=False)
+
     # -------------------------------------
-    # --- Bloc 1 : Courbes d'apprentissage
+    # --- Bloc 2 : APPRENTISSAGE DU MODÈLE
     # -------------------------------------
     # st.subheader("APPRENTISSAGE DU MODELE")
     st.markdown(
@@ -604,51 +620,32 @@ with tab4:
     st.markdown("<div class='widget-caption'>Ces courbes montrent la progression de l'entraînement et permettent de vérifier la convergence.</div>", unsafe_allow_html=True)
     col_left, col_center, col_right = st.columns([2,6,2])
     with col_center:
-        st.image(res["learning_curves"], caption="Courbes Loss & Accuracy", width=1000)
-
-    # ---------------------------------
-    # --- Bloc 2 : Performance globale
-    # ---------------------------------
-    # st.subheader("2. Performance globale")
-    st.markdown(
-    """
-    <div style="font-size:22px; font-weight:600; color:#005A9C; margin-top:16px;">
-        PERFORMANCES GLOBALES
-    </div>
-    """,
-    unsafe_allow_html=True
-    )
-    metrics_df = pd.read_csv(res["metrics"])
-    col_left, col_center, col_right = st.columns([2,6,2])
-    with col_center:
-        st.dataframe(metrics_df, use_container_width=False)
+        st.image(res["learning_curves"], caption="Courbes Loss & Accuracy", width=1000)    
 
     # ------------------------------------
     # --- Bloc 3 : Performance par classe
     # -------------------------------------
-    # --- st.subheader("3. Performance par classe")
     st.markdown(
     """
     <div style="font-size:22px; font-weight:600; color:#005A9C; margin-top:16px;">
-        PERFORMANCE PAR CLASSE
+        RÉPARTITION DES PRÉDICTIONS DANS LES CLASSES
     </div>
     """,
     unsafe_allow_html=True
     )
     col1, col2 = st.columns(2)
     with col1:
-        st.image(res["confusion_matrix"], caption="Matrice de confusion")
+        st.image(res["confusion_matrix"], caption="MATRICE DE CONFUSION")
     with col2:
-        st.image(res["roc_curve"], caption="Courbe ROC")
+        st.image(res["roc_curve"], caption="COURBES ROC - AUC")
 
     report_df = pd.read_csv(res["classification_report"])
-    with st.expander("Rapport de classification détaillé"):
+    with st.expander("RAPPORT DE CLASSIFICATION DETAILLE"):
         st.dataframe(report_df, use_container_width=False)
 
     # -----------------------------------------------------
-    # --- Bloc 4 : Analyse qualitative et interprétabilité
+    # --- Bloc 4 : SEPARABILITE DES CLASSES
     # --------------------------------------------------------
-    # --- st.subheader("4. Analyse qualitative et interprétabilité")
     st.markdown(
     """
     <div style="font-size:22px; font-weight:600; color:#005A9C; margin-top:16px;">
@@ -657,26 +654,20 @@ with tab4:
     """,
     unsafe_allow_html=True
     )
-    st.markdown("<div class='widget-caption'>Projection PCA et visualisations GradCAM pour comprendre les décisions du modèle.</div>", unsafe_allow_html=True)
-    # Introduction PCA avec taille lisible
     st.markdown(
         """
         <div style="font-size:18px; color:#222; margin-bottom:8px;">
-            Cette projection PCA en 3D permet de visualiser la séparation des classes à partir des features extraits par le modèle CNN.
-        </div>
-        <div style="font-size:20px; font-weight:600; color:#000; margin-bottom:12px;">
-            ACP 3D INTERACTIVE (CNN)
+            Cette projection PCA en 3D permet de visualiser la séparation des classes à partir des features extraits par le modèle.
         </div>
         """,
         unsafe_allow_html=True
     )
-
-    st.markdown("<div style='font-size:20px; font-weight:600; color:#000;'>ACP 3D INTERACTIVE (CNN)</div>", unsafe_allow_html=True)    
     col_left, col_center, col_right = st.columns([2,6,2])
     with col_center:
         st.components.v1.html(requests.get(res["pca"]).text, height=450)
-        
-    # Transition GradCAM
+    # -----------------------------------------------------
+    # --- Bloc 5 : EXPLICABILITE
+    # --------------------------------------------------------    
     st.markdown(
     """
     <div style="font-size:22px; font-weight:600; color:#005A9C; margin-top:16px;">
@@ -695,11 +686,6 @@ with tab4:
         with grad_col2:
             st.image(res["gradcam_error"], caption="GradCAM - prédiction en erreur", width=400)
 
-    col1, col2 = st.columns(2)
-    with col1:
-        st.image(res["gradcam_success"], caption="GradCAM - prédiction correcte", width=400)
-    with col2:
-        st.image(res["gradcam_error"], caption="GradCAM - prédiction en erreur", width=400)
     # ----------------------------------------------
     # --- Bloc 5 : ARCHITECTURE DU MODELE technique
     # -----------------------------------------------
