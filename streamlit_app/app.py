@@ -793,6 +793,15 @@ with tab3:
     
         selected_model = st.session_state.get("perf_select", "baseline_cnn")
         res = HF_PERFORMANCES[selected_model]
+        # Indicateur visuel du modèle choisi
+        st.markdown(
+            f"""
+            <div style="margin-top:12px; font-size:16px; font-weight:600; color:#005A9C;">
+                ✅ Modèle sélectionné : <span style="color:#222;">{selected_model.upper()}</span>
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
     
         # ---------------------------------
         # --- Bloc 1 : METRIQUES GLOBALES
