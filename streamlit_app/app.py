@@ -662,6 +662,15 @@ with tab4:
         """,
         unsafe_allow_html=True
     )
+    st.markdown(
+        """
+        <div style="font-size:16px; color:#444; margin-top:12px;">
+            <strong>Classes :</strong> <span style="color:blue;">Benign</span>, <span style="color:orange;">Malignant</span>, <span style="color:green;">Normal</span>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+
     # col_left, col_center, col_right = st.columns([2,6,2])
     # with col_center:
     #     st.components.v1.html(requests.get(res["pca"]).text, height=450)
@@ -669,15 +678,19 @@ with tab4:
     row1_col1, row1_col2 = st.columns(2)
     with row1_col1:
         st.components.v1.html(requests.get(res["pca"]).text, height=650)
+        st.markdown("Vue A")
     with row1_col2:
         st.components.v1.html(requests.get(res["pca"]).text, height=650)
+        st.markdown("Vue B")
     
     # Ligne 2
     row2_col1, row2_col2 = st.columns(2)
     with row2_col1:
         st.components.v1.html(requests.get(res["pca"]).text, height=650)
+        st.markdown("Vue C")
     with row2_col2:
         st.components.v1.html(requests.get(res["pca"]).text, height=650)
+        st.markdown("Vue D")
     # -----------------------------------------------------
     # --- Bloc 5 : EXPLICABILITE
     # --------------------------------------------------------    
