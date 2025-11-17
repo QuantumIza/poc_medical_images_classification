@@ -534,9 +534,9 @@ with tab4:
     st.subheader("3. Performance par classe")
     col1, col2 = st.columns(2)
     with col1:
-        st.image(res["confusion_matrix"], caption="Matrice de confusion")
+        st.image(res["confusion_matrix"], caption="Matrice de confusion", use_column_width=True)
     with col2:
-        st.image(res["roc_curve"], caption="Courbe ROC")
+        st.image(res["roc_curve"], caption="Courbe ROC", use_column_width=True)
 
     report_df = pd.read_csv(res["classification_report"])
     with st.expander("Rapport de classification détaillé"):
