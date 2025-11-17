@@ -98,6 +98,7 @@ def preprocess_image_iiv3(img, target_size=(224, 224)):
 @st.cache_resource
 def load_model_cnn():
     try:
+        st.write("⚡ Chargement BASELINE CNN (appel réel)")
         res = HF_RESOURCES["models"]["baseline_cnn"]
         download_from_huggingface(res["local"], res["url"])
         return load_model(res["local"])
@@ -109,6 +110,7 @@ def load_model_cnn():
 @st.cache_resource
 def load_model_ictn():
     try:
+        st.write("⚡ Chargement ICNT (appel réel)")
         res = HF_RESOURCES["models"]["icnt"]
         download_from_huggingface(res["local"], res["url"])
         return load_model(res["local"])
@@ -134,6 +136,7 @@ def load_model_ictn():
 @st.cache_resource
 def load_model_iiv3():
     try:
+        st.write("⚡ Chargement IIV3 (appel réel)")
         res = HF_RESOURCES["models"]["iiv3"]
         download_from_huggingface(res["local"], res["url"])
         return load_model(res["local"])
