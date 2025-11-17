@@ -292,144 +292,7 @@ with tab1:
 
 
 
-# ----------------------------------------------------
-# COMPOSANT GRAPHIQUE ONGLET 2 : PREDICTIONS
-# ----------------------------------------------------
-# with tab2:
-#     st.header("PREDICTIONS BASELINE CNN VS IMPROVED CONVNEXT-TINY")
 
-#     # Charger l'échantillon blind test
-#     df_blind = load_blind_test_sample()
-
-#     # Sélecteur d'image
-#     selected_row = st.selectbox(
-#         "Choisissez une image du blind test",
-#         df_blind["source_path"].tolist(),
-#         key="selectbox_cnn_vs_icnt"
-#     )
-
-#     if selected_row:
-#         import altair as alt
-
-#         # --- Charger l'image depuis HuggingFace
-#         img_url = selected_row
-#         img = Image.open(requests.get(img_url, stream=True).raw).convert("RGB")
-#         img = img.resize((250, 250))
-#         st.image(img, caption="Image sélectionnée", use_column_width=False)
-
-#         # --- Prétraitement de l'image
-#         img_batch_cnn = preprocess_image_cnn(img, target_size=(227, 227))
-#         img_batch_ictn = preprocess_image_icnt(img, target_size=(224, 224))
-
-#         # 🔹 Couleurs pour les modèles
-#         model_colors = {
-#             "BASELINE CNN": "#3B82F6",  # Bleu doux
-#             "ICTN": "#A78BFA"           # Lavande foncée
-#         }
-
-#         # 🔹 Ligne 1 : Image + choix des modèles
-#         row1_col1, row1_col2 = st.columns([1, 2])
-
-#         with row1_col1:
-#             st.subheader("IMAGE CHARGÉE")
-#             # st.image(img, caption="IMAGE CHARGÉE", use_column_width=False)
-
-#         with row1_col2:
-#             st.subheader("CHOISISSEZ LE(S) MODÈLE(S) À UTILISER")
-#             cb_col1, cb_col2 = st.columns(2)
-
-#             with cb_col1:
-#                 st.markdown(
-#                     f"<h5 style='color:{model_colors['BASELINE CNN']}; font-size:18px;'>BASELINE CNN</h5>",
-#                     unsafe_allow_html=True
-#                 )
-#                 use_baseline = st.checkbox("", value=True)
-
-#             with cb_col2:
-#                 st.markdown(
-#                     f"<h5 style='color:{model_colors['ICTN']}; font-size:18px;'>ICTN</h5>",
-#                     unsafe_allow_html=True
-#                 )
-#                 use_ictn = st.checkbox("")
-
-#         # 🔹 Ligne 2 : Prédictions par modèle
-#         row2_col1, row2_col2 = st.columns(2)
-
-#         if use_baseline:
-#             y_pred_base = model.predict(img_batch_cnn)
-#             pred_base = classes_cnn[np.argmax(y_pred_base)]
-
-#             with row2_col1:
-#                 st.markdown(
-#                     f"<h4 style='color:{model_colors['BASELINE CNN']};'>PRÉDICTION – BASELINE CNN</h4>",
-#                     unsafe_allow_html=True
-#                 )
-#                 st.markdown(
-#                     f"""
-#                     <div style='background-color:{model_colors["BASELINE CNN"]}; padding:10px; border-radius:8px;'>
-#                         <h5 style='color:white; text-align:center;'>CLASSE PRÉDITE : {pred_base.upper()}</h5>
-#                     </div>
-#                     """,
-#                     unsafe_allow_html=True
-#                 )
-
-#         if use_ictn:
-#             try:
-#                 ictn_model = load_model_ictn()
-#                 y_pred_ictn = ictn_model.predict(img_batch_ictn)
-#                 pred_ictn = classes_icnt[np.argmax(y_pred_ictn)]
-
-#                 with row2_col2:
-#                     st.markdown(
-#                         f"<h4 style='color:{model_colors['ICTN']};'>PRÉDICTION – ICTN</h4>",
-#                         unsafe_allow_html=True
-#                     )
-#                     st.markdown(
-#                         f"""
-#                         <div style='background-color:{model_colors["ICTN"]}; padding:10px; border-radius:8px;'>
-#                             <h5 style='color:white; text-align:center;'>CLASSE PRÉDITE : {pred_ictn.upper()}</h5>
-#                         </div>
-#                         """,
-#                         unsafe_allow_html=True
-#                     )
-#             except Exception as e:
-#                 with row2_col2:
-#                     st.warning(f"ERREUR DE CHARGEMENT DU MODÈLE ICTN : {e}")
-
-#         # 🔹 Ligne 3 : Probabilités par modèle
-#         row3_col1, row3_col2 = st.columns(2)
-
-#         if use_baseline:
-#             probas_base = pd.Series(y_pred_base[0], index=classes_cnn).sort_values(ascending=False)
-#             df_base = probas_base.reset_index()
-#             df_base.columns = ["Classe", "Probabilité"]
-
-#             with row3_col1:
-#                 st.markdown(
-#                     f"<h4 style='color:{model_colors['BASELINE CNN']};'>PROBABILITÉS – BASELINE CNN</h4>",
-#                     unsafe_allow_html=True
-#                 )
-#                 chart_base = alt.Chart(df_base).mark_bar(color=model_colors["BASELINE CNN"]).encode(
-#                     x=alt.X("Classe", title="CLASSE"),
-#                     y=alt.Y("Probabilité", title="PROBABILITÉ")
-#                 ).properties(height=300)
-#                 st.altair_chart(chart_base, use_container_width=True)
-
-#         if use_ictn:
-#             probas_ictn = pd.Series(y_pred_ictn[0], index=classes_icnt).sort_values(ascending=False)
-#             df_ictn = probas_ictn.reset_index()
-#             df_ictn.columns = ["Classe", "Probabilité"]
-
-#             with row3_col2:
-#                 st.markdown(
-#                     f"<h4 style='color:{model_colors['ICTN']};'>PROBABILITÉS – ICTN</h4>",
-#                     unsafe_allow_html=True
-#                 )
-#                 chart_ictn = alt.Chart(df_ictn).mark_bar(color=model_colors["ICTN"]).encode(
-#                     x=alt.X("Classe", title="CLASSE"),
-#                     y=alt.Y("Probabilité", title="PROBABILITÉ")
-#                 ).properties(height=300)
-#                 st.altair_chart(chart_ictn, use_container_width=True)
 # ----------------------------------------------------
 # COMPOSANT GRAPHIQUE ONGLET 2 : PREDICTIONS CNN vs ICTN
 # ----------------------------------------------------
@@ -466,7 +329,7 @@ with tab2:
     )
     
     # Récupérer l’URL correspondant au label choisi
-    selected_row = df_blind.loc[df_blind["label"] == selected_label, "source_path"].values[0]
+    selected_url = df_blind.loc[df_blind["label"] == selected_label, "source_path"].values[0]
 
     # ----------------------------------------------------
     selected_row = st.selectbox(
