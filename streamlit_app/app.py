@@ -582,7 +582,7 @@ st.markdown(
     <div style="border:2px solid #5A2D82; border-radius:8px;
                 padding:12px; background-color:#F9F6FB; margin:20px 0;">
         <div style="font-size:20px; font-weight:600; color:#5A2D82; margin-bottom:8px;">
-            🧠 Synthèse comparative
+            SYNTHESE COMPARATIVE
         </div>
     """,
     unsafe_allow_html=True
