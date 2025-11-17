@@ -801,7 +801,7 @@ with tab3:
             """
             <div style="border:2px solid #5A2D82; border-radius:8px; padding:12px; background-color:#F9F6FB; margin:20px 0;">
                 <div style="font-size:22px; font-weight:600; color:#5A2D82; margin-bottom:12px;">
-                    📊 METRIQUES GLOBALES
+                    METRIQUES GLOBALES
                 </div>
             """,
             unsafe_allow_html=True
@@ -823,9 +823,9 @@ with tab3:
             """
             <div style="border:2px solid #5A2D82; border-radius:8px; padding:12px; background-color:#F9F6FB; margin:20px 0;">
                 <div style="font-size:22px; font-weight:600; color:#5A2D82; margin-bottom:8px;">
-                    📈 APPRENTISSAGE DU MODÈLE
+                    APPRENTISSAGE DU MODÈLE
                 </div>
-                <div style="font-size:16px; color:#444; margin-bottom:12px;">
+                <div style="font-size:20px; color:#444; margin-bottom:12px;">
                     Ces courbes montrent la progression de l'entraînement et permettent de vérifier la convergence.
                 </div>
             """,
@@ -843,7 +843,7 @@ with tab3:
             """
             <div style="border:2px solid #5A2D82; border-radius:8px; padding:12px; background-color:#F9F6FB; margin:20px 0;">
                 <div style="font-size:22px; font-weight:600; color:#5A2D82; margin-bottom:8px;">
-                    📊 RÉPARTITION DES PRÉDICTIONS DANS LES CLASSES
+                    RÉPARTITION DES PRÉDICTIONS DANS LES CLASSES
                 </div>
             """,
             unsafe_allow_html=True
@@ -878,9 +878,9 @@ with tab3:
             """
             <div style="border:2px solid #5A2D82; border-radius:8px; padding:12px; background-color:#F9F6FB; margin:20px 0;">
                 <div style="font-size:22px; font-weight:600; color:#5A2D82; margin-bottom:8px;">
-                    🔍 SÉPARABILITÉ DES CLASSES
+                    SÉPARABILITÉ DES CLASSES
                 </div>
-                <div style="font-size:16px; color:#444; margin-bottom:12px;">
+                <div style="font-size:20px; color:#444; margin-bottom:12px;">
                     Cette projection PCA en 3D permet de visualiser la séparation des classes à partir des features extraits par le modèle.
                 </div>
             """,
@@ -909,9 +909,9 @@ with tab3:
             """
             <div style="border:2px solid #5A2D82; border-radius:8px; padding:12px; background-color:#F9F6FB; margin:20px 0;">
                 <div style="font-size:22px; font-weight:600; color:#5A2D82; margin-bottom:8px;">
-                    🔎 EXPLICABILITÉ
+                    EXPLICABILITÉ
                 </div>
-                <div style="font-size:16px; color:#444; margin-bottom:12px;">
+                <div style="font-size:20px; color:#444; margin-bottom:12px;">
                     Les visualisations GradCAM ci-dessous illustrent les zones activées par le modèle lors de ses prédictions.
                 </div>
             """,
