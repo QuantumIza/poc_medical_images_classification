@@ -602,9 +602,9 @@ with tab4:
     with col_center:
         st.image(res["learning_curves"], caption="Courbes Loss & Accuracy")    
 
-    # ------------------------------------
-    # --- Bloc 3 : Performance par classe
-    # -------------------------------------
+    # ---------------------------------------------------------
+    # --- Bloc 3 : REPARTITION DES PREDICTIONS DANS LES CLASSES
+    # ---------------------------------------------------------
     st.markdown(
     """
     <div style="font-size:22px; font-weight:600; color:#5A2D82; margin-top:16px;">
@@ -655,7 +655,7 @@ with tab4:
     )
     st.markdown(
         """
-        <div style="font-size:18px; color:#222; margin-bottom:8px;">
+        <div style="font-size:18px; color:#222; margin-bottom:8px;margin-top:16px;">
             Cette projection PCA en 3D permet de visualiser la séparation des classes à partir des features extraits par le modèle.
         </div>
         """,
