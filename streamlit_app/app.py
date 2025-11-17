@@ -620,12 +620,12 @@ with tab4:
     with col1:
         # st.image(res["confusion_matrix"], caption="MATRICE DE CONFUSION")
         st.markdown("<div style='text-align:center;'>", unsafe_allow_html=True)
-        st.image(res["confusion_matrix"], caption="MATRICE DE CONFUSION", use_column_width=True)
+        st.image(res["confusion_matrix"], caption="MATRICE DE CONFUSION")
         st.markdown("</div>", unsafe_allow_html=True)
     with col2:
         # st.image(res["roc_curve"], caption="COURBES ROC - AUC")
         st.markdown("<div style='text-align:center;'>", unsafe_allow_html=True)
-        st.image(res["roc_curve"], caption="COURBES ROC - AUC", use_column_width=True)
+        st.image(res["roc_curve"], caption="COURBES ROC - AUC")
         st.markdown("</div>", unsafe_allow_html=True)
     # ----------------------------------------
     # --- RAPPORT DE CLASSIFICATION DETAILLE
