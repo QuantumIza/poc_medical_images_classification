@@ -519,12 +519,16 @@ with tab4:
     # --- Bloc 1 : Courbes d'apprentissage
     st.subheader("1. Apprentissage du modèle")
     st.caption("Ces courbes montrent la progression de l'entraînement et permettent de vérifier la convergence.")
-    st.image(res["learning_curves"])
+    col_left, col_center, col_right = st.columns([1,2,1])
+    with col_center:
+        st.image(res["learning_curves"], caption="Courbes Loss & Accuracy")
 
     # --- Bloc 2 : Performance globale
     st.subheader("2. Performance globale")
     metrics_df = pd.read_csv(res["metrics"])
-    st.dataframe(metrics_df)
+    col_left, col_center, col_right = st.columns([1,2,1])
+    with col_center:
+        st.dataframe(metrics_df)
 
     # --- Bloc 3 : Performance par classe
     st.subheader("3. Performance par classe")
@@ -541,14 +545,23 @@ with tab4:
     # --- Bloc 4 : Analyse qualitative et interprétabilité
     st.subheader("4. Analyse qualitative et interprétabilité")
     st.caption("Projection PCA et visualisations GradCAM pour comprendre les décisions du modèle.")
-    st.components.v1.html(requests.get(res["pca"]).text, height=600)
-    st.image(res["gradcam_success"], caption="GradCAM - prédiction correcte")
-    st.image(res["gradcam_error"], caption="GradCAM - erreur critique")
+    col_left, col_center, col_right = st.columns([1,2,1])
+    with col_center:
+        st.components.v1.html(requests.get(res["pca"]).text, height=600)
+
+    # GradCAM côte à côte
+    col1, col2 = st.columns(2)
+    with col1:
+        st.image(res["gradcam_success"], caption="GradCAM - prédiction correcte")
+    with col2:
+        st.image(res["gradcam_error"], caption="GradCAM - erreur critique")
 
     # --- Bloc 5 : Synthèse technique
-    with st.expander("Résumé technique du modèle"):
+    st.subheader("5. Synthèse technique")
+    with st.expander("Résumé du modèle"):
         summary_df = pd.read_csv(res["summary"])
         st.dataframe(summary_df)
+
 
 
 # ----------------------------------------------------
