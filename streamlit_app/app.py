@@ -332,20 +332,16 @@ with tab2:
     selected_url = df_blind.loc[df_blind["label"] == selected_label, "source_path"].values[0]
 
     # ----------------------------------------------------
-    # selected_row = st.selectbox(
-    #     "Image du blind test",
-    #     df_blind["source_path"].tolist(),
-    #     key="selectbox_cnn_vs_icnt"
-    # )
+   
 
     if selected_url:
-        img_url = selected_row
+        img_url = selected_url
         img = Image.open(requests.get(img_url, stream=True).raw).convert("RGB")
         img = img.resize((250, 250))
         st.image(img, caption="Image sélectionnée", use_column_width=False)
     st.markdown("</div>", unsafe_allow_html=True)
 
-    if selected_row:
+    if selected_url:
         import altair as alt
 
         # --- Prétraitement
