@@ -501,65 +501,65 @@ with tab2:
             unsafe_allow_html=True
         )
 
-# Cas 1 : les deux modèles sont disponibles
-if pred_base_str and pred_ictn_str:
-    if pred_base_str == pred_ictn_str:
-        # Même classe prédite : on compare les confiances
-        base_pct = format_pct(conf_base)
-        ictn_pct = format_pct(conf_ictn)
+        # Cas 1 : les deux modèles sont disponibles
+        if pred_base_str and pred_ictn_str:
+            if pred_base_str == pred_ictn_str:
+                # Même classe prédite : on compare les confiances
+                base_pct = format_pct(conf_base)
+                ictn_pct = format_pct(conf_ictn)
 
-        if abs(conf_base - conf_ictn) < epsilon:
+                if abs(conf_base - conf_ictn) < epsilon:
+                    st.markdown(
+                        f"<p style='font-size:16px;'>Les deux modèles ont prédit <b>{pred_base_str}</b> "
+                        f"avec une confiance comparable (CNN {base_pct}, ICTN {ictn_pct}).</p>",
+                        unsafe_allow_html=True
+                    )
+                elif conf_ictn > conf_base:
+                    st.markdown(
+                        f"<p style='font-size:16px;'>Les deux modèles ont prédit <b>{pred_base_str}</b>. "
+                        f"<b>ICNT</b> est plus confiant ({ictn_pct}) que <b>CNN</b> ({base_pct}).</p>",
+                        unsafe_allow_html=True
+                    )
+                else:
+                    st.markdown(
+                        f"<p style='font-size:16px;'>Les deux modèles ont prédit <b>{pred_base_str}</b>. "
+                        f"<b>CNN</b> est plus confiant ({base_pct}) que <b>ICTN</b> ({ictn_pct}).</p>",
+                        unsafe_allow_html=True
+                    )
+            else:
+                # Désaccord : on affiche clairement les deux et leurs confiances
+                base_pct = format_pct(conf_base)
+                ictn_pct = format_pct(conf_ictn)
+                st.markdown(
+                    f"<p style='font-size:16px;'>Les modèles sont en désaccord : "
+                    f"<b>CNN</b> prédit <b>{pred_base_str}</b> ({base_pct}) "
+                    f"tandis que <b>ICTN</b> prédit <b>{pred_ictn_str}</b> ({ictn_pct}). "
+                    f"Cette divergence mérite une analyse approfondie (examen de l’image, saliences, et cas similaires).</p>",
+                    unsafe_allow_html=True
+                )
+
+        # Cas 2 : un seul modèle actif
+        elif pred_base_str and not pred_ictn_str:
+            base_pct = format_pct(conf_base)
             st.markdown(
-                f"<p style='font-size:16px;'>Les deux modèles ont prédit <b>{pred_base_str}</b> "
-                f"avec une confiance comparable (CNN {base_pct}, ICTN {ictn_pct}).</p>",
+                f"<p style='font-size:16px;'>Seul <b>CNN</b> est activé : prédiction <b>{pred_base_str}</b> "
+                f"avec une confiance de {base_pct}.</p>",
                 unsafe_allow_html=True
             )
-        elif conf_ictn > conf_base:
+        elif pred_ictn_str and not pred_base_str:
+            ictn_pct = format_pct(conf_ictn)
             st.markdown(
-                f"<p style='font-size:16px;'>Les deux modèles ont prédit <b>{pred_base_str}</b>. "
-                f"<b>ICNT</b> est plus confiant ({ictn_pct}) que <b>CNN</b> ({base_pct}).</p>",
+                f"<p style='font-size:16px;'>Seul <b>ICTN</b> est activé : prédiction <b>{pred_ictn_str}</b> "
+                f"avec une confiance de {ictn_pct}.</p>",
                 unsafe_allow_html=True
             )
         else:
             st.markdown(
-                f"<p style='font-size:16px;'>Les deux modèles ont prédit <b>{pred_base_str}</b>. "
-                f"<b>CNN</b> est plus confiant ({base_pct}) que <b>ICTN</b> ({ictn_pct}).</p>",
+                "<p style='font-size:16px;'>Aucun modèle activé pour la synthèse.</p>",
                 unsafe_allow_html=True
             )
-    else:
-        # Désaccord : on affiche clairement les deux et leurs confiances
-        base_pct = format_pct(conf_base)
-        ictn_pct = format_pct(conf_ictn)
-        st.markdown(
-            f"<p style='font-size:16px;'>Les modèles sont en désaccord : "
-            f"<b>CNN</b> prédit <b>{pred_base_str}</b> ({base_pct}) "
-            f"tandis que <b>ICTN</b> prédit <b>{pred_ictn_str}</b> ({ictn_pct}). "
-            f"Cette divergence mérite une analyse approfondie (examen de l’image, saliences, et cas similaires).</p>",
-            unsafe_allow_html=True
-        )
 
-# Cas 2 : un seul modèle actif
-elif pred_base_str and not pred_ictn_str:
-    base_pct = format_pct(conf_base)
-    st.markdown(
-        f"<p style='font-size:16px;'>Seul <b>CNN</b> est activé : prédiction <b>{pred_base_str}</b> "
-        f"avec une confiance de {base_pct}.</p>",
-        unsafe_allow_html=True
-    )
-elif pred_ictn_str and not pred_base_str:
-    ictn_pct = format_pct(conf_ictn)
-    st.markdown(
-        f"<p style='font-size:16px;'>Seul <b>ICTN</b> est activé : prédiction <b>{pred_ictn_str}</b> "
-        f"avec une confiance de {ictn_pct}.</p>",
-        unsafe_allow_html=True
-    )
-else:
-    st.markdown(
-        "<p style='font-size:16px;'>Aucun modèle activé pour la synthèse.</p>",
-        unsafe_allow_html=True
-    )
-
-st.markdown("</div>", unsafe_allow_html=True)
+        st.markdown("</div>", unsafe_allow_html=True)
 
 
 
