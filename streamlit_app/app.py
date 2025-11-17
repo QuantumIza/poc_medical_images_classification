@@ -662,8 +662,17 @@ with tab4:
         """,
         unsafe_allow_html=True
     )
-    col_left, col_center, col_right = st.columns([2,6,2])
-    with col_center:
+    # col_left, col_center, col_right = st.columns([2,6,2])
+    # with col_center:
+    #     st.components.v1.html(requests.get(res["pca"]).text, height=450)
+    col1, col2, col3 = st.columns(3)
+    with col1:
+        st.components.v1.html(requests.get(res["pca"]).text, height=450)
+    
+    with col2:
+        st.components.v1.html(requests.get(res["pca"]).text, height=450)
+    
+    with col3:
         st.components.v1.html(requests.get(res["pca"]).text, height=450)
     # -----------------------------------------------------
     # --- Bloc 5 : EXPLICABILITE
