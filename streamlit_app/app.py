@@ -521,7 +521,7 @@ with tab4:
     st.caption("Ces courbes montrent la progression de l'entraînement et permettent de vérifier la convergence.")
     col_left, col_center, col_right = st.columns([2,6,2])
     with col_center:
-        st.image(res["learning_curves"], caption="Courbes Loss & Accuracy", width=400)
+        st.image(res["learning_curves"], caption="Courbes Loss & Accuracy", width=350)
 
     # --- Bloc 2 : Performance globale
     st.subheader("2. Performance globale")
