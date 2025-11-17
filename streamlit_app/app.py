@@ -582,29 +582,20 @@ with tab4:
         unsafe_allow_html=True
     )
     
-    # CSS robuste pour augmenter la taille de police des cellules et des en-têtes
-    st.markdown(
-        """
-        <style>
-        /* cellules */
-        div[data-testid="stDataFrame"] div[role="gridcell"] {
-            font-size: 22px !important;
-            line-height: 1.4 !important;
-        }
-        /* en-têtes */
-        div[data-testid="stDataFrame"] div[role="columnheader"] {
-            font-size: 22px !important;
-            font-weight: 600 !important;
-        }
-        </style>
-        """,
-        unsafe_allow_html=True
-    )
-    
+    # Lecture du CSV
     metrics_df = pd.read_csv(res["metrics"])
-    st.dataframe(metrics_df, use_container_width=True, height=420)
+    
+    # Version stylisée en HTML pour agrandir la police
+    styled_df = metrics_df.style.set_table_styles([
+        {'selector': 'th', 'props': [('font-size', '22pt'), ('font-weight', 'bold'), ('text-align', 'center')]},
+        {'selector': 'td', 'props': [('font-size', '22pt'), ('text-align', 'center')]}
+    ])
+    
+    # Affichage du tableau stylisé
+    st.markdown(styled_df.to_html(), unsafe_allow_html=True)
     
     st.markdown("</div>", unsafe_allow_html=True)
+
 
 
     # -------------------------------------
