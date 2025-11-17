@@ -595,8 +595,8 @@ with tab4:
     # st.subheader("APPRENTISSAGE DU MODELE")
     st.markdown(
     """
-    <div style="font-size:22px; font-weight:600; color:#222; margin-top:16px;">
-        • APPRENTISSAGE DU MODÈLE
+    <div style="font-size:22px; font-weight:600; color:#005A9C; margin-top:16px;">
+        APPRENTISSAGE DU MODÈLE
     </div>
     """,
     unsafe_allow_html=True
