@@ -630,7 +630,7 @@ with tab4:
     """,
     unsafe_allow_html=True
     ):
-    st.dataframe(report_df, use_container_width=False)
+        st.dataframe(report_df, use_container_width=False)
 
 
     # -----------------------------------------------------
