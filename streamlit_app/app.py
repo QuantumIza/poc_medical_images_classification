@@ -668,16 +668,16 @@ with tab4:
     # Ligne 1
     row1_col1, row1_col2 = st.columns(2)
     with row1_col1:
-        st.components.v1.html(requests.get(res["pca"]).text, height=450)
+        st.components.v1.html(requests.get(res["pca"]).text, height=550)
     with row1_col2:
-        st.components.v1.html(requests.get(res["pca"]).text, height=450)
+        st.components.v1.html(requests.get(res["pca"]).text, height=550)
     
     # Ligne 2
     row2_col1, row2_col2 = st.columns(2)
     with row2_col1:
-        st.components.v1.html(requests.get(res["pca"]).text, height=450)
+        st.components.v1.html(requests.get(res["pca"]).text, height=550)
     with row2_col2:
-        st.components.v1.html(requests.get(res["pca"]).text, height=450)
+        st.components.v1.html(requests.get(res["pca"]).text, height=550)
     # -----------------------------------------------------
     # --- Bloc 5 : EXPLICABILITE
     # --------------------------------------------------------    
