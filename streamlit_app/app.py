@@ -559,23 +559,61 @@ with tab4:
     )
     
     # --- Trois colonnes avec boutons radio simulés
-    col1, col2, col3 = st.columns(3)
+    # col1, col2, col3 = st.columns(3)
     
+    # with col1:
+    #     if st.button("BASELINE CNN", key="btn_cnn"):
+    #         st.session_state["perf_select"] = "baseline_cnn"
+    
+    # with col2:
+    #     if st.button("IMPROVED CONVNEXT-TINY", key="btn_icnt"):
+    #         st.session_state["perf_select"] = "icnt"
+    
+    # with col3:
+    #     if st.button("IMPROVED INCEPTIONV3", key="btn_iiv3"):
+    #         st.session_state["perf_select"] = "iiv3"
+    
+    # # --- Valeur sélectionnée
+    # selected_model = st.session_state.get("perf_select", "baseline_cnn")
+    # res = HF_PERFORMANCES[selected_model]
+    col1, col2, col3 = st.columns(3)
+
     with col1:
-        if st.button("BASELINE CNN", key="btn_cnn"):
+        if st.button("baseline_cnn", key="btn_cnn"):
             st.session_state["perf_select"] = "baseline_cnn"
+        st.markdown(
+            """
+            <div style="text-align:center; font-size:16px; font-weight:600; color:#005A9C; margin-top:6px;">
+                BASELINE CNN
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
     
     with col2:
-        if st.button("icnt", key="btn_icnt"):
+        if st.button("ICNT", key="btn_icnt"):
             st.session_state["perf_select"] = "icnt"
+        st.markdown(
+            """
+            <div style="text-align:center; font-size:16px; font-weight:600; color:#005A9C; margin-top:6px;">
+                ICNT
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
     
     with col3:
-        if st.button("iiv3", key="btn_iiv3"):
+        if st.button("IMPROVED INCEPTIONV3", key="btn_iiv3"):
             st.session_state["perf_select"] = "iiv3"
-    
-    # --- Valeur sélectionnée
-    selected_model = st.session_state.get("perf_select", "baseline_cnn")
-    res = HF_PERFORMANCES[selected_model]
+        st.markdown(
+            """
+            <div style="text-align:center; font-size:16px; font-weight:600; color:#005A9C; margin-top:6px;">
+                IMPROVED INCEPTIONV3
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
+
 
 
     # ---------------------------------
