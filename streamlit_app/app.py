@@ -1,3 +1,39 @@
+st.markdown(
+    """
+    <style>
+    /* Largeur maximale pour le contenu central */
+    .main {
+        max-width: 1000px;
+        margin: auto;
+    }
+
+    /* Titres */
+    h1, h2, h3 {
+        font-size: 26px !important;
+        font-weight: 600;
+    }
+
+    /* Sous-titres Streamlit */
+    .stSubheader {
+        font-size: 20px !important;
+        font-weight: 500;
+    }
+
+    /* Captions */
+    div[data-testid="stCaption"] {
+        font-size: 16px !important;
+        color: #444;
+    }
+
+    /* Tableaux */
+    .stDataFrame {
+        font-size: 15px !important;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
 # ---------------------------
 # --- IMPORTS DES LIBRAIRIES
 # ---------------------------
