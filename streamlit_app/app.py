@@ -277,73 +277,221 @@ with tab1:
 # ----------------------------------------------------
 # COMPOSANT GRAPHIQUE ONGLET 2 : PREDICTIONS
 # ----------------------------------------------------
+# with tab2:
+#     st.header("PREDICTIONS BASELINE CNN VS IMPROVED CONVNEXT-TINY")
+
+#     # Charger l'échantillon blind test
+#     df_blind = load_blind_test_sample()
+
+#     # Sélecteur d'image
+#     selected_row = st.selectbox(
+#         "Choisissez une image du blind test",
+#         df_blind["source_path"].tolist(),
+#         key="selectbox_cnn_vs_icnt"
+#     )
+
+#     if selected_row:
+#         import altair as alt
+
+#         # --- Charger l'image depuis HuggingFace
+#         img_url = selected_row
+#         img = Image.open(requests.get(img_url, stream=True).raw).convert("RGB")
+#         img = img.resize((250, 250))
+#         st.image(img, caption="Image sélectionnée", use_column_width=False)
+
+#         # --- Prétraitement de l'image
+#         img_batch_cnn = preprocess_image_cnn(img, target_size=(227, 227))
+#         img_batch_ictn = preprocess_image_icnt(img, target_size=(224, 224))
+
+#         # 🔹 Couleurs pour les modèles
+#         model_colors = {
+#             "BASELINE CNN": "#3B82F6",  # Bleu doux
+#             "ICTN": "#A78BFA"           # Lavande foncée
+#         }
+
+#         # 🔹 Ligne 1 : Image + choix des modèles
+#         row1_col1, row1_col2 = st.columns([1, 2])
+
+#         with row1_col1:
+#             st.subheader("IMAGE CHARGÉE")
+#             # st.image(img, caption="IMAGE CHARGÉE", use_column_width=False)
+
+#         with row1_col2:
+#             st.subheader("CHOISISSEZ LE(S) MODÈLE(S) À UTILISER")
+#             cb_col1, cb_col2 = st.columns(2)
+
+#             with cb_col1:
+#                 st.markdown(
+#                     f"<h5 style='color:{model_colors['BASELINE CNN']}; font-size:18px;'>BASELINE CNN</h5>",
+#                     unsafe_allow_html=True
+#                 )
+#                 use_baseline = st.checkbox("", value=True)
+
+#             with cb_col2:
+#                 st.markdown(
+#                     f"<h5 style='color:{model_colors['ICTN']}; font-size:18px;'>ICTN</h5>",
+#                     unsafe_allow_html=True
+#                 )
+#                 use_ictn = st.checkbox("")
+
+#         # 🔹 Ligne 2 : Prédictions par modèle
+#         row2_col1, row2_col2 = st.columns(2)
+
+#         if use_baseline:
+#             y_pred_base = model.predict(img_batch_cnn)
+#             pred_base = classes_cnn[np.argmax(y_pred_base)]
+
+#             with row2_col1:
+#                 st.markdown(
+#                     f"<h4 style='color:{model_colors['BASELINE CNN']};'>PRÉDICTION – BASELINE CNN</h4>",
+#                     unsafe_allow_html=True
+#                 )
+#                 st.markdown(
+#                     f"""
+#                     <div style='background-color:{model_colors["BASELINE CNN"]}; padding:10px; border-radius:8px;'>
+#                         <h5 style='color:white; text-align:center;'>CLASSE PRÉDITE : {pred_base.upper()}</h5>
+#                     </div>
+#                     """,
+#                     unsafe_allow_html=True
+#                 )
+
+#         if use_ictn:
+#             try:
+#                 ictn_model = load_model_ictn()
+#                 y_pred_ictn = ictn_model.predict(img_batch_ictn)
+#                 pred_ictn = classes_icnt[np.argmax(y_pred_ictn)]
+
+#                 with row2_col2:
+#                     st.markdown(
+#                         f"<h4 style='color:{model_colors['ICTN']};'>PRÉDICTION – ICTN</h4>",
+#                         unsafe_allow_html=True
+#                     )
+#                     st.markdown(
+#                         f"""
+#                         <div style='background-color:{model_colors["ICTN"]}; padding:10px; border-radius:8px;'>
+#                             <h5 style='color:white; text-align:center;'>CLASSE PRÉDITE : {pred_ictn.upper()}</h5>
+#                         </div>
+#                         """,
+#                         unsafe_allow_html=True
+#                     )
+#             except Exception as e:
+#                 with row2_col2:
+#                     st.warning(f"ERREUR DE CHARGEMENT DU MODÈLE ICTN : {e}")
+
+#         # 🔹 Ligne 3 : Probabilités par modèle
+#         row3_col1, row3_col2 = st.columns(2)
+
+#         if use_baseline:
+#             probas_base = pd.Series(y_pred_base[0], index=classes_cnn).sort_values(ascending=False)
+#             df_base = probas_base.reset_index()
+#             df_base.columns = ["Classe", "Probabilité"]
+
+#             with row3_col1:
+#                 st.markdown(
+#                     f"<h4 style='color:{model_colors['BASELINE CNN']};'>PROBABILITÉS – BASELINE CNN</h4>",
+#                     unsafe_allow_html=True
+#                 )
+#                 chart_base = alt.Chart(df_base).mark_bar(color=model_colors["BASELINE CNN"]).encode(
+#                     x=alt.X("Classe", title="CLASSE"),
+#                     y=alt.Y("Probabilité", title="PROBABILITÉ")
+#                 ).properties(height=300)
+#                 st.altair_chart(chart_base, use_container_width=True)
+
+#         if use_ictn:
+#             probas_ictn = pd.Series(y_pred_ictn[0], index=classes_icnt).sort_values(ascending=False)
+#             df_ictn = probas_ictn.reset_index()
+#             df_ictn.columns = ["Classe", "Probabilité"]
+
+#             with row3_col2:
+#                 st.markdown(
+#                     f"<h4 style='color:{model_colors['ICTN']};'>PROBABILITÉS – ICTN</h4>",
+#                     unsafe_allow_html=True
+#                 )
+#                 chart_ictn = alt.Chart(df_ictn).mark_bar(color=model_colors["ICTN"]).encode(
+#                     x=alt.X("Classe", title="CLASSE"),
+#                     y=alt.Y("Probabilité", title="PROBABILITÉ")
+#                 ).properties(height=300)
+#                 st.altair_chart(chart_ictn, use_container_width=True)
+# ----------------------------------------------------
+# COMPOSANT GRAPHIQUE ONGLET 2 : PREDICTIONS CNN vs ICTN
+# ----------------------------------------------------
 with tab2:
-    st.header("PREDICTIONS BASELINE CNN VS IMPROVED CONVNEXT-TINY")
+    st.header("🔮 COMPARAISON DES PRÉDICTIONS : BASELINE CNN VS CONVNEXT-TINY")
 
-    # Charger l'échantillon blind test
+    # --- Palette harmonisée
+    model_colors = {
+        "BASELINE CNN": "#4E79A7",   # Bleu doux/grisé
+        "ICTN": "#8A70C9"            # Violet lumineux mais feutré
+    }
+
+    # --- Bloc 1 : Sélection d'image
+    st.markdown(
+        """
+        <div style="border:2px solid #5A2D82; border-radius:8px;
+                    padding:12px; background-color:#F9F6FB; margin:20px 0;">
+            <div style="font-size:20px; font-weight:600; color:#5A2D82; margin-bottom:8px;">
+                🖼️ Sélectionnez une image du blind test pour comparer les prédictions des deux modèles.
+            </div>
+        """,
+        unsafe_allow_html=True
+    )
     df_blind = load_blind_test_sample()
-
-    # Sélecteur d'image
     selected_row = st.selectbox(
-        "Choisissez une image du blind test",
+        "Image du blind test",
         df_blind["source_path"].tolist(),
         key="selectbox_cnn_vs_icnt"
     )
 
     if selected_row:
-        import altair as alt
-
-        # --- Charger l'image depuis HuggingFace
         img_url = selected_row
         img = Image.open(requests.get(img_url, stream=True).raw).convert("RGB")
         img = img.resize((250, 250))
         st.image(img, caption="Image sélectionnée", use_column_width=False)
+    st.markdown("</div>", unsafe_allow_html=True)
 
-        # --- Prétraitement de l'image
+    if selected_row:
+        import altair as alt
+
+        # --- Prétraitement
         img_batch_cnn = preprocess_image_cnn(img, target_size=(227, 227))
         img_batch_ictn = preprocess_image_icnt(img, target_size=(224, 224))
 
-        # 🔹 Couleurs pour les modèles
-        model_colors = {
-            "BASELINE CNN": "#3B82F6",  # Bleu doux
-            "ICTN": "#A78BFA"           # Lavande foncée
-        }
+        # --- Bloc 2 : Choix des modèles
+        st.markdown(
+            """
+            <div style="border:2px solid #5A2D82; border-radius:8px;
+                        padding:12px; background-color:#F9F6FB; margin:20px 0;">
+                <div style="font-size:20px; font-weight:600; color:#5A2D82; margin-bottom:8px;">
+                    ⚙️ Choisissez les modèles à comparer
+                </div>
+            """,
+            unsafe_allow_html=True
+        )
+        cb_col1, cb_col2 = st.columns(2)
+        with cb_col1:
+            st.markdown(
+                f"<h5 style='color:{model_colors['BASELINE CNN']}; font-size:18px;'>BASELINE CNN</h5>",
+                unsafe_allow_html=True
+            )
+            use_baseline = st.checkbox("Activer", value=True)
+        with cb_col2:
+            st.markdown(
+                f"<h5 style='color:{model_colors['ICTN']}; font-size:18px;'>ICTN</h5>",
+                unsafe_allow_html=True
+            )
+            use_ictn = st.checkbox("Activer", value=True)
+        st.markdown("</div>", unsafe_allow_html=True)
 
-        # 🔹 Ligne 1 : Image + choix des modèles
-        row1_col1, row1_col2 = st.columns([1, 2])
-
-        with row1_col1:
-            st.subheader("IMAGE CHARGÉE")
-            # st.image(img, caption="IMAGE CHARGÉE", use_column_width=False)
-
-        with row1_col2:
-            st.subheader("CHOISISSEZ LE(S) MODÈLE(S) À UTILISER")
-            cb_col1, cb_col2 = st.columns(2)
-
-            with cb_col1:
-                st.markdown(
-                    f"<h5 style='color:{model_colors['BASELINE CNN']}; font-size:18px;'>BASELINE CNN</h5>",
-                    unsafe_allow_html=True
-                )
-                use_baseline = st.checkbox("", value=True)
-
-            with cb_col2:
-                st.markdown(
-                    f"<h5 style='color:{model_colors['ICTN']}; font-size:18px;'>ICTN</h5>",
-                    unsafe_allow_html=True
-                )
-                use_ictn = st.checkbox("")
-
-        # 🔹 Ligne 2 : Prédictions par modèle
+        # --- Bloc 3 : Prédictions
         row2_col1, row2_col2 = st.columns(2)
+        pred_base, pred_ictn = None, None
 
         if use_baseline:
             y_pred_base = model.predict(img_batch_cnn)
             pred_base = classes_cnn[np.argmax(y_pred_base)]
-
             with row2_col1:
                 st.markdown(
-                    f"<h4 style='color:{model_colors['BASELINE CNN']};'>PRÉDICTION – BASELINE CNN</h4>",
+                    f"<h4 style='color:{model_colors['BASELINE CNN']};'>📌 PRÉDICTION – BASELINE CNN</h4>",
                     unsafe_allow_html=True
                 )
                 st.markdown(
@@ -360,10 +508,9 @@ with tab2:
                 ictn_model = load_model_ictn()
                 y_pred_ictn = ictn_model.predict(img_batch_ictn)
                 pred_ictn = classes_icnt[np.argmax(y_pred_ictn)]
-
                 with row2_col2:
                     st.markdown(
-                        f"<h4 style='color:{model_colors['ICTN']};'>PRÉDICTION – ICTN</h4>",
+                        f"<h4 style='color:{model_colors['ICTN']};'>📌 PRÉDICTION – ICTN</h4>",
                         unsafe_allow_html=True
                     )
                     st.markdown(
@@ -376,19 +523,17 @@ with tab2:
                     )
             except Exception as e:
                 with row2_col2:
-                    st.warning(f"ERREUR DE CHARGEMENT DU MODÈLE ICTN : {e}")
+                    st.warning(f"Erreur de chargement du modèle ICTN : {e}")
 
-        # 🔹 Ligne 3 : Probabilités par modèle
+        # --- Bloc 4 : Probabilités
         row3_col1, row3_col2 = st.columns(2)
-
         if use_baseline:
             probas_base = pd.Series(y_pred_base[0], index=classes_cnn).sort_values(ascending=False)
             df_base = probas_base.reset_index()
             df_base.columns = ["Classe", "Probabilité"]
-
             with row3_col1:
                 st.markdown(
-                    f"<h4 style='color:{model_colors['BASELINE CNN']};'>PROBABILITÉS – BASELINE CNN</h4>",
+                    f"<h4 style='color:{model_colors['BASELINE CNN']};'>📊 PROBABILITÉS – BASELINE CNN</h4>",
                     unsafe_allow_html=True
                 )
                 chart_base = alt.Chart(df_base).mark_bar(color=model_colors["BASELINE CNN"]).encode(
@@ -401,10 +546,9 @@ with tab2:
             probas_ictn = pd.Series(y_pred_ictn[0], index=classes_icnt).sort_values(ascending=False)
             df_ictn = probas_ictn.reset_index()
             df_ictn.columns = ["Classe", "Probabilité"]
-
             with row3_col2:
                 st.markdown(
-                    f"<h4 style='color:{model_colors['ICTN']};'>PROBABILITÉS – ICTN</h4>",
+                    f"<h4 style='color:{model_colors['ICTN']};'>📊 PROBABILITÉS – ICTN</h4>",
                     unsafe_allow_html=True
                 )
                 chart_ictn = alt.Chart(df_ictn).mark_bar(color=model_colors["ICTN"]).encode(
@@ -412,6 +556,34 @@ with tab2:
                     y=alt.Y("Probabilité", title="PROBABILITÉ")
                 ).properties(height=300)
                 st.altair_chart(chart_ictn, use_container_width=True)
+
+        # --- Bloc 5 : Synthèse finale
+        if pred_base and pred_ictn:
+            st.markdown(
+                """
+                <div style="border:2px solid #5A2D82; border-radius:8px;
+                            padding:12px; background-color:#F9F6FB; margin:20px 0;">
+                    <div style="font-size:20px; font-weight:600; color:#5A2D82; margin-bottom:8px;">
+                        🧠 Synthèse comparative
+                    </div>
+                """,
+                unsafe_allow_html=True
+            )
+            if pred_base == pred_ictn:
+                confidence_base = round(np.max(y_pred_base[0]), 2)
+                confidence_ictn = round(np.max(y_pred_ictn[0]), 2)
+                st.markdown(
+                    f"<p style='font-size:16px;'>Les deux modèles ont prédit <b>{pred_base.upper()}</b>. "
+                    f"Le modèle ICTN est plus confiant ({confidence_ictn}) que le modèle CNN ({confidence_base}).</p>",
+                    unsafe_allow_html=True
+                )
+            else:
+                st.markdown(
+                    f"<p style='font-size:16px;'>Les modèles sont en désaccord : CNN prédit <b>{pred_base.upper()}</b>, "
+                    f"tandis que ICTN prédit <b>{pred_ictn.upper()}</b>. Cette divergence mérite une analyse approfondie.</p>",
+                    unsafe_allow_html=True
+                )
+            st.markdown("</div>", unsafe_allow_html=True)
 
 
 
