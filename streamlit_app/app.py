@@ -491,7 +491,7 @@ with tab2:
             pred_base = classes_cnn[np.argmax(y_pred_base)]
             with row2_col1:
                 st.markdown(
-                    f"<h4 style='color:{model_colors['BASELINE CNN']};'>📌 PRÉDICTION – BASELINE CNN</h4>",
+                    f"<h4 style='color:{model_colors['BASELINE CNN']};'> PRÉDICTION – BASELINE CNN</h4>",
                     unsafe_allow_html=True
                 )
                 st.markdown(
@@ -510,7 +510,7 @@ with tab2:
                 pred_ictn = classes_icnt[np.argmax(y_pred_ictn)]
                 with row2_col2:
                     st.markdown(
-                        f"<h4 style='color:{model_colors['ICTN']};'>📌 PRÉDICTION – ICTN</h4>",
+                        f"<h4 style='color:{model_colors['ICTN']};'> PRÉDICTION – ICTN</h4>",
                         unsafe_allow_html=True
                     )
                     st.markdown(
@@ -533,7 +533,7 @@ with tab2:
             df_base.columns = ["Classe", "Probabilité"]
             with row3_col1:
                 st.markdown(
-                    f"<h4 style='color:{model_colors['BASELINE CNN']};'>📊 PROBABILITÉS – BASELINE CNN</h4>",
+                    f"<h4 style='color:{model_colors['BASELINE CNN']};'> PROBABILITÉS – BASELINE CNN</h4>",
                     unsafe_allow_html=True
                 )
                 chart_base = alt.Chart(df_base).mark_bar(color=model_colors["BASELINE CNN"]).encode(
@@ -548,7 +548,7 @@ with tab2:
             df_ictn.columns = ["Classe", "Probabilité"]
             with row3_col2:
                 st.markdown(
-                    f"<h4 style='color:{model_colors['ICTN']};'>📊 PROBABILITÉS – ICTN</h4>",
+                    f"<h4 style='color:{model_colors['ICTN']};'> PROBABILITÉS – ICTN</h4>",
                     unsafe_allow_html=True
                 )
                 chart_ictn = alt.Chart(df_ictn).mark_bar(color=model_colors["ICTN"]).encode(
