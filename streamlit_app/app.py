@@ -674,8 +674,6 @@ with tab4:
     # col_left, col_center, col_right = st.columns([2,6,2])
     # with col_center:
     #     st.components.v1.html(requests.get(res["pca"]).text, height=450)
-    st.components.v1.html(requests.get(res["pca"]).text, height=450)
-    st.markdown("</div>", unsafe_allow_html=True)
     # Ligne 1
     row1_col1, row1_col2 = st.columns(2)
     with row1_col1:
