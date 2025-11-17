@@ -587,8 +587,8 @@ with tab4:
     
     # Version stylisée en HTML pour agrandir la police
     styled_df = metrics_df.style.set_table_styles([
-        {'selector': 'th', 'props': [('font-size', '22pt'), ('font-weight', 'bold'), ('text-align', 'center')]},
-        {'selector': 'td', 'props': [('font-size', '22pt'), ('text-align', 'center')]}
+        {'selector': 'th', 'props': [('font-size', '18pt'), ('font-weight', 'bold'), ('text-align', 'center')]},
+        {'selector': 'td', 'props': [('font-size', '18pt'), ('text-align', 'center')]}
     ])
     
     # Affichage du tableau stylisé
