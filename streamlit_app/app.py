@@ -119,15 +119,15 @@ st.set_page_config(
     page_title="Dashboard POC – Projet 7",
     layout="wide"
 )
-st.title("DASHBOARD – BASELINE CNN VS MODELE ICNT LS")
+st.title("DASHBOARD – CLASSIFICATION MAMMOGRAPHIES - PREUVE DE CONCEPT")
 
 # ---------------------------
 # --- 2. DEFINITION DES ONGLETS
 # ---------------------------
 tab1, tab2, tab3, tab4, tab5 = st.tabs([
     "ANALYSE EXPLORATOIRE",
-    "PREDICTIONS (CNN vs ICNT)",
-    "PREDICTIONS (CNN vs IIV3)",   # placé juste après ICNT
+    "PREDICTIONS CNN vs ICNT",
+    "PREDICTIONS CNN vs IIV3",
     "PERFORMANCES",
     "COMPARAISON MODELES"
 ])
@@ -263,7 +263,7 @@ with tab1:
 # COMPOSANT GRAPHIQUE ONGLET 2 : PREDICTIONS
 # ----------------------------------------------------
 with tab2:
-    st.header("PREDICTIONS")
+    st.header("PREDICTIONS BASELINE CNN VS IMPROVED CONVNEXT-TINY")
 
     # Charger l'échantillon blind test
     df_blind = load_blind_test_sample()
@@ -404,7 +404,7 @@ with tab2:
 # COMPOSANT GRAPHIQUE ONGLET 3 : PREDICTIONS CNN vs IIV3
 # ----------------------------------------------------
 with tab3:
-    st.header("PREDICTIONS (CNN vs IIV3)")
+    st.header("PREDICTIONS BASELINE CNN VS IMPROVED INCEPTIONV3")
 
     # Charger le CSV blind test
     df_blind = load_blind_test_sample()
@@ -574,16 +574,16 @@ with tab4:
     # ---------------------------------
     st.markdown(
     """
-    <div style="font-size:22px; font-weight:600; color:#5A2D82; margin-top:16px;">
-        METRIQUES GLOBALES
-    </div>
+    <div style="border:2px solid #5A2D82; border-radius:8px; padding:12px; background-color:#F9F6FB; margin:20px 0;">
+        <div style="font-size:22px; font-weight:600; color:#5A2D82; margin-bottom:12px;">
+            METRIQUES GLOBALES
+        </div>
     """,
     unsafe_allow_html=True
     )
     metrics_df = pd.read_csv(res["metrics"])
-    col_left, col_center, col_right = st.columns([2,6,2])
-    with col_center:
-        st.dataframe(metrics_df, use_container_width=False)
+    st.dataframe(metrics_df, use_container_width=False)
+    st.markdown("</div>", unsafe_allow_html=True)
 
     # -------------------------------------
     # --- Bloc 2 : APPRENTISSAGE DU MODÈLE
