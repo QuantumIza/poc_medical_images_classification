@@ -338,7 +338,7 @@ with tab2:
     #     key="selectbox_cnn_vs_icnt"
     # )
 
-    if selected_row:
+    if selected_url:
         img_url = selected_row
         img = Image.open(requests.get(img_url, stream=True).raw).convert("RGB")
         img = img.resize((250, 250))
