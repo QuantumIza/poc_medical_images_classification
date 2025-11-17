@@ -8,36 +8,19 @@ st.markdown(
         margin: auto;
     }
 
-    /* Titres */
+    /* Titres principaux */
     h1, h2, h3 {
         font-size: 26px !important;
-        font-weight: 600;
+        font-weight: 600 !important;
     }
 
     /* Sous-titres Streamlit */
     .stSubheader {
-        font-size: 20px !important;
-        font-weight: 500;
+        font-size: 22px !important;
+        font-weight: 500 !important;
     }
 
-    /* Captions */
-    div[data-testid="stCaption"] {
-        font-size: 16px !important;
-        color: #444;
-    }
-
-    /* Tableaux */
-    .stDataFrame {
-        font-size: 15px !important;
-    }
-    </style>
-    """,
-    unsafe_allow_html=True
-)
-st.markdown(
-    """
-    <style>
-    /* Label de la selectbox */
+    /* Labels des widgets (selectbox, sliders, etc.) */
     div[data-testid="stSelectboxLabel"] > label {
         font-size: 20px !important;
         font-weight: 600 !important;
@@ -50,15 +33,15 @@ st.markdown(
         color: #333 !important;
     }
 
-    /* Sous-titres */
-    .stSubheader {
-        font-size: 22px !important;
-        font-weight: 500 !important;
+    /* Tableaux */
+    .stDataFrame {
+        font-size: 15px !important;
     }
     </style>
     """,
     unsafe_allow_html=True
 )
+
 
 
 # ---------------------------
