@@ -594,7 +594,7 @@ with tab4:
     # ---------------------------------
     st.markdown(
     """
-    <div style="font-size:22px; font-weight:600; color:#005A9C; margin-top:16px;">
+    <div style="font-size:22px; font-weight:600; color:#5A2D82; margin-top:16px;">
         METRIQUES GLOBALES
     </div>
     """,
@@ -611,7 +611,7 @@ with tab4:
     # st.subheader("APPRENTISSAGE DU MODELE")
     st.markdown(
     """
-    <div style="font-size:22px; font-weight:600; color:#005A9C; margin-top:16px;">
+    <div style="font-size:22px; font-weight:600; color:#5A2D82; margin-top:16px;">
         APPRENTISSAGE DU MODÈLE
     </div>
     """,
@@ -627,7 +627,7 @@ with tab4:
     # -------------------------------------
     st.markdown(
     """
-    <div style="font-size:22px; font-weight:600; color:#005A9C; margin-top:16px;">
+    <div style="font-size:22px; font-weight:600; color:#5A2D82; margin-top:16px;">
         RÉPARTITION DES PRÉDICTIONS DANS LES CLASSES
     </div>
     """,
@@ -648,7 +648,7 @@ with tab4:
     # --------------------------------------------------------
     st.markdown(
     """
-    <div style="font-size:22px; font-weight:600; color:#005A9C; margin-top:16px;">
+    <div style="font-size:22px; font-weight:600; color:#5A2D82; margin-top:16px;">
         SEPARABILITE DES CLASSES
     </div>
     """,
@@ -736,7 +736,7 @@ with tab4:
     # --------------------------------------------------------    
     st.markdown(
     """
-    <div style="font-size:22px; font-weight:600; color:#005A9C; margin-top:16px;">
+    <div style="font-size:22px; font-weight:600; color:#5A2D82; margin-top:16px;">
         EXPLICABILITE
     </div>
     """,
@@ -754,10 +754,9 @@ with tab4:
     # ----------------------------------------------
     # --- Bloc 5 : ARCHITECTURE DU MODELE technique
     # -----------------------------------------------
-    # st.subheader("5. Synthèse technique")
     st.markdown(
     """
-    <div style="font-size:22px; font-weight:600; color:#5A2D82; margin-top:16px;">
+    <div style="font-size:22px; font-weight:600; color:#005A9C; margin-top:16px;">
         DESIGN DU MODÈLE
     </div>
     """,
