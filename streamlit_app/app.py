@@ -810,7 +810,7 @@ with tab5:
         """,
         unsafe_allow_html=True
     )
-    st.image(HF_COMPARAISON["metrics"]["radar_perf"], width=500)
+    st.image(HF_COMPARAISON["metrics"]["radar_perf"])
     st.markdown("<div style='text-align:center; font-size:16px; font-weight:600;'>Radar plot des performances globales</div>", unsafe_allow_html=True)
     st.markdown("</div>", unsafe_allow_html=True)
 
