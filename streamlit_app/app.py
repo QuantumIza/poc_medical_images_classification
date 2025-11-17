@@ -922,11 +922,11 @@ with tab3:
         # -----------------------------------------------------
         st.markdown(
             """
-            <div style="border:2px solid #5A2D82; border-radius:8px; padding:12px; background-color:#F9F6FB; margin:20px 0;">
+            <div style="border:2px solid #5A2D82; border-radius:8px; padding:12px; background-color:#F9F6FB;margin:20px 0 40px 0;">
                 <div style="font-size:22px; font-weight:600; color:#5A2D82; margin-bottom:8px;">
                     EXPLICABILITÉ
                 </div>
-                <div style="font-size:20px; color:#444; margin-bottom:50px;">
+                <div style="font-size:20px; color:#444; margin-bottom:20px;">
                     Les visualisations GradCAM ci-dessous illustrent les zones activées par le modèle lors de ses prédictions.
                 </div>
             """,
