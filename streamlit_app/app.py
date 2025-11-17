@@ -421,7 +421,7 @@ with tab2:
     # --- Palette harmonisée
     model_colors = {
         "BASELINE CNN": "#4E79A7",   # Bleu doux/grisé
-        "ICTN": "#8A70C9"            # Violet lumineux mais feutré
+        "ICTN": "#76B7B2"            # Violet lumineux mais feutré
     }
 
     # --- Bloc 1 : Sélection d'image
