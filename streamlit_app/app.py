@@ -540,14 +540,6 @@ with tab4:
     # --------------------------------------------
     # --- Sélecteur dynamique avec libellé custom
     # --------------------------------------------
-    # st.markdown("<div class='widget-label-strong'>Choisissez un modèle à analyser</div>", unsafe_allow_html=True)
-    # selected_model = st.selectbox(
-    #     label="",  # pas de texte natif
-    #     options=["baseline_cnn", "icnt", "iiv3"],
-    #     key="perf_select",
-    #     label_visibility="collapsed"  # masque le label Streamlit
-    # )
-    # res = HF_PERFORMANCES[selected_model]
     # --- Libellé personnalisé
     st.markdown(
         """
@@ -628,8 +620,18 @@ with tab4:
         st.image(res["roc_curve"], caption="COURBES ROC - AUC")
 
     report_df = pd.read_csv(res["classification_report"])
-    with st.expander("RAPPORT DE CLASSIFICATION DETAILLE"):
-        st.dataframe(report_df, use_container_width=False)
+    # with st.expander("RAPPORT DE CLASSIFICATION DETAILLE"):
+    #     st.dataframe(report_df, use_container_width=False)
+    with st.expander(
+    """
+    <div style="background-color:#E6F0FA; padding:6px; border-radius:6px; font-size:18px; font-weight:600; color:#005A9C;">
+        RAPPORT DE CLASSIFICATION DÉTAILLÉ
+    </div>
+    """,
+    unsafe_allow_html=True
+    ):
+    st.dataframe(report_df, use_container_width=False)
+
 
     # -----------------------------------------------------
     # --- Bloc 4 : SEPARABILITE DES CLASSES
