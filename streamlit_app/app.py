@@ -882,28 +882,28 @@ with tab3:
                         unsafe_allow_html=True
                     )
     
-            # Cas 2 : un seul modèle actif
-            elif pred_base_str and not pred_iiv3_str:
-                base_pct = format_pct(conf_base)
-                st.markdown(
-                    f"<p style='font-size:16px;'>Seul <b>CNN</b> est activé : prédiction <b>{pred_base_str}</b> "
-                    f"avec une confiance de {base_pct}.</p>",
-                    unsafe_allow_html=True
-                )
-            elif pred_iiv3_str and not pred_base_str:
-                iiv3_pct = format_pct(conf_iiv3)
-                st.markdown(
-                    f"<p style='font-size:16px;'>Seul <b>IIV3</b> est activé : prédiction <b>{pred_iiv3_str}</b> "
-                    f"avec une confiance de {iiv3_pct}.</p>",
-                    unsafe_allow_html=True
-                )
-            else:
-                st.markdown(
-                    "<p style='font-size:16px;'>Aucun modèle activé pour la synthèse.</p>",
-                    unsafe_allow_html=True
-                )
-    
-            st.markdown("</div>", unsafe_allow_html=True)
+                # Cas 2 : un seul modèle actif
+                elif pred_base_str and not pred_iiv3_str:
+                    base_pct = format_pct(conf_base)
+                    st.markdown(
+                        f"<p style='font-size:16px;'>Seul <b>CNN</b> est activé : prédiction <b>{pred_base_str}</b> "
+                        f"avec une confiance de {base_pct}.</p>",
+                        unsafe_allow_html=True
+                    )
+                elif pred_iiv3_str and not pred_base_str:
+                    iiv3_pct = format_pct(conf_iiv3)
+                    st.markdown(
+                        f"<p style='font-size:16px;'>Seul <b>IIV3</b> est activé : prédiction <b>{pred_iiv3_str}</b> "
+                        f"avec une confiance de {iiv3_pct}.</p>",
+                        unsafe_allow_html=True
+                    )
+                else:
+                    st.markdown(
+                        "<p style='font-size:16px;'>Aucun modèle activé pour la synthèse.</p>",
+                        unsafe_allow_html=True
+                    )
+        
+                st.markdown("</div>", unsafe_allow_html=True)
 
 
 
