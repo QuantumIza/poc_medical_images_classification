@@ -588,12 +588,12 @@ with tab4:
         <style>
         /* cellules */
         div[data-testid="stDataFrame"] div[role="gridcell"] {
-            font-size: 16px !important;
+            font-size: 22px !important;
             line-height: 1.4 !important;
         }
         /* en-têtes */
         div[data-testid="stDataFrame"] div[role="columnheader"] {
-            font-size: 16px !important;
+            font-size: 22px !important;
             font-weight: 600 !important;
         }
         </style>
