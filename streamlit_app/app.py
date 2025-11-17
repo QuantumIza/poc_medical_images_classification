@@ -691,7 +691,7 @@ with tab4:
     with col_center:
         grad_col1, grad_col2 = st.columns([1,1])
         with grad_col1:
-            st.image(res["gradcam_success"], caption="GradCAM - prédiction correcte", width=3400)
+            st.image(res["gradcam_success"], caption="GradCAM - prédiction correcte", width=400)
         with grad_col2:
             st.image(res["gradcam_error"], caption="GradCAM - prédiction en erreur", width=400)
 
