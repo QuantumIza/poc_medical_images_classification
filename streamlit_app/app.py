@@ -926,7 +926,7 @@ with tab3:
                 <div style="font-size:22px; font-weight:600; color:#5A2D82; margin-bottom:8px;">
                     EXPLICABILITÉ
                 </div>
-                <div style="font-size:20px; color:#444; margin-bottom:12px;">
+                <div style="font-size:20px; color:#444; margin-bottom:50px;">
                     Les visualisations GradCAM ci-dessous illustrent les zones activées par le modèle lors de ses prédictions.
                 </div>
             """,
