@@ -586,7 +586,7 @@ with tab4:
         """
         <style>
         .stDataFrame div[data-testid="stDataFrame"] table {
-            font-size: 18px; /* augmente la taille du texte */
+            font-size: 22px; /* augmente la taille du texte */
         }
         </style>
         """,
