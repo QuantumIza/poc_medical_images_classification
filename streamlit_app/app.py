@@ -509,46 +509,6 @@ with tab3:
                 st.bar_chart(probas_iiv3)
 
 
-# # ----------------------------------------------------
-# # COMPOSANT GRAPHIQUE ONGLET 4 : PERFORMANCES
-# # ----------------------------------------------------
-# with tab4:
-#     st.header("Performances des modèles")
-
-#     selected_model = st.selectbox("Choisissez un modèle", ["baseline_cnn", "icnt", "iiv3"], key="perf_select")
-
-#     res = HF_PERFORMANCES[selected_model]
-
-#     # --- Bloc résumé
-#     st.subheader("Résumé des métriques")
-#     metrics_df = pd.read_csv(res["metrics"])
-#     st.dataframe(metrics_df)
-
-#     with st.expander("Résumé du modèle"):
-#         summary_df = pd.read_csv(res["summary"])
-#         st.dataframe(summary_df)
-
-#     # --- Bloc courbes apprentissage
-#     st.subheader("Courbes d'apprentissage (Loss & Accuracy)")
-#     st.image(res["learning_curves"])
-
-#     # --- Bloc évaluation
-#     st.subheader("Évaluation sur le jeu de test")
-#     col1, col2 = st.columns(2)
-#     with col1:
-#         st.image(res["confusion_matrix"])
-#     with col2:
-#         st.image(res["roc_curve"])
-
-#     report_df = pd.read_csv(res["classification_report"])
-#     st.dataframe(report_df)
-
-#     # --- Bloc analyse qualitative
-#     st.subheader("Analyse qualitative")
-#     st.components.v1.html(requests.get(res["pca"]).text, height=600)
-#     st.image(res["gradcam_success"], caption="GradCAM - prédiction correcte")
-#     st.image(res["gradcam_error"], caption="GradCAM - erreur critique")
-
 # ----------------------------------------------------
 # COMPOSANT GRAPHIQUE ONGLET 4 : PERFORMANCES
 # ----------------------------------------------------
@@ -561,12 +521,12 @@ st.markdown(
     .widget-label-strong {
         font-size: 22px;
         font-weight: 600;
-        color: #222;
+        color: #005A9C;
         margin: 8px 0 4px 0;
     }
     .widget-caption {
         font-size: 22px;
-        color: #005A9C;
+        color: #222;
         margin: 4px 0 12px 0;
     }
     </style>
