@@ -616,20 +616,7 @@ with tab4:
     st.markdown("<div class='widget-caption'>Projection PCA et visualisations GradCAM pour comprendre les décisions du modèle.</div>", unsafe_allow_html=True)
     col_left, col_center, col_right = st.columns([2,6,2])
     with col_center:
-        st.markdown(
-            """
-<div style="
-    border: 1px solid #000;
-    border-radius: 8px;
-    background-color: #f9f9f9;
-    padding: 12px;
-    margin-bottom: 20px;
-">
-""",
-            unsafe_allow_html=True
-        )
         st.components.v1.html(requests.get(res["pca"]).text, height=450)
-        st.markdown("</div>", unsafe_allow_html=True)
 
     # GradCAM côte à côte et centrées
     col_left, col_center, col_right = st.columns([2,6,2])
@@ -645,6 +632,7 @@ with tab4:
     with st.expander("Résumé du modèle"):
         summary_df = pd.read_csv(res["summary"])
         st.dataframe(summary_df, use_container_width=False)
+
 
 
 
