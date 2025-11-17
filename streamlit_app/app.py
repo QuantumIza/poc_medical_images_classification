@@ -540,14 +540,43 @@ with tab4:
     # --------------------------------------------
     # --- Sélecteur dynamique avec libellé custom
     # --------------------------------------------
-    st.markdown("<div class='widget-label-strong'>Choisissez un modèle à analyser</div>", unsafe_allow_html=True)
-    selected_model = st.selectbox(
-        label="",  # pas de texte natif
-        options=["baseline_cnn", "icnt", "iiv3"],
-        key="perf_select",
-        label_visibility="collapsed"  # masque le label Streamlit
+    # st.markdown("<div class='widget-label-strong'>Choisissez un modèle à analyser</div>", unsafe_allow_html=True)
+    # selected_model = st.selectbox(
+    #     label="",  # pas de texte natif
+    #     options=["baseline_cnn", "icnt", "iiv3"],
+    #     key="perf_select",
+    #     label_visibility="collapsed"  # masque le label Streamlit
+    # )
+    # res = HF_PERFORMANCES[selected_model]
+    # --- Libellé personnalisé
+    st.markdown(
+        """
+        <div style="font-size:18px; font-weight:600; color:#005A9C; margin-bottom:12px;">
+            Choisissez un modèle à analyser
+        </div>
+        """,
+        unsafe_allow_html=True
     )
+    
+    # --- Trois colonnes avec boutons radio simulés
+    col1, col2, col3 = st.columns(3)
+    
+    with col1:
+        if st.button("baseline_cnn", key="btn_cnn"):
+            st.session_state["perf_select"] = "baseline_cnn"
+    
+    with col2:
+        if st.button("icnt", key="btn_icnt"):
+            st.session_state["perf_select"] = "icnt"
+    
+    with col3:
+        if st.button("iiv3", key="btn_iiv3"):
+            st.session_state["perf_select"] = "iiv3"
+    
+    # --- Valeur sélectionnée
+    selected_model = st.session_state.get("perf_select", "baseline_cnn")
     res = HF_PERFORMANCES[selected_model]
+
 
     # ---------------------------------
     # --- Bloc 1 : METRIQUES GLOBALES
