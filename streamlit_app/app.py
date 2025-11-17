@@ -599,7 +599,7 @@ with tab3:
         "IIV3": "#A67C7C"            # Corail feutré
     }
 
-    # --- Bloc 1 : Sélection d'image
+    # --- BLOC 1 : SELECTION IMAGE
     st.markdown(
         """
         <div style="border:2px solid #5A2D82; border-radius:8px;
@@ -635,7 +635,7 @@ with tab3:
         img_batch_cnn = preprocess_image_cnn(img, target_size=(227, 227))
         img_batch_iiv3 = preprocess_image_iiv3(img, target_size=(224, 224))
 
-        # --- Bloc 2 : Choix des modèles
+        # --- BLOC 2 : CHOIX DES MODELES
         st.markdown(
             """
             <div style="border:2px solid #5A2D82; border-radius:8px;
@@ -661,7 +661,7 @@ with tab3:
             use_iiv3 = st.checkbox("PREDIRE AVEC INCEPTIONV3", value=True, key="checkbox_iiv3")
         st.markdown("</div>", unsafe_allow_html=True)
 
-        # --- Bloc 3 : Prédictions
+        # --- BLOC 3 : PREDICTIONS
         row2_col1, row2_col2 = st.columns(2)
         pred_base, pred_iiv3 = None, None
 
@@ -712,7 +712,7 @@ with tab3:
                 with row2_col2:
                     st.warning(f"Erreur de chargement du modèle IIV3 : {e}")
 
-        # --- Bloc 4 : Probabilités
+        # --- BLOC 4 : PROBABILITES
         row3_col1, row3_col2 = st.columns(2)
         if use_baseline:
             probas_base = pd.Series(y_pred_base[0], index=classes_cnn).sort_values(ascending=False)
@@ -744,91 +744,7 @@ with tab3:
                 ).properties(height=300)
                 st.altair_chart(chart_iiv3, use_container_width=True)
 
-        # --- Bloc 5 : Synthèse finale
-        def format_pct(x):
-            return f"{int(round(float(x) * 100))}%"
-
-        epsilon = 1e-3
-        pred_base_str, pred_iiv3_str = None, None
-        conf_base, conf_iiv3 = None, None
-
-        if use_baseline and pred_base is not None:
-            pred_base_str = pred_base.upper()
-            conf_base = float(np.max(y_pred_base[0]))
-
-        if use_iiv3 and pred_iiv3 is not None:
-            pred_iiv3_str = pred_iiv3.upper()
-            conf_iiv3 = float(np.max(y_pred_iiv3[0]))
-
-        st.markdown(
-            """
-            <div style="border:2px solid #5A2D82; border-radius:8px;
-                        padding:12px; background-color:#F9F6FB; margin:20px 0;">
-                <div style="font-size:20px; font-weight:600; color:#5A2D82; margin-bottom:8px;">
-                    SYNTHESE COMPARATIVE
-                </div>
-            """,
-            unsafe_allow_html=True
-        )
-        # Cas 1 : les deux modèles sont disponibles
-        if pred_base_str and pred_iiv3_str:
-            if pred_base_str == pred_iiv3_str:
-                # Même classe prédite : on compare les confiances
-                base_pct = format_pct(conf_base)
-                iiv3_pct = format_pct(conf_iiv3)
         
-                if abs(conf_base - conf_iiv3) < epsilon:
-                    st.markdown(
-                        f"<p style='font-size:16px;'>Les deux modèles ont prédit <b>{pred_base_str}</b> "
-                        f"avec une confiance comparable (CNN {base_pct}, IIV3 {iiv3_pct}).</p>",
-                        unsafe_allow_html=True
-                    )
-                elif conf_iiv3 > conf_base:
-                    st.markdown(
-                        f"<p style='font-size:16px;'>Les deux modèles ont prédit <b>{pred_base_str}</b>. "
-                        f"<b>IIV3</b> est plus confiant ({iiv3_pct}) que <b>CNN</b> ({base_pct}).</p>",
-                        unsafe_allow_html=True
-                    )
-                else:
-                    st.markdown(
-                        f"<p style='font-size:16px;'>Les deux modèles ont prédit <b>{pred_base_str}</b>. "
-                        f"<b>CNN</b> est plus confiant ({base_pct}) que <b>IIV3</b> ({iiv3_pct}).</p>",
-                        unsafe_allow_html=True
-                    )
-            else:
-                # Désaccord : on affiche clairement les deux et leurs confiances
-                base_pct = format_pct(conf_base)
-                iiv3_pct = format_pct(conf_iiv3)
-                st.markdown(
-                    f"<p style='font-size:16px;'>Les modèles sont en désaccord : "
-                    f"<b>CNN</b> prédit <b>{pred_base_str}</b> ({base_pct}) "
-                    f"tandis que <b>IIV3</b> prédit <b>{pred_iiv3_str}</b> ({iiv3_pct}). "
-                    f"Cette divergence mérite une analyse approfondie (examen de l’image, saliences, et cas similaires).</p>",
-                    unsafe_allow_html=True
-                )
-        
-        # Cas 2 : un seul modèle actif
-        elif pred_base_str and not pred_iiv3_str:
-            base_pct = format_pct(conf_base)
-            st.markdown(
-                f"<p style='font-size:16px;'>Seul <b>CNN</b> est activé : prédiction <b>{pred_base_str}</b> "
-                f"avec une confiance de {base_pct}.</p>",
-                unsafe_allow_html=True
-            )
-        elif pred_iiv3_str and not pred_base_str:
-            iiv3_pct = format_pct(conf_iiv3)
-            st.markdown(
-                f"<p style='font-size:16px;'>Seul <b>IIV3</b> est activé : prédiction <b>{pred_iiv3_str}</b> "
-                f"avec une confiance de {iiv3_pct}.</p>",
-                unsafe_allow_html=True
-            )
-        else:
-            st.markdown(
-                "<p style='font-size:16px;'>Aucun modèle activé pour la synthèse.</p>",
-                unsafe_allow_html=True
-            )
-        
-        st.markdown("</div>", unsafe_allow_html=True)
 
 
     # ----------------------------------------------------
