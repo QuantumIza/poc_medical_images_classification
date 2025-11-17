@@ -668,10 +668,10 @@ with tab4:
         st.components.v1.html(requests.get(res["pca"]).text, height=490)
         st.markdown(
         """
-        <div style="font-size:16px; font-weight:600; color:#005A9C; margin-bottom:4px;">
+        <div style="font-size:16px; font-weight:600; color:#005A9C; margin-bottom:4px;margin-left:10px">
             Vue A
         </div>
-        <div style="font-size:16px; color:#444; margin-top:0; margin-left:10px">
+        <div style="font-size:16px; color:#444; margin-top:0; margin-left:20px">
             <strong>LEGENDE :</strong> 
             <span style="color:blue;">Benign</span>, 
             <span style="color:orange;">Malignant</span>, 
