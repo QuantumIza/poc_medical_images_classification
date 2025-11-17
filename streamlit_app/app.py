@@ -45,7 +45,7 @@ st.markdown(
 
     /* Captions */
     div[data-testid="stCaption"] {
-        font-size: 18px !important;
+        font-size: 22px !important;
         color: #333;
     }
 
