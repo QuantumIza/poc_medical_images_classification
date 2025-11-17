@@ -800,6 +800,9 @@ with tab5:
     # ---------------------------------
     # --- Bloc 3 : Radar performances globales
     # ---------------------------------
+    # ---------------------------------
+    # --- Bloc 3 : Radar performances globales
+    # ---------------------------------
     st.markdown(
         """
         <div style="border:2px solid #5A2D82; border-radius:8px;
@@ -810,13 +813,18 @@ with tab5:
         """,
         unsafe_allow_html=True
     )
-    # st.image(HF_COMPARAISON["metrics"]["radar_perf"])
-    st.markdown("<div style='text-align:center;'>", unsafe_allow_html=True)
-    st.image(HF_COMPARAISON["metrics"]["radar_perf"], use_column_width=False)
+    
+    # Création de colonnes pour centrer l'image
+    col1, col2, col3 = st.columns([1,2,1])
+    with col2:
+        st.image(HF_COMPARAISON["metrics"]["radar_perf"], use_column_width=True)
+        st.markdown(
+            "<div style='text-align:center; font-size:16px; font-weight:600;'>Radar plot des performances globales</div>",
+            unsafe_allow_html=True
+        )
+    
     st.markdown("</div>", unsafe_allow_html=True)
 
-    st.markdown("<div style='text-align:center; font-size:16px; font-weight:600;'>Radar plot des performances globales</div>", unsafe_allow_html=True)
-    st.markdown("</div>", unsafe_allow_html=True)
 
     # ---------------------------------
     # --- Bloc 4 : Scatter + Barplots (équilibre inter-classes)
