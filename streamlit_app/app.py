@@ -527,7 +527,7 @@ st.markdown(
     .widget-caption {
         font-size: 22px;
         color: #222;
-        margin: 4px 0 12px 0;
+        margin: 4px 0 50px 0;
     }
     </style>
     """,
