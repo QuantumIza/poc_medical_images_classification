@@ -143,9 +143,10 @@ tab1, tab2, tab3, tab4, tab5 = st.tabs([
 # }
 class_colors = {
     "normal": "#4E79A7",     # Bleu doux/grisé
-    "benign": "#A67856",     # Brun noisette doux
+    "benign": "#7B6D5D",     # Taupe/gris-brun élégant
     "malignant": "#9467BD"   # Violet/mauve feutré
 }
+
 
 
 color_map = {
