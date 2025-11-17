@@ -667,13 +667,13 @@ with tab4:
     #     st.components.v1.html(requests.get(res["pca"]).text, height=450)
     col1, col2, col3 = st.columns(3)
     with col1:
-        st.components.v1.html(requests.get(res["pca"]).text)
+        st.components.v1.html(requests.get(res["pca"]).text, height=650)
     
     with col2:
-        st.components.v1.html(requests.get(res["pca"]).text)
+        st.components.v1.html(requests.get(res["pca"]).text, height=650)
     
     with col3:
-        st.components.v1.html(requests.get(res["pca"]).text)
+        st.components.v1.html(requests.get(res["pca"]).text, height=650)
     # -----------------------------------------------------
     # --- Bloc 5 : EXPLICABILITE
     # --------------------------------------------------------    
