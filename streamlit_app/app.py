@@ -757,9 +757,6 @@ with tab3:
 # ----------------------------------------------------
 # COMPOSANT GRAPHIQUE ONGLET 5 : COMPARAISON MODELES
 # ----------------------------------------------------
-# ----------------------------------------------------
-# COMPOSANT GRAPHIQUE ONGLET 5 : COMPARAISON MODELES
-# ----------------------------------------------------
 with tab5:
     st.header("COMPARAISON DES MODÈLES")
 
@@ -777,6 +774,9 @@ with tab5:
         unsafe_allow_html=True
     )
     metrics_df = pd.read_csv(HF_COMPARAISON["metrics"]["csv"])
+    # --- Suppression de la colonne inutile
+    if "model_path" in metrics_df.columns:
+        metrics_df = metrics_df.drop(columns=["model_path"])
     st.dataframe(metrics_df, use_container_width=True)
     st.markdown("</div>", unsafe_allow_html=True)
 
@@ -848,6 +848,7 @@ with tab5:
         st.markdown("<div style='text-align:center; font-size:16px; font-weight:600;'>F1 moyen ± écart-type</div>", unsafe_allow_html=True)
 
     st.markdown("</div>", unsafe_allow_html=True)
+
 
 
 
