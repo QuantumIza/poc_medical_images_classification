@@ -594,12 +594,17 @@ with tab4:
         st.image(res["roc_curve"], caption="Courbe ROC", width=600)
 
     report_df = pd.read_csv(res["classification_report"])
-    with st.expander("Rapport de classification détaillé"):
+   report_df = pd.read_csv(res["classification_report"])
+with st.expander("Rapport de classification détaillé"):
+    st.dataframe(report_df, use_container_width=False)
 
-    st.markdown("<div class='widget-caption'>Projection PCA et visualisations GradCAM pour comprendre les décisions du modèle.</div>", unsafe_allow_html=True)
-    col_left, col_center, col_right = st.columns([2,6,2])
-    with col_center:
-        st.components.v1.html(requests.get(res["pca"]).text, height=450)
+st.markdown("<div class='widget-caption'>Projection PCA et visualisations GradCAM pour comprendre les décisions du modèle.</div>", unsafe_allow_html=True)
+col_left, col_center, col_right = st.columns([2,6,2])
+with col_center:
+    st.components.v1.html(requests.get(res["pca"]).text, height=450)
+
+
+    
  # GradCAM côte à côte et centrées
     col_left, col_center, col_right = st.columns([2,6,2])
     with col_center:
