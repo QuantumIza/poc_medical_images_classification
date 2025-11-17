@@ -71,7 +71,7 @@ classes_iiv3 = json.loads(requests.get(json_url_iiv3).text)
 # -------------------------------
 st.set_page_config(
     page_title="Dashboard POC – Projet 7",
-    layout="centered"
+    layout="wide"
 )
 st.title("DASHBOARD – BASELINE CNN VS MODELE ICNT LS")
 
@@ -519,16 +519,16 @@ with tab4:
     # --- Bloc 1 : Courbes d'apprentissage
     st.subheader("1. Apprentissage du modèle")
     st.caption("Ces courbes montrent la progression de l'entraînement et permettent de vérifier la convergence.")
-    col_left, col_center, col_right = st.columns([1,2,1])
+    col_left, col_center, col_right = st.columns([2,6,2])
     with col_center:
         st.image(res["learning_curves"], caption="Courbes Loss & Accuracy")
 
     # --- Bloc 2 : Performance globale
     st.subheader("2. Performance globale")
     metrics_df = pd.read_csv(res["metrics"])
-    col_left, col_center, col_right = st.columns([1,2,1])
+    col_left, col_center, col_right = st.columns([2,6,2])
     with col_center:
-        st.dataframe(metrics_df)
+        st.dataframe(metrics_df, use_container_width=False)
 
     # --- Bloc 3 : Performance par classe
     st.subheader("3. Performance par classe")
@@ -540,27 +540,27 @@ with tab4:
 
     report_df = pd.read_csv(res["classification_report"])
     with st.expander("Rapport de classification détaillé"):
-        st.dataframe(report_df)
+        st.dataframe(report_df, use_container_width=False)
 
     # --- Bloc 4 : Analyse qualitative et interprétabilité
     st.subheader("4. Analyse qualitative et interprétabilité")
     st.caption("Projection PCA et visualisations GradCAM pour comprendre les décisions du modèle.")
-    col_left, col_center, col_right = st.columns([1,2,1])
+    col_left, col_center, col_right = st.columns([2,6,2])
     with col_center:
         st.components.v1.html(requests.get(res["pca"]).text, height=600)
 
     # GradCAM côte à côte
-    col1, col2 = st.columns(2)
+    col1, col2 = st.columns([1,1])
     with col1:
         st.image(res["gradcam_success"], caption="GradCAM - prédiction correcte")
     with col2:
-        st.image(res["gradcam_error"], caption="GradCAM - erreur critique")
+        st.image(res["gradcam_error"], caption="GradCAM - prédiction en erreur")
 
     # --- Bloc 5 : Synthèse technique
     st.subheader("5. Synthèse technique")
     with st.expander("Résumé du modèle"):
         summary_df = pd.read_csv(res["summary"])
-        st.dataframe(summary_df)
+        st.dataframe(summary_df, use_container_width=False)
 
 
 
