@@ -578,41 +578,42 @@ with tab4:
     # res = HF_PERFORMANCES[selected_model]
     col1, col2, col3 = st.columns(3)
 
-with col1:
-    if st.button("baseline_cnn", key="btn_cnn"):
-        st.session_state["perf_select"] = "baseline_cnn"
-    st.markdown(
-        """
-        <div style="text-align:center; font-size:16px; font-weight:600; color:#005A9C; margin-top:6px;">
-            BASELINE CNN
-        </div>
-        """,
-        unsafe_allow_html=True
-    )
+    with col1:
+        if st.button("baseline_cnn", key="btn_cnn"):
+            st.session_state["perf_select"] = "baseline_cnn"
+        st.markdown(
+            """
+            <div style="text-align:center; font-size:16px; font-weight:600; color:#005A9C; margin-top:6px;">
+                BASELINE CNN
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
 
-with col2:
-    if st.button("ICNT", key="btn_icnt"):
-        st.session_state["perf_select"] = "icnt"
-    st.markdown(
-        """
-        <div style="text-align:center; font-size:16px; font-weight:600; color:#005A9C; margin-top:6px;">
-            ICNT
-        </div>
-        """,
-        unsafe_allow_html=True
-    )
+    with col2:
+        if st.button("ICNT", key="btn_icnt"):
+            st.session_state["perf_select"] = "icnt"
+        st.markdown(
+            """
+            <div style="text-align:center; font-size:16px; font-weight:600; color:#005A9C; margin-top:6px;">
+                ICNT
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
 
-with col3:
-    if st.button("IMPROVED INCEPTIONV3", key="btn_iiv3"):
-        st.session_state["perf_select"] = "iiv3"
-    st.markdown(
-        """
-        <div style="text-align:center; font-size:16px; font-weight:600; color:#005A9C; margin-top:6px;">
-            IMPROVED INCEPTIONV3
-        </div>
-        """,
-        unsafe_allow_html=True
-    )
+    with col3:
+        if st.button("IMPROVED INCEPTIONV3", key="btn_iiv3"):
+            st.session_state["perf_select"] = "iiv3"
+        st.markdown(
+            """
+            <div style="text-align:center; font-size:16px; font-weight:600; color:#005A9C; margin-top:6px;">
+                IMPROVED INCEPTIONV3
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
+        res = HF_PERFORMANCES[selected_model]
 
     # ---------------------------------
     # --- Bloc 1 : METRIQUES GLOBALES
