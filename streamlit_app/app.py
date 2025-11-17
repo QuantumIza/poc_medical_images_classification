@@ -620,7 +620,7 @@ with tab4:
     st.subheader("3. Performance par classe")
     col1, col2 = st.columns(2)
     with col1:
-        st.image(res["confusion_matrix"], caption="Matrice de confusion", width=400)
+        st.image(res["confusion_matrix"], caption="Matrice de confusion", width=600)
     with col2:
         st.image(res["roc_curve"], caption="Courbe ROC", width=400)
 
@@ -633,7 +633,7 @@ with tab4:
     st.markdown("<div class='widget-caption'>Projection PCA et visualisations GradCAM pour comprendre les décisions du modèle.</div>", unsafe_allow_html=True)
     col_left, col_center, col_right = st.columns([2,6,2])
     with col_center:
-        st.components.v1.html(requests.get(res["pca"]).text, height=600)
+        st.components.v1.html(requests.get(res["pca"]).text, height=450)
 
     # GradCAM côte à côte et centrées
     col_left, col_center, col_right = st.columns([2,6,2])
