@@ -472,34 +472,34 @@ with tab2:
 
         # --- Bloc 5 : Synthèse finale
         # --- Bloc 5 : Synthèse finale (corrigée)
-def format_pct(x):
-    return f"{int(round(float(x) * 100))}%"
-
-epsilon = 1e-3  # tolérance pour égalité de confiance
-
-# Récupération des prédictions et confiances si disponibles
-pred_base_str, pred_ictn_str = None, None
-conf_base, conf_ictn = None, None
-
-if use_baseline and pred_base is not None:
-    pred_base_str = pred_base.upper()
-    conf_base = float(np.max(y_pred_base[0]))
-
-if use_ictn and pred_ictn is not None:
-    pred_ictn_str = pred_ictn.upper()
-    conf_ictn = float(np.max(y_pred_ictn[0]))
-
-# Affichage de la synthèse
-st.markdown(
-    """
-    <div style="border:2px solid #5A2D82; border-radius:8px;
-                padding:12px; background-color:#F9F6FB; margin:20px 0;">
-        <div style="font-size:20px; font-weight:600; color:#5A2D82; margin-bottom:8px;">
-            SYNTHESE COMPARATIVE
-        </div>
-    """,
-    unsafe_allow_html=True
-)
+        def format_pct(x):
+            return f"{int(round(float(x) * 100))}%"
+        
+        epsilon = 1e-3  # tolérance pour égalité de confiance
+        
+        # Récupération des prédictions et confiances si disponibles
+        pred_base_str, pred_ictn_str = None, None
+        conf_base, conf_ictn = None, None
+        
+        if use_baseline and pred_base is not None:
+            pred_base_str = pred_base.upper()
+            conf_base = float(np.max(y_pred_base[0]))
+        
+        if use_ictn and pred_ictn is not None:
+            pred_ictn_str = pred_ictn.upper()
+            conf_ictn = float(np.max(y_pred_ictn[0]))
+        
+        # Affichage de la synthèse
+        st.markdown(
+            """
+            <div style="border:2px solid #5A2D82; border-radius:8px;
+                        padding:12px; background-color:#F9F6FB; margin:20px 0;">
+                <div style="font-size:20px; font-weight:600; color:#5A2D82; margin-bottom:8px;">
+                    SYNTHESE COMPARATIVE
+                </div>
+            """,
+            unsafe_allow_html=True
+        )
 
 # Cas 1 : les deux modèles sont disponibles
 if pred_base_str and pred_ictn_str:
@@ -517,7 +517,7 @@ if pred_base_str and pred_ictn_str:
         elif conf_ictn > conf_base:
             st.markdown(
                 f"<p style='font-size:16px;'>Les deux modèles ont prédit <b>{pred_base_str}</b>. "
-                f"<b>ICTN</b> est plus confiant ({ictn_pct}) que <b>CNN</b> ({base_pct}).</p>",
+                f"<b>ICNT</b> est plus confiant ({ictn_pct}) que <b>CNN</b> ({base_pct}).</p>",
                 unsafe_allow_html=True
             )
         else:
