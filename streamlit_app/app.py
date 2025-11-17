@@ -585,6 +585,20 @@ with tab4:
     )
     res = HF_PERFORMANCES[selected_model]
 
+    # --- Bloc 1 : Courbes d'apprentissage
+    st.subheader("1. Apprentissage du modèle")
+    st.markdown("<div class='widget-caption'>Ces courbes montrent la progression de l'entraînement et permettent de vérifier la convergence.</div>", unsafe_allow_html=True)
+    col_left, col_center, col_right = st.columns([2,6,2])
+    with col_center:
+        st.image(res["learning_curves"], caption="Courbes Loss & Accuracy", width=1000)
+
+    # --- Bloc 2 : Performance globale
+    st.subheader("2. Performance globale")
+    metrics_df = pd.read_csv(res["metrics"])
+    col_left, col_center, col_right = st.columns([2,6,2])
+    with col_center:
+        st.dataframe(metrics_df, use_container_width=False)
+
     # --- Bloc 3 : Performance par classe
     st.subheader("3. Performance par classe")
     col1, col2 = st.columns(2)
@@ -602,7 +616,20 @@ with tab4:
     st.markdown("<div class='widget-caption'>Projection PCA et visualisations GradCAM pour comprendre les décisions du modèle.</div>", unsafe_allow_html=True)
     col_left, col_center, col_right = st.columns([2,6,2])
     with col_center:
+        st.markdown(
+            """
+            <div style="
+                border: 2px solid #4CAF50;
+                border-radius: 8px;
+                background-color: #f9f9f9;
+                padding: 12px;
+                margin-bottom: 20px;
+            ">
+            """,
+            unsafe_allow_html=True
+        )
         st.components.v1.html(requests.get(res["pca"]).text, height=450)
+        st.markdown("</div>", unsafe_allow_html=True)
 
     # GradCAM côte à côte et centrées
     col_left, col_center, col_right = st.columns([2,6,2])
