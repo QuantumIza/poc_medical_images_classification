@@ -463,45 +463,93 @@ with tab3:
                 st.bar_chart(probas_iiv3)
 
 
+# # ----------------------------------------------------
+# # COMPOSANT GRAPHIQUE ONGLET 4 : PERFORMANCES
+# # ----------------------------------------------------
+# with tab4:
+#     st.header("Performances des modèles")
+
+#     selected_model = st.selectbox("Choisissez un modèle", ["baseline_cnn", "icnt", "iiv3"], key="perf_select")
+
+#     res = HF_PERFORMANCES[selected_model]
+
+#     # --- Bloc résumé
+#     st.subheader("Résumé des métriques")
+#     metrics_df = pd.read_csv(res["metrics"])
+#     st.dataframe(metrics_df)
+
+#     with st.expander("Résumé du modèle"):
+#         summary_df = pd.read_csv(res["summary"])
+#         st.dataframe(summary_df)
+
+#     # --- Bloc courbes apprentissage
+#     st.subheader("Courbes d'apprentissage (Loss & Accuracy)")
+#     st.image(res["learning_curves"])
+
+#     # --- Bloc évaluation
+#     st.subheader("Évaluation sur le jeu de test")
+#     col1, col2 = st.columns(2)
+#     with col1:
+#         st.image(res["confusion_matrix"])
+#     with col2:
+#         st.image(res["roc_curve"])
+
+#     report_df = pd.read_csv(res["classification_report"])
+#     st.dataframe(report_df)
+
+#     # --- Bloc analyse qualitative
+#     st.subheader("Analyse qualitative")
+#     st.components.v1.html(requests.get(res["pca"]).text, height=600)
+#     st.image(res["gradcam_success"], caption="GradCAM - prédiction correcte")
+#     st.image(res["gradcam_error"], caption="GradCAM - erreur critique")
 # ----------------------------------------------------
 # COMPOSANT GRAPHIQUE ONGLET 4 : PERFORMANCES
 # ----------------------------------------------------
 with tab4:
     st.header("Performances des modèles")
 
-    selected_model = st.selectbox("Choisissez un modèle", ["baseline_cnn", "icnt", "iiv3"], key="perf_select")
-
+    # --- Sélecteur dynamique
+    selected_model = st.selectbox(
+        "Choisissez un modèle à analyser",
+        ["baseline_cnn", "icnt", "iiv3"],
+        key="perf_select"
+    )
     res = HF_PERFORMANCES[selected_model]
 
-    # --- Bloc résumé
-    st.subheader("Résumé des métriques")
+    # --- Bloc 1 : Courbes d'apprentissage
+    st.subheader("1. Apprentissage du modèle")
+    st.caption("Ces courbes montrent la progression de l'entraînement et permettent de vérifier la convergence.")
+    st.image(res["learning_curves"])
+
+    # --- Bloc 2 : Performance globale
+    st.subheader("2. Performance globale")
     metrics_df = pd.read_csv(res["metrics"])
     st.dataframe(metrics_df)
 
-    with st.expander("Résumé du modèle"):
-        summary_df = pd.read_csv(res["summary"])
-        st.dataframe(summary_df)
-
-    # --- Bloc courbes apprentissage
-    st.subheader("Courbes d'apprentissage (Loss & Accuracy)")
-    st.image(res["learning_curves"])
-
-    # --- Bloc évaluation
-    st.subheader("Évaluation sur le jeu de test")
+    # --- Bloc 3 : Performance par classe
+    st.subheader("3. Performance par classe")
     col1, col2 = st.columns(2)
     with col1:
-        st.image(res["confusion_matrix"])
+        st.image(res["confusion_matrix"], caption="Matrice de confusion")
     with col2:
-        st.image(res["roc_curve"])
+        st.image(res["roc_curve"], caption="Courbe ROC")
 
     report_df = pd.read_csv(res["classification_report"])
-    st.dataframe(report_df)
+    with st.expander("Rapport de classification détaillé"):
+        st.dataframe(report_df)
 
-    # --- Bloc analyse qualitative
-    st.subheader("Analyse qualitative")
+    # --- Bloc 4 : Analyse qualitative et interprétabilité
+    st.subheader("4. Analyse qualitative et interprétabilité")
+    st.caption("Projection PCA et visualisations GradCAM pour comprendre les décisions du modèle.")
     st.components.v1.html(requests.get(res["pca"]).text, height=600)
     st.image(res["gradcam_success"], caption="GradCAM - prédiction correcte")
     st.image(res["gradcam_error"], caption="GradCAM - erreur critique")
+
+    # --- Bloc 5 : Synthèse technique
+    with st.expander("Résumé technique du modèle"):
+        summary_df = pd.read_csv(res["summary"])
+        st.dataframe(summary_df)
+
 
 # ----------------------------------------------------
 # COMPOSANT GRAPHIQUE ONGLET  5 : COMPARAISON MODELES
