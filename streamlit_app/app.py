@@ -543,7 +543,7 @@ with tab4:
     # --- Libellé personnalisé
     st.markdown(
         """
-        <div style="font-size:18px; font-weight:600; color:#005A9C; margin-bottom:12px;">
+        <div style="font-size:18px; font-weight:600; color:#005A9C; margin-bottom:12px;margin-top:50px;">
             Choisissez un modèle à analyser
         </div>
         """,
@@ -576,7 +576,7 @@ with tab4:
         """
         <div style="border:2px solid #5A2D82; border-radius:8px; padding:12px; background-color:#F9F6FB; margin:20px 0;">
             <div style="font-size:22px; font-weight:600; color:#5A2D82; margin-bottom:12px;">
-                📊 METRIQUES GLOBALES
+                METRIQUES GLOBALES
             </div>
         """,
         unsafe_allow_html=True
