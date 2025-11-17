@@ -142,10 +142,11 @@ tab1, tab2, tab3, tab4, tab5 = st.tabs([
 #     "malignant": "#FB9A99"   # Rouge rosé
 # }
 class_colors = {
-    "normal": "#1f77b4",     # Bleu moyen
-    "benign": "#2ca02c",     # Vert soutenu
-    "malignant": "#d62728"   # Rouge foncé
+    "normal": "#4E79A7",     # Bleu doux/grisé
+    "benign": "#59A14F",     # Vert apaisé
+    "malignant": "#E15759"   # Rouge corail atténué
 }
+
 
 color_map = {
     "normal": "#5B8FA8",     # Bleu plus foncé
