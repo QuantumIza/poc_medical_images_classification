@@ -617,7 +617,8 @@ with tab4:
     col_left, col_center, col_right = st.columns([2,6,2])
     with col_center:
         st.components.v1.html(requests.get(res["pca"]).text, height=450)
-
+    # Transition GradCAM
+    st.markdown("Les visualisations GradCAM ci-dessous illustrent les zones activées par le modèle lors de ses prédictions.")
     # GradCAM côte à côte et centrées
     col_left, col_center, col_right = st.columns([2,6,2])
     with col_center:
