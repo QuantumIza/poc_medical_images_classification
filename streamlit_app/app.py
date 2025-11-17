@@ -247,50 +247,91 @@ with tab1:
     ax.axis('equal')
     col2.pyplot(fig)
 
+    # # --- APERÇU D'IMAGES PAR CLASSE
+    # st.subheader("APERÇU D'IMAGES PAR CLASSE")
+
+    # # Création de 3 colonnes pour les checkboxes côte à côte
+    # col_normal, col_benign, col_malignant = st.columns(3)
+
+    # with col_normal:
+    #     # st.markdown(f"<span style='color:{class_colors['normal']}; font-weight:bold;'>Classe normal</span>", unsafe_allow_html=True)
+    #     st.subheader("Classe normal")
+    #     show_normal = st.checkbox("", value=True, key="cb_normal")
+
+    # with col_benign:
+    #     # st.markdown(f"<span style='color:{class_colors['benign']}; font-weight:bold;'>Classe benign</span>", unsafe_allow_html=True)
+    #     st.subheader("Classe benign")
+    #     show_benign = st.checkbox("", key="cb_benign")
+
+    # with col_malignant:
+    #     # st.markdown(f"<span style='color:{class_colors['malignant']}; font-weight:bold;'>Classe malignant</span>", unsafe_allow_html=True)
+    #     st.subheader("Classe malignant")
+    #     show_malignant = st.checkbox("", key="cb_malignant")
+
+    # # Mapping des checkboxes
+    # checkbox_map = {
+    #     "normal": show_normal,
+    #     "benign": show_benign,
+    #     "malignant": show_malignant
+    # }
+
+    # # Affichage des images selon les cases cochées
+    # for selected_class, is_checked in checkbox_map.items():
+    #     if is_checked:
+    #         st.markdown(
+    #             f"<h4 style='color:{class_colors[selected_class]};'>Classe : {selected_class}</h4>",
+    #             unsafe_allow_html=True
+    #         )
+    #         sample_urls = df_sample[df_sample["class"] == selected_class]["image_url"].sample(3)
+    #         cols = st.columns(3)
+    #         for i, url in enumerate(sample_urls):
+    #             img = load_image_from_url(url)
+    #             if img:
+    #                 img = img.resize((250, 250))
+    #                 cols[i].image(img, caption=selected_class, use_column_width=False)
+    #             else:
+    #                 cols[i].warning(f"Image introuvable : {url}")
     # --- APERÇU D'IMAGES PAR CLASSE
     st.subheader("APERÇU D'IMAGES PAR CLASSE")
-
+    
     # Création de 3 colonnes pour les checkboxes côte à côte
     col_normal, col_benign, col_malignant = st.columns(3)
-
+    
     with col_normal:
-        # st.markdown(f"<span style='color:{class_colors['normal']}; font-weight:bold;'>Classe normal</span>", unsafe_allow_html=True)
-        st.subheader("Classe normal")
-        show_normal = st.checkbox("", value=True, key="cb_normal")
-
+        show_normal = st.checkbox("Afficher Normal", value=True, key="cb_normal")
+    
     with col_benign:
-        # st.markdown(f"<span style='color:{class_colors['benign']}; font-weight:bold;'>Classe benign</span>", unsafe_allow_html=True)
-        st.subheader("Classe benign")
-        show_benign = st.checkbox("", key="cb_benign")
-
+        show_benign = st.checkbox("Afficher Benign", key="cb_benign")
+    
     with col_malignant:
-        # st.markdown(f"<span style='color:{class_colors['malignant']}; font-weight:bold;'>Classe malignant</span>", unsafe_allow_html=True)
-        st.subheader("Classe malignant")
-        show_malignant = st.checkbox("", key="cb_malignant")
-
+        show_malignant = st.checkbox("Afficher Malignant", key="cb_malignant")
+    
     # Mapping des checkboxes
     checkbox_map = {
         "normal": show_normal,
         "benign": show_benign,
         "malignant": show_malignant
     }
-
+    
     # Affichage des images selon les cases cochées
     for selected_class, is_checked in checkbox_map.items():
         if is_checked:
             st.markdown(
-                f"<h4 style='color:{class_colors[selected_class]};'>Classe : {selected_class}</h4>",
+                f"<h4 style='color:{class_colors[selected_class]};'>Classe : {selected_class.capitalize()}</h4>",
                 unsafe_allow_html=True
             )
-            sample_urls = df_sample[df_sample["class"] == selected_class]["image_url"].sample(3)
+            # ⚡ Fixer un seed pour éviter que les images changent à chaque rerun
+            sample_urls = df_sample[df_sample["class"] == selected_class]["image_url"].sample(3, random_state=42)
+            
             cols = st.columns(3)
             for i, url in enumerate(sample_urls):
                 img = load_image_from_url(url)
                 if img:
-                    img = img.resize((250, 250))
-                    cols[i].image(img, caption=selected_class, use_column_width=False)
+                    img = img.resize((220, 220))  # taille réduite pour mémoire
+                    cols[i].image(img, caption=f"{selected_class.capitalize()} – Exemple {i+1}", use_column_width=False)
                 else:
                     cols[i].warning(f"Image introuvable : {url}")
+
 
 
 
