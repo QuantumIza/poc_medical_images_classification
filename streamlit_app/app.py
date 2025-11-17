@@ -665,19 +665,19 @@ with tab4:
     # col_left, col_center, col_right = st.columns([2,6,2])
     # with col_center:
     #     st.components.v1.html(requests.get(res["pca"]).text, height=450)
-    # Ligne 1 : deux perspectives
+    # Ligne 1
     row1_col1, row1_col2 = st.columns(2)
     with row1_col1:
-        st.components.v1.html(requests.get(res["pca_view1"]).text, height=450)
+        st.components.v1.html(requests.get(res["pca"]).text, height=450)
     with row1_col2:
-        st.components.v1.html(requests.get(res["pca_view2"]).text, height=450)
+        st.components.v1.html(requests.get(res["pca"]).text, height=450)
     
-    # Ligne 2 : deux perspectives
+    # Ligne 2
     row2_col1, row2_col2 = st.columns(2)
     with row2_col1:
-        st.components.v1.html(requests.get(res["pca_view3"]).text, height=450)
+        st.components.v1.html(requests.get(res["pca"]).text, height=450)
     with row2_col2:
-        st.components.v1.html(requests.get(res["pca_view4"]).text, height=450)
+        st.components.v1.html(requests.get(res["pca"]).text, height=450)
     # -----------------------------------------------------
     # --- Bloc 5 : EXPLICABILITE
     # --------------------------------------------------------    
