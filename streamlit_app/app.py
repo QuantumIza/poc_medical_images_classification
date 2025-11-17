@@ -671,7 +671,7 @@ with tab3:
     # --- Palette harmonisée
     model_colors = {
         "BASELINE CNN": "#4E79A7",   # Bleu doux/grisé
-        "IIV3": "#E07B7B"            # Corail feutré
+        "IIV3": "#A67C7C"            # Corail feutré
     }
 
     # --- Bloc 1 : Sélection d'image
