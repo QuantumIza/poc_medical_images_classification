@@ -227,15 +227,18 @@ with tab1:
     col_normal, col_benign, col_malignant = st.columns(3)
 
     with col_normal:
-        st.markdown(f"<span style='color:{class_colors['normal']}; font-weight:bold;'>Classe normal</span>", unsafe_allow_html=True)
+        # st.markdown(f"<span style='color:{class_colors['normal']}; font-weight:bold;'>Classe normal</span>", unsafe_allow_html=True)
+        st.subheader("Classe normal")
         show_normal = st.checkbox("", value=True, key="cb_normal")
 
     with col_benign:
-        st.markdown(f"<span style='color:{class_colors['benign']}; font-weight:bold;'>Classe benign</span>", unsafe_allow_html=True)
+        # st.markdown(f"<span style='color:{class_colors['benign']}; font-weight:bold;'>Classe benign</span>", unsafe_allow_html=True)
+        st.subheader("Classe benign")
         show_benign = st.checkbox("", key="cb_benign")
 
     with col_malignant:
-        st.markdown(f"<span style='color:{class_colors['malignant']}; font-weight:bold;'>Classe malignant</span>", unsafe_allow_html=True)
+        # st.markdown(f"<span style='color:{class_colors['malignant']}; font-weight:bold;'>Classe malignant</span>", unsafe_allow_html=True)
+        st.subheader("Classe malignant")
         show_malignant = st.checkbox("", key="cb_malignant")
 
     # Mapping des checkboxes
