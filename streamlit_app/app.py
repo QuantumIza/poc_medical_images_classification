@@ -712,49 +712,6 @@ with tab3:
 
 
 # ----------------------------------------------------
-# COMPOSANT GRAPHIQUE ONGLET  5 : COMPARAISON MODELES
-# ----------------------------------------------------
-# with tab5:
-#     st.header("COMPARAISON DES MODELES")
-
-#     # --- Bloc dynamique d'apprentissage
-#     st.subheader("DYNAMIQUE D'ENTRAINEMENT DES MODELES")
-#     st.image(HF_COMPARAISON["apprentissage"]["learning_curves"])
-
-#     # --- Bloc équité des modèles
-#     st.subheader("EQUILIBRE DES PREDICTIONS - DISPERSION DES METRIQUES F1 & Recall")
-#     stats_df = pd.read_csv(HF_COMPARAISON["equilibre"]["stats"])
-#     st.dataframe(stats_df)
-
-#     col1, col2 = st.columns(2)
-#     with col1:
-#         st.image(HF_COMPARAISON["equilibre"]["bar_recall"], caption="Recall moyen avec écart-types")
-#     with col2:
-#         st.image(HF_COMPARAISON["equilibre"]["bar_f1"], caption="F1 moyen avec écart-types")
-
-#     st.image(HF_COMPARAISON["equilibre"]["scatter"], caption="Scatter plot F1 vs Recall")
-#     st.image(HF_COMPARAISON["equilibre"]["matrices_confusion"], caption="Matrices de confusion")
-
-#     # --- Bloc métriques globales
-#     st.subheader("METRIQUES GLOBALES")
-#     metrics_df = pd.read_csv(HF_COMPARAISON["metrics"]["csv"])
-#     st.dataframe(metrics_df)
-
-#     st.image(HF_COMPARAISON["metrics"]["scatter"], caption="Scatter plots de comparaison par couple de métriques")
-
-#     col3, col4, col5 = st.columns(3)
-#     with col3:
-#         st.image(HF_COMPARAISON["metrics"]["radar_classes"], caption="Couverture des classes")
-#     with col4:
-#         st.image(HF_COMPARAISON["metrics"]["radar_perf"], caption="Performances globales")
-#     with col5:
-#         st.image(HF_COMPARAISON["metrics"]["radar_overfit"], caption="Sur-apprentissage relatif")
-
-#     st.image(HF_COMPARAISON["metrics"]["roc_curves"], caption="Courbes ROC comparatives")
-# ----------------------------------------------------
-# COMPOSANT GRAPHIQUE ONGLET 5 : COMPARAISON MODELES
-# ----------------------------------------------------
-# ----------------------------------------------------
 # COMPOSANT GRAPHIQUE ONGLET 5 : COMPARAISON MODELES
 # ----------------------------------------------------
 with tab5:
@@ -768,17 +725,28 @@ with tab5:
         <div style="border:2px solid #5A2D82; border-radius:8px;
                     padding:12px; background-color:#F9F6FB; margin:20px 0;">
             <div style="font-size:22px; font-weight:600; color:#5A2D82; margin-bottom:8px;">
-                📊 MÉTRIQUES GLOBALES
+                MÉTRIQUES GLOBALES
             </div>
         """,
         unsafe_allow_html=True
     )
+    
     metrics_df = pd.read_csv(HF_COMPARAISON["metrics"]["csv"])
     # --- Suppression de la colonne inutile
     if "model_path" in metrics_df.columns:
         metrics_df = metrics_df.drop(columns=["model_path"])
-    st.dataframe(metrics_df, use_container_width=True)
+    
+    # --- Styliser le tableau avec pandas Styler
+    styled_df = metrics_df.style.set_table_styles([
+        {'selector': 'th', 'props': [('font-size', '18pt'), ('font-weight', 'bold'), ('text-align', 'center')]},
+        {'selector': 'td', 'props': [('font-size', '16pt'), ('text-align', 'center')]}
+    ])
+    
+    # --- Affichage en HTML
+    st.markdown(styled_df.to_html(), unsafe_allow_html=True)
+    
     st.markdown("</div>", unsafe_allow_html=True)
+
 
     # ---------------------------------
     # --- Bloc 2 : Scatter plots multi-métriques
@@ -788,18 +756,15 @@ with tab5:
         <div style="border:2px solid #5A2D82; border-radius:8px;
                     padding:12px; background-color:#F9F6FB; margin:20px 0;">
             <div style="font-size:22px; font-weight:600; color:#5A2D82; margin-bottom:8px;">
-                📈 SCATTER PLOTS DE COMPARAISON
+                SCATTER PLOTS DE COMPARAISON
             </div>
         """,
         unsafe_allow_html=True
     )
     st.image(HF_COMPARAISON["metrics"]["scatter"])
-    st.markdown("<div style='text-align:center; font-size:16px; font-weight:600;'>Comparaison par couples de métriques</div>", unsafe_allow_html=True)
+    st.markdown("<div style='text-align:center; font-size:18px; font-weight:600;'>Comparaison par couples de métriques</div>", unsafe_allow_html=True)
     st.markdown("</div>", unsafe_allow_html=True)
 
-    # ---------------------------------
-    # --- Bloc 3 : Radar performances globales
-    # ---------------------------------
     # ---------------------------------
     # --- Bloc 3 : Radar performances globales
     # ---------------------------------
@@ -834,7 +799,7 @@ with tab5:
         <div style="border:2px solid #5A2D82; border-radius:8px;
                     padding:12px; background-color:#F9F6FB; margin:20px 0;">
             <div style="font-size:22px; font-weight:600; color:#5A2D82; margin-bottom:8px;">
-                ⚖️ ÉQUILIBRE INTER-CLASSES : F1_mean vs Recall_mean & DISPERSION
+                ÉQUILIBRE INTER-CLASSES : F1_mean vs Recall_mean & DISPERSION
             </div>
             <div style="font-size:16px; color:#444; margin-bottom:12px;">
                 Le scatter plot suggère que ICNT est meilleur que le baseline CNN. 
