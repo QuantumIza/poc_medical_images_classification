@@ -332,11 +332,11 @@ with tab2:
     selected_url = df_blind.loc[df_blind["label"] == selected_label, "source_path"].values[0]
 
     # ----------------------------------------------------
-    selected_row = st.selectbox(
-        "Image du blind test",
-        df_blind["source_path"].tolist(),
-        key="selectbox_cnn_vs_icnt"
-    )
+    # selected_row = st.selectbox(
+    #     "Image du blind test",
+    #     df_blind["source_path"].tolist(),
+    #     key="selectbox_cnn_vs_icnt"
+    # )
 
     if selected_row:
         img_url = selected_row
@@ -382,22 +382,6 @@ with tab2:
         row2_col1, row2_col2 = st.columns(2)
         pred_base, pred_ictn = None, None
 
-        # if use_baseline:
-        #     y_pred_base = model.predict(img_batch_cnn)
-        #     pred_base = classes_cnn[np.argmax(y_pred_base)]
-        #     with row2_col1:
-        #         st.markdown(
-        #             f"<h4 style='color:{model_colors['BASELINE CNN']};'> PRÉDICTION – BASELINE CNN</h4>",
-        #             unsafe_allow_html=True
-        #         )
-        #         st.markdown(
-        #             f"""
-        #             <div style='background-color:{model_colors["BASELINE CNN"]}; padding:10px; border-radius:8px;'>
-        #                 <h5 style='color:white; text-align:center;'>CLASSE PRÉDITE : {pred_base.upper()}</h5>
-        #             </div>
-        #             """,
-        #             unsafe_allow_html=True
-        #         )
         if use_baseline:
             y_pred_base = model.predict(img_batch_cnn)
             pred_base = classes_cnn[np.argmax(y_pred_base)]
@@ -421,27 +405,7 @@ with tab2:
 
 
 
-        # if use_ictn:
-        #     try:
-        #         ictn_model = load_model_ictn()
-        #         y_pred_ictn = ictn_model.predict(img_batch_ictn)
-        #         pred_ictn = classes_icnt[np.argmax(y_pred_ictn)]
-        #         with row2_col2:
-        #             st.markdown(
-        #                 f"<h4 style='color:{model_colors['ICTN']};'> PRÉDICTION – ICTN</h4>",
-        #                 unsafe_allow_html=True
-        #             )
-        #             st.markdown(
-        #                 f"""
-        #                 <div style='background-color:{model_colors["ICTN"]}; padding:10px; border-radius:8px;'>
-        #                     <h5 style='color:white; text-align:center;'>CLASSE PRÉDITE : {pred_ictn.upper()}</h5>
-        #                 </div>
-        #                 """,
-        #                 unsafe_allow_html=True
-        #             )
-        #     except Exception as e:
-        #         with row2_col2:
-        #             st.warning(f"Erreur de chargement du modèle ICTN : {e}")
+        
         if use_ictn:
             try:
                 ictn_model = load_model_ictn()
