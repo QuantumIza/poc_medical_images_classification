@@ -714,42 +714,129 @@ with tab3:
 # ----------------------------------------------------
 # COMPOSANT GRAPHIQUE ONGLET  5 : COMPARAISON MODELES
 # ----------------------------------------------------
+# with tab5:
+#     st.header("COMPARAISON DES MODELES")
+
+#     # --- Bloc dynamique d'apprentissage
+#     st.subheader("DYNAMIQUE D'ENTRAINEMENT DES MODELES")
+#     st.image(HF_COMPARAISON["apprentissage"]["learning_curves"])
+
+#     # --- Bloc équité des modèles
+#     st.subheader("EQUILIBRE DES PREDICTIONS - DISPERSION DES METRIQUES F1 & Recall")
+#     stats_df = pd.read_csv(HF_COMPARAISON["equilibre"]["stats"])
+#     st.dataframe(stats_df)
+
+#     col1, col2 = st.columns(2)
+#     with col1:
+#         st.image(HF_COMPARAISON["equilibre"]["bar_recall"], caption="Recall moyen avec écart-types")
+#     with col2:
+#         st.image(HF_COMPARAISON["equilibre"]["bar_f1"], caption="F1 moyen avec écart-types")
+
+#     st.image(HF_COMPARAISON["equilibre"]["scatter"], caption="Scatter plot F1 vs Recall")
+#     st.image(HF_COMPARAISON["equilibre"]["matrices_confusion"], caption="Matrices de confusion")
+
+#     # --- Bloc métriques globales
+#     st.subheader("METRIQUES GLOBALES")
+#     metrics_df = pd.read_csv(HF_COMPARAISON["metrics"]["csv"])
+#     st.dataframe(metrics_df)
+
+#     st.image(HF_COMPARAISON["metrics"]["scatter"], caption="Scatter plots de comparaison par couple de métriques")
+
+#     col3, col4, col5 = st.columns(3)
+#     with col3:
+#         st.image(HF_COMPARAISON["metrics"]["radar_classes"], caption="Couverture des classes")
+#     with col4:
+#         st.image(HF_COMPARAISON["metrics"]["radar_perf"], caption="Performances globales")
+#     with col5:
+#         st.image(HF_COMPARAISON["metrics"]["radar_overfit"], caption="Sur-apprentissage relatif")
+
+#     st.image(HF_COMPARAISON["metrics"]["roc_curves"], caption="Courbes ROC comparatives")
+# ----------------------------------------------------
+# COMPOSANT GRAPHIQUE ONGLET 5 : COMPARAISON MODELES
+# ----------------------------------------------------
 with tab5:
-    st.header("COMPARAISON DES MODELES")
+    st.header("COMPARAISON DES MODÈLES")
 
-    # --- Bloc dynamique d'apprentissage
-    st.subheader("DYNAMIQUE D'ENTRAINEMENT DES MODELES")
+    # ---------------------------------
+    # --- Bloc 1 : Dynamique d'apprentissage
+    # ---------------------------------
+    st.markdown(
+        """
+        <div style="border:2px solid #5A2D82; border-radius:8px;
+                    padding:12px; background-color:#F9F6FB; margin:20px 0;">
+            <div style="font-size:22px; font-weight:600; color:#5A2D82; margin-bottom:8px;">
+                📈 DYNAMIQUE D'ENTRAÎNEMENT DES MODÈLES
+            </div>
+        """,
+        unsafe_allow_html=True
+    )
     st.image(HF_COMPARAISON["apprentissage"]["learning_curves"])
+    st.markdown("</div>", unsafe_allow_html=True)
 
-    # --- Bloc équité des modèles
-    st.subheader("EQUILIBRE DES PREDICTIONS - DISPERSION DES METRIQUES F1 & Recall")
+    # ---------------------------------
+    # --- Bloc 2 : Équité des modèles
+    # ---------------------------------
+    st.markdown(
+        """
+        <div style="border:2px solid #5A2D82; border-radius:8px;
+                    padding:12px; background-color:#F9F6FB; margin:20px 0;">
+            <div style="font-size:22px; font-weight:600; color:#5A2D82; margin-bottom:8px;">
+                ⚖️ ÉQUILIBRE DES PRÉDICTIONS - DISPERSION DES MÉTRIQUES F1 & Recall
+            </div>
+        """,
+        unsafe_allow_html=True
+    )
     stats_df = pd.read_csv(HF_COMPARAISON["equilibre"]["stats"])
-    st.dataframe(stats_df)
+    st.dataframe(stats_df, use_container_width=True)
 
     col1, col2 = st.columns(2)
     with col1:
-        st.image(HF_COMPARAISON["equilibre"]["bar_recall"], caption="Recall moyen avec écart-types")
+        st.image(HF_COMPARAISON["equilibre"]["bar_recall"], width=400)
+        st.markdown("<div style='text-align:center; font-size:16px; font-weight:600;'>Recall moyen avec écart-types</div>", unsafe_allow_html=True)
     with col2:
-        st.image(HF_COMPARAISON["equilibre"]["bar_f1"], caption="F1 moyen avec écart-types")
+        st.image(HF_COMPARAISON["equilibre"]["bar_f1"], width=400)
+        st.markdown("<div style='text-align:center; font-size:16px; font-weight:600;'>F1 moyen avec écart-types</div>", unsafe_allow_html=True)
 
-    st.image(HF_COMPARAISON["equilibre"]["scatter"], caption="Scatter plot F1 vs Recall")
-    st.image(HF_COMPARAISON["equilibre"]["matrices_confusion"], caption="Matrices de confusion")
+    st.image(HF_COMPARAISON["equilibre"]["scatter"], width=600)
+    st.markdown("<div style='text-align:center; font-size:16px; font-weight:600;'>Scatter plot F1 vs Recall</div>", unsafe_allow_html=True)
 
-    # --- Bloc métriques globales
-    st.subheader("METRIQUES GLOBALES")
+    st.image(HF_COMPARAISON["equilibre"]["matrices_confusion"], width=800)
+    st.markdown("<div style='text-align:center; font-size:16px; font-weight:600;'>Matrices de confusion comparatives</div>", unsafe_allow_html=True)
+    st.markdown("</div>", unsafe_allow_html=True)
+
+    # ---------------------------------
+    # --- Bloc 3 : Métriques globales
+    # ---------------------------------
+    st.markdown(
+        """
+        <div style="border:2px solid #5A2D82; border-radius:8px;
+                    padding:12px; background-color:#F9F6FB; margin:20px 0;">
+            <div style="font-size:22px; font-weight:600; color:#5A2D82; margin-bottom:8px;">
+                📊 MÉTRIQUES GLOBALES
+            </div>
+        """,
+        unsafe_allow_html=True
+    )
     metrics_df = pd.read_csv(HF_COMPARAISON["metrics"]["csv"])
-    st.dataframe(metrics_df)
+    st.dataframe(metrics_df, use_container_width=True)
 
-    st.image(HF_COMPARAISON["metrics"]["scatter"], caption="Scatter plots de comparaison par couple de métriques")
+    st.image(HF_COMPARAISON["metrics"]["scatter"], width=600)
+    st.markdown("<div style='text-align:center; font-size:16px; font-weight:600;'>Scatter plots de comparaison par couple de métriques</div>", unsafe_allow_html=True)
 
     col3, col4, col5 = st.columns(3)
     with col3:
-        st.image(HF_COMPARAISON["metrics"]["radar_classes"], caption="Couverture des classes")
+        st.image(HF_COMPARAISON["metrics"]["radar_classes"], width=300)
+        st.markdown("<div style='text-align:center; font-size:16px; font-weight:600;'>Couverture des classes</div>", unsafe_allow_html=True)
     with col4:
-        st.image(HF_COMPARAISON["metrics"]["radar_perf"], caption="Performances globales")
+        st.image(HF_COMPARAISON["metrics"]["radar_perf"], width=300)
+        st.markdown("<div style='text-align:center; font-size:16px; font-weight:600;'>Performances globales</div>", unsafe_allow_html=True)
     with col5:
-        st.image(HF_COMPARAISON["metrics"]["radar_overfit"], caption="Sur-apprentissage relatif")
+        st.image(HF_COMPARAISON["metrics"]["radar_overfit"], width=300)
+        st.markdown("<div style='text-align:center; font-size:16px; font-weight:600;'>Sur-apprentissage relatif</div>", unsafe_allow_html=True)
 
-    st.image(HF_COMPARAISON["metrics"]["roc_curves"], caption="Courbes ROC comparatives")
+    st.image(HF_COMPARAISON["metrics"]["roc_curves"], width=800)
+    st.markdown("<div style='text-align:center; font-size:16px; font-weight:600;'>Courbes ROC comparatives</div>", unsafe_allow_html=True)
+    st.markdown("</div>", unsafe_allow_html=True)
+
 
 
