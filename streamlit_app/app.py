@@ -34,6 +34,30 @@ st.markdown(
     """,
     unsafe_allow_html=True
 )
+st.markdown(
+    """
+    <style>
+    /* Labels des widgets (selectbox, sliders, etc.) */
+    label[data-testid="stWidgetLabel"] {
+        font-size: 20px !important;
+        font-weight: 600;
+    }
+
+    /* Captions */
+    div[data-testid="stCaption"] {
+        font-size: 18px !important;
+        color: #333;
+    }
+
+    /* Sous-titres */
+    .stSubheader {
+        font-size: 22px !important;
+        font-weight: 500;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
 
 # ---------------------------
 # --- IMPORTS DES LIBRAIRIES
