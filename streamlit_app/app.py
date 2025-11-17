@@ -584,6 +584,9 @@ with tab4:
     
     # Lecture du CSV
     metrics_df = pd.read_csv(res["metrics"])
+    # --- SUPPRESSION DE COLONNE INUTILE model_path
+    if "model_path" in metrics_df.columns:
+        metrics_df = metrics_df.drop(columns=["model_path"])
     
     # Version stylisée en HTML pour agrandir la police
     styled_df = metrics_df.style.set_table_styles([
