@@ -548,11 +548,13 @@ with tab3:
 #     st.components.v1.html(requests.get(res["pca"]).text, height=600)
 #     st.image(res["gradcam_success"], caption="GradCAM - prédiction correcte")
 #     st.image(res["gradcam_error"], caption="GradCAM - erreur critique")
+
 # ----------------------------------------------------
 # COMPOSANT GRAPHIQUE ONGLET 4 : PERFORMANCES
 # ----------------------------------------------------
-
+# --------------------------------------------------------------
 # --- Styles globaux pour homogénéiser les consignes et labels
+# --------------------------------------------------------------
 st.markdown(
     """
     <style>
@@ -573,9 +575,11 @@ st.markdown(
 )
 
 with tab4:
-    st.header("APERÇU DES PERFORMANCES DES MODÈLES")
+    st.header("APERÇU DES PERFORMANCES")
 
+    # --------------------------------------------
     # --- Sélecteur dynamique avec libellé custom
+    # --------------------------------------------
     st.markdown("<div class='widget-label-strong'>Choisissez un modèle à analyser</div>", unsafe_allow_html=True)
     selected_model = st.selectbox(
         label="",  # pas de texte natif
@@ -585,21 +589,35 @@ with tab4:
     )
     res = HF_PERFORMANCES[selected_model]
 
+    # -------------------------------------
     # --- Bloc 1 : Courbes d'apprentissage
-    st.subheader("1. Apprentissage du modèle")
+    # -------------------------------------
+    # st.subheader("APPRENTISSAGE DU MODELE")
+    st.markdown(
+    """
+    <div style="font-size:22px; font-weight:600; color:#222; margin-top:16px;">
+        • APPRENTISSAGE DU MODÈLE
+    </div>
+    """,
+    unsafe_allow_html=True
+    )
     st.markdown("<div class='widget-caption'>Ces courbes montrent la progression de l'entraînement et permettent de vérifier la convergence.</div>", unsafe_allow_html=True)
     col_left, col_center, col_right = st.columns([2,6,2])
     with col_center:
         st.image(res["learning_curves"], caption="Courbes Loss & Accuracy", width=1000)
 
+    # ---------------------------------
     # --- Bloc 2 : Performance globale
+    # ---------------------------------
     st.subheader("2. Performance globale")
     metrics_df = pd.read_csv(res["metrics"])
     col_left, col_center, col_right = st.columns([2,6,2])
     with col_center:
         st.dataframe(metrics_df, use_container_width=False)
 
+    # ------------------------------------
     # --- Bloc 3 : Performance par classe
+    # -------------------------------------
     st.subheader("3. Performance par classe")
     col1, col2 = st.columns(2)
     with col1:
@@ -611,7 +629,9 @@ with tab4:
     with st.expander("Rapport de classification détaillé"):
         st.dataframe(report_df, use_container_width=False)
 
+    # -----------------------------------------------------
     # --- Bloc 4 : Analyse qualitative et interprétabilité
+    # --------------------------------------------------------
     st.subheader("4. Analyse qualitative et interprétabilité")
     st.markdown("<div class='widget-caption'>Projection PCA et visualisations GradCAM pour comprendre les décisions du modèle.</div>", unsafe_allow_html=True)
     # Introduction PCA avec taille lisible
@@ -644,7 +664,9 @@ with tab4:
         with grad_col2:
             st.image(res["gradcam_error"], caption="GradCAM - prédiction en erreur", width=350)
 
-    # --- Bloc 5 : Synthèse technique
+    # ----------------------------------------------
+    # --- Bloc 5 : ARCHITECTURE DU MODELE technique
+    # -----------------------------------------------
     st.subheader("5. Synthèse technique")
     with st.expander("Résumé du modèle"):
         summary_df = pd.read_csv(res["summary"])
