@@ -136,10 +136,15 @@ tab1, tab2, tab3, tab4, tab5 = st.tabs([
 # ----------------------------------
 # --- 3. DEFINITION DES CODES COULEURS
 # ----------------------------------
+# class_colors = {
+#     "normal": "#A6CEE3",     # Bleu clair
+#     "benign": "#B2DF8A",     # Vert doux
+#     "malignant": "#FB9A99"   # Rouge rosé
+# }
 class_colors = {
-    "normal": "#A6CEE3",     # Bleu clair
-    "benign": "#B2DF8A",     # Vert doux
-    "malignant": "#FB9A99"   # Rouge rosé
+    "normal": "#1f77b4",     # Bleu moyen
+    "benign": "#2ca02c",     # Vert soutenu
+    "malignant": "#d62728"   # Rouge foncé
 }
 
 color_map = {
