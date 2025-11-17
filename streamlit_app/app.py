@@ -662,13 +662,10 @@ with tab4:
         """,
         unsafe_allow_html=True
     )
-    # col_left, col_center, col_right = st.columns([2,6,2])
-    # with col_center:
-    #     st.components.v1.html(requests.get(res["pca"]).text, height=450)
     # Ligne 1
     row1_col1, row1_col2 = st.columns(2)
     with row1_col1:
-        st.components.v1.html(requests.get(res["pca"]).text, height=500)
+        st.components.v1.html(requests.get(res["pca"]).text, height=400)
         st.markdown(
         """
         <div style="font-size:16px; font-weight:600; color:#005A9C; margin-bottom:4px;">
@@ -683,11 +680,8 @@ with tab4:
         """,
         unsafe_allow_html=True
     )
-    
-
-
     with row1_col2:
-        st.components.v1.html(requests.get(res["pca"]).text, height=500)
+        st.components.v1.html(requests.get(res["pca"]).text, height=400)
         st.markdown(
         """
         <div style="font-size:16px; font-weight:600; color:#005A9C; margin-bottom:4px;">
@@ -706,7 +700,7 @@ with tab4:
     # Ligne 2
     row2_col1, row2_col2 = st.columns(2)
     with row2_col1:
-        st.components.v1.html(requests.get(res["pca"]).text, height=500)
+        st.components.v1.html(requests.get(res["pca"]).text, height=400)
         st.markdown(
         """
         <div style="font-size:16px; font-weight:600; color:#005A9C; margin-bottom:4px;">
@@ -722,7 +716,7 @@ with tab4:
         unsafe_allow_html=True
     )
     with row2_col2:
-        st.components.v1.html(requests.get(res["pca"]).text, height=500)
+        st.components.v1.html(requests.get(res["pca"]).text, height=400)
         st.markdown(
         """
         <div style="font-size:16px; font-weight:600; color:#005A9C; margin-bottom:4px;">
