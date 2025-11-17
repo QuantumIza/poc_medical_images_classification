@@ -938,7 +938,7 @@ with tab3:
         """,
         unsafe_allow_html=True
         )
-        with st.expander("DESIGN DU MODELE"):
+        with st.expander("Voir le design détaillé"):
             summary_df = pd.read_csv(res["summary"])
             st.dataframe(summary_df, use_container_width=False)
 
