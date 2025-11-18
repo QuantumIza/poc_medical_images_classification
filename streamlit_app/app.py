@@ -458,8 +458,9 @@ with tab2:
                 ).properties(height=300)
                 st.altair_chart(chart_base, use_container_width=True)
             # Libération mémoire après affichage
-            del y_pred_base, probas_base, df_base, chart_base
-            gc.collect()
+            if "y_pred_base" in locals():
+                del y_pred_base, probas_base, df_base, chart_base
+                gc.collect()
 
         if use_ictn:
             probas_ictn = pd.Series(y_pred_ictn[0], index=classes_icnt).sort_values(ascending=False)
@@ -476,8 +477,9 @@ with tab2:
                 ).properties(height=300)
                 st.altair_chart(chart_ictn, use_container_width=True)
             # ✅ Libération mémoire après affichage
-            del y_pred_ictn, probas_ictn, df_ictn, chart_ictn
-            gc.collect()
+            if "y_pred_ictn" in locals():
+                del y_pred_ictn, probas_ictn, df_ictn, chart_ictn
+                gc.collect()
 
        
 
@@ -743,9 +745,10 @@ with tab3:
                     y=alt.Y("Probabilité", title="PROBABILITÉ")
                 ).properties(height=300)
                 st.altair_chart(chart_base, use_container_width=True)
+            if "y_pred_base" in locals():
             # Libération mémoire après affichage
-            del y_pred_base, probas_base, df_base, chart_base
-            gc.collect()
+                del y_pred_base, probas_base, df_base, chart_base
+                gc.collect()
 
         if use_iiv3:
             probs_iiv3 = y_pred_iiv3[0]
@@ -762,9 +765,10 @@ with tab3:
                     y=alt.Y("Probabilité", title="PROBABILITÉ")
                 ).properties(height=300)
                 st.altair_chart(chart_iiv3, use_container_width=True)
-                 # ---ON LIBERE LA MEMOIRE APRES PREDICTION DE LA CLASSE: 
-                del y_pred_iiv3, probs_iiv3, probas_iiv3, df_iiv3, chart_iiv3
-                gc.collect()
+                 # ---ON LIBERE LA MEMOIRE APRES PREDICTION DE LA CLASSE:
+                if "y_pred_iiv3" in locals():
+                    del y_pred_iiv3, probs_iiv3, probas_iiv3, df_iiv3, chart_iiv3
+                    gc.collect()
 
         
 
