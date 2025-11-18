@@ -95,51 +95,74 @@ def preprocess_image_iiv3(img, target_size=(224, 224)):
 # ------------------------------
 # CHARGEMENT DES MODELES
 # ------------------------------
-@st.cache_resource
+# @st.cache_resource
+# def load_model_cnn():
+#     try:
+#         st.write("⚡ Chargement BASELINE CNN (appel réel)")
+#         res = HF_RESOURCES["models"]["baseline_cnn"]
+#         download_from_huggingface(res["local"], res["url"])
+#         return load_model(res["local"])
+#     except Exception as e:
+#         st.error(f"Erreur de chargement du modèle CNN : {e}")
+#         st.stop()
 def load_model_cnn():
     try:
-        st.write("⚡ Chargement BASELINE CNN (appel réel)")
-        res = HF_RESOURCES["models"]["baseline_cnn"]
-        download_from_huggingface(res["local"], res["url"])
-        return load_model(res["local"])
+        if "cnn_model" not in st.session_state:
+            st.write("⚡ Chargement BASELINE CNN (appel réel)")
+            res = HF_RESOURCES["models"]["baseline_cnn"]
+            download_from_huggingface(res["local"], res["url"])
+            # ⚠️ compile=False pour éviter les soucis de désérialisation
+            st.session_state.cnn_model = load_model(res["local"], compile=False)
+        return st.session_state.cnn_model
     except Exception as e:
         st.error(f"Erreur de chargement du modèle CNN : {e}")
         st.stop()
 
 
-@st.cache_resource
+# @st.cache_resource
+# def load_model_ictn():
+#     try:
+#         st.write("⚡ Chargement ICNT (appel réel)")
+#         res = HF_RESOURCES["models"]["icnt"]
+#         download_from_huggingface(res["local"], res["url"])
+#         return load_model(res["local"])
+#     except Exception as e:
+#         st.error(f"Erreur de chargement du modèle ICTN : {e}")
+#         st.stop()
 def load_model_ictn():
     try:
-        st.write("⚡ Chargement ICNT (appel réel)")
-        res = HF_RESOURCES["models"]["icnt"]
-        download_from_huggingface(res["local"], res["url"])
-        return load_model(res["local"])
+        if "ictn_model" not in st.session_state:
+            st.write("⚡ Chargement ICNT (appel réel)")
+            res = HF_RESOURCES["models"]["icnt"]
+            download_from_huggingface(res["local"], res["url"])
+            st.session_state.ictn_model = load_model(res["local"], compile=False)
+        return st.session_state.ictn_model
     except Exception as e:
         st.error(f"Erreur de chargement du modèle ICTN : {e}")
         st.stop()
 
 
+# ------------------------------
+# CHARGEMENT DU MODELE IIV3
+# ------------------------------
 # @st.cache_resource
 # def load_model_iiv3():
 #     try:
+#         st.write("⚡ Chargement IIV3 (appel réel)")
 #         res = HF_RESOURCES["models"]["iiv3"]
 #         download_from_huggingface(res["local"], res["url"])
 #         return load_model(res["local"])
 #     except Exception as e:
-#         st.error(f"Erreur de chargement du modèle InceptionV3 : {e}")
+#         st.error(f"Erreur de chargement du modèle IIV3 : {e}")
 #         st.stop()
-
-
-# ------------------------------
-# CHARGEMENT DU MODELE IIV3
-# ------------------------------
-@st.cache_resource
 def load_model_iiv3():
     try:
-        st.write("⚡ Chargement IIV3 (appel réel)")
-        res = HF_RESOURCES["models"]["iiv3"]
-        download_from_huggingface(res["local"], res["url"])
-        return load_model(res["local"])
+        if "iiv3_model" not in st.session_state:
+            st.write("⚡ Chargement IIV3 (appel réel)")
+            res = HF_RESOURCES["models"]["iiv3"]
+            download_from_huggingface(res["local"], res["url"])
+            st.session_state.iiv3_model = load_model(res["local"], compile=False)
+        return st.session_state.iiv3_model
     except Exception as e:
         st.error(f"Erreur de chargement du modèle IIV3 : {e}")
         st.stop()
