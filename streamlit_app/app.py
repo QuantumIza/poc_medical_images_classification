@@ -253,7 +253,7 @@ with tab1:
     for selected_class in ["normal", "benign", "malignant"]:
         with st.expander(f"Classe : {selected_class.capitalize()}"):
             # --- SELECTION ALEATOIRE DE TROIS IMAGES POUR LA CLASSE
-            sample_urls = df_sample[df_sample[class] == selected_class]["image_url"].sample(3, random_stae=42)
+            sample_urls = df_sample[df_sample["class"] == selected_class]["image_url"].sample(3, random_state=42)
             cols = st.columns(3)
             for i,url in enumerate(sample_urls):
                 img = load_image_from_url(url)
