@@ -457,6 +457,9 @@ with tab2:
                     y=alt.Y("Probabilité", title="PROBABILITÉ")
                 ).properties(height=300)
                 st.altair_chart(chart_base, use_container_width=True)
+            # Libération mémoire après affichage
+            del y_pred_base, probas_base, df_base, chart_base
+            gc.collect()
 
         if use_ictn:
             probas_ictn = pd.Series(y_pred_ictn[0], index=classes_icnt).sort_values(ascending=False)
@@ -740,6 +743,9 @@ with tab3:
                     y=alt.Y("Probabilité", title="PROBABILITÉ")
                 ).properties(height=300)
                 st.altair_chart(chart_base, use_container_width=True)
+            # Libération mémoire après affichage
+            del y_pred_base, probas_base, df_base, chart_base
+            gc.collect()
 
         if use_iiv3:
             probs_iiv3 = y_pred_iiv3[0]
