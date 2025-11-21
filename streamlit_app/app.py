@@ -211,9 +211,15 @@ with tab1:
         )
         fig_stats.update_traces(textposition="outside")
         st.plotly_chart(fig_stats, use_container_width=True)
-        st.caption("📊 Chaque groupe correspond à un sous-ensemble du dataset : total, entraînement et blind test. Les couleurs indiquent les classes (normal, benign, malignant).")
+        # --- TEXTE EXPLICATIF
         st.markdown(
-            "<p style='font-size:16px; color:black;'>📊 Chaque groupe correspond à un sous-ensemble du dataset : <b>total</b>, <b>entraînement</b> et <b>blind test</b>. Les couleurs indiquent les classes (<span style='color:#4E79A7;'>normal</span>, <span style='color:#7B6D5D;'>benign</span>, <span style='color:#8A70C9;'>malignant</span>).</p>",
+            "<p style='font-size:16px; color:black;'>
+            📊 Chaque groupe correspond à un sous-ensemble du dataset : 
+            <ul>
+                <li>IMAGES CHARGEES DEPUIS KAGGLE</li>
+                <li>IMAGES APRES REEQUILIBRAGES DES CLASSES (data augmentation ciblee sur la clase "normal"), SUBDIVIS2ES EN ECHANTILLON ENTARINEMENT ET ECHANTILLON BLID TEST</li>
+            </ul>
+            <b>total</b>, <b>entraînement</b> et <b>blind test</b>. Les couleurs indiquent les classes (<span style='color:#4E79A7;'>normal</span>, <span style='color:#7B6D5D;'>benign</span>, <span style='color:#8A70C9;'>malignant</span>).</p>",
             unsafe_allow_html=True
         )
 
