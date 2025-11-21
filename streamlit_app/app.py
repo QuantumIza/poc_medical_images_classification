@@ -264,6 +264,16 @@ with tab1:
         color_discrete_map=class_colors,
         title="⬛ DISTRIBUTION DES CLASSES DANS L'ECHANTILLON D'ENTRAINEMENT"
     )
+    # --- ON VEUT RENDRE MOINS DISCRETE LA LEGENDE
+    fig_bar.update_layout(
+    legend=dict(
+        title="Classes",
+        font=dict(size=14, color="black"),
+        bgcolor="white",
+        bordercolor="black",
+        borderwidth=1
+        )
+    )
     col1.plotly_chart(fig_bar, use_container_width=True)
 
     fig, ax = plt.subplots()
@@ -278,16 +288,7 @@ with tab1:
     ax.axis('equal')
     col2.pyplot(fig)
 
-    # --- ON VEUT RENDRE MOINS DISCRETE LA LEGENDE
-    fig_bar.update_layout(
-    legend=dict(
-        title="Classes",
-        font=dict(size=14, color="black"),
-        bgcolor="white",
-        bordercolor="black",
-        borderwidth=1
-        )
-    )
+    
 
     
     
