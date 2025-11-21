@@ -217,14 +217,13 @@ with tab1:
             <ul style="font-size:20px; color:black;">
                 <li>A GAUCHE : IMAGES CHARGEES DEPUIS KAGGLE</li>
                 <li>A DROITE : LES DEUX BARPLOTS RESULTENT DU REEQUILIBRAGE DES CLASSES (par data augmentation ciblée sur la classe <b>normal</b>), 
-                ECHANTILLON SUBDIVISE EN SUBSET <b>ENTRAINEMENT</b> ET <b>BLIND TEST</b></li>
+                ECHANTILLON SUBDIVISE EN SUBSET <b>ENTRAINEMENT</b> ET SUBSET <b>BLIND TEST</b></li>
             </ul>
-            <p style="font-size:16px; color:black;">
-                Les groupes correspondent à <b>total</b>, <b>entraînement</b> et <b>blind test</b>. 
-                Les couleurs indiquent les classes 
-                (<span style='color:#4E79A7;'>normal</span>, 
-                <span style='color:#E07B7B;'>benign</span>, 
-                <span style='color:#8A70C9;'>malignant</span>).
+            <p style="font-size:20px; color:black;">
+                LES COULEURS INDIQUENT LES CLASSES 
+                (<span style='color:#4E79A7;'>NORMAL</span>, 
+                <span style='color:#E07B7B;'>BENIGN</span>, 
+                <span style='color:#8A70C9;'>MALIGNANT</span>).
             </p>
             """,
             unsafe_allow_html=True
