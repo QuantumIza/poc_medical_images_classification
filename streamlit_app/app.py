@@ -207,7 +207,7 @@ with tab1:
             text="Proportion (%)",
             color_discrete_map=class_colors,
             barmode="group",
-            title="REPARTITION DES IMAGES PAR DATASET ET PAR CLASSE"
+            title="⬛ REPARTITION DES IMAGES PAR DATASET ET PAR CLASSE"
         )
         fig_stats.update_traces(textposition="outside")
         st.plotly_chart(fig_stats, use_container_width=True)
@@ -251,7 +251,7 @@ with tab1:
         y="count",
         color="class",
         color_discrete_map=class_colors,
-        title="DISTRIBUTION DES CLASSES DANS L'ECHANTILLON D'ENTRAINEMENT"
+        title="⬛ DISTRIBUTION DES CLASSES DANS L'ECHANTILLON D'ENTRAINEMENT"
     )
     col1.plotly_chart(fig_bar, use_container_width=True)
 
