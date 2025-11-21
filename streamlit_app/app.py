@@ -207,7 +207,7 @@ with tab1:
             text="Proportion (%)",
             color_discrete_map=class_colors,
             barmode="group",
-            title="Répartition des images par dataset et par classe"
+            title="REPARTITION DES IMAGES PAR DATASET ET PAR CLASSE"
         )
         fig_stats.update_traces(textposition="outside")
         st.plotly_chart(fig_stats, use_container_width=True)
