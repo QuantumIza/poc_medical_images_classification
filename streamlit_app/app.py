@@ -214,7 +214,7 @@ with tab1:
         fig_stats.update_layout(
             legend=dict(
                 title="Classes",
-                font=dict(size=14, color="black"),   # taille et couleur du texte
+                font=dict(size=18, color="black"),   # taille et couleur du texte
                 bgcolor="white",                     # fond blanc pour contraste
                 bordercolor="black",                 # bordure noire
                 borderwidth=1
@@ -268,7 +268,7 @@ with tab1:
     fig_bar.update_layout(
     legend=dict(
         title="Classes",
-        font=dict(size=14, color="black"),
+        font=dict(size=18, color="black"),
         bgcolor="white",
         bordercolor="black",
         borderwidth=1
