@@ -214,10 +214,10 @@ with tab1:
         # --- TEXTE EXPLICATIF
         st.markdown(
             """
-            <ul style="font-size:16px; color:black;">
-                <li>📥 Images chargées depuis Kaggle</li>
-                <li>⚖️ Rééquilibrage des classes (data augmentation ciblée sur la classe <b>normal</b>), 
-                subdivisées en échantillon <b>entraînement</b> et <b>blind test</b></li>
+            <ul style="font-size:20px; color:black;">
+                <li>A GAUCHE : IMAGES CHARGEES DEPUIS KAGGLE</li>
+                <li>A DROITE : LES DEUX BARPLOTS RESULTENT DU REEQUILIBRAGE DES CLASSES (par data augmentation ciblée sur la classe <b>normal</b>), 
+                ECHANTILLON SUBDIVISE EN SUBSET <b>ENTRAINEMENT</b> ET <b>BLIND TEST</b></li>
             </ul>
             <p style="font-size:16px; color:black;">
                 Les groupes correspondent à <b>total</b>, <b>entraînement</b> et <b>blind test</b>. 
