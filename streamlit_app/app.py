@@ -215,8 +215,8 @@ with tab1:
         st.markdown(
             """
             <ul style="font-size:20px; color:black;">
-                <li>A GAUCHE : IMAGES CHARGEES DEPUIS KAGGLE</li>
-                <li>A DROITE : LES DEUX BARPLOTS RESULTENT DU REEQUILIBRAGE DES CLASSES (par data augmentation ciblée sur la classe <b>normal</b>), 
+                <li><b>A GAUCHE</b> : IMAGES CHARGEES DEPUIS KAGGLE</li>
+                <li><b>A DROITE</b> : LES DEUX BARPLOTS RESULTENT DU REEQUILIBRAGE DES CLASSES (par data augmentation ciblée sur la classe <b>normal</b>), 
                 ECHANTILLON SUBDIVISE EN SUBSET <b>ENTRAINEMENT</b> ET SUBSET <b>BLIND TEST</b></li>
             </ul>
             <p style="font-size:20px; color:black;">
