@@ -195,7 +195,7 @@ with tab1:
     # --- CHARGEMENT DU DATAFRAME DE STATS VIA LOADER
     try:
         df_stats = load_dataset_stats()
-        st.subheader("Statistiques du dataset")
+        st.subheader("⬛ Statistiques du dataset")
         st.dataframe(df_stats)
 
         # --- BARPLOT COMPARATIF
