@@ -278,6 +278,20 @@ with tab1:
     ax.axis('equal')
     col2.pyplot(fig)
 
+    # --- ON VEUT RENDRE MOINS DISCRETE LA LEGENDE
+    fig_bar.update_layout(
+    legend=dict(
+        title="Classes",
+        font=dict(size=14, color="black"),
+        bgcolor="white",
+        bordercolor="black",
+        borderwidth=1
+        )
+    )
+
+    
+    
+
     # # --- APERÇU D'IMAGES PAR CLASSE
     st.subheader("APERÇU D'IMAGES PAR CLASSE")
     # --- BOUCLE SUR LES TROIS CLASSES
