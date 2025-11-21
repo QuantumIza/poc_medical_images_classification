@@ -211,6 +211,8 @@ with tab1:
         )
         fig_stats.update_traces(textposition="outside")
         st.plotly_chart(fig_stats, use_container_width=True)
+        st.caption("📊 Chaque groupe correspond à un sous-ensemble du dataset : total, entraînement et blind test. Les couleurs indiquent les classes (normal, benign, malignant).")
+
 
     except Exception as e:
         st.warning(f"Impossible de charger les stats : {e}")
