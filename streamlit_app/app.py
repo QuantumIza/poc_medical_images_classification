@@ -221,9 +221,9 @@ with tab1:
             </ul>
             <p style="font-size:20px; color:black;">
                 LES COULEURS INDIQUENT LES CLASSES 
-                (<span style='color:#4E79A7;'>NORMAL</span>, 
-                <span style='color:#E07B7B;'>BENIGN</span>, 
-                <span style='color:#8A70C9;'>MALIGNANT</span>).
+                (<span style='color:#4E79A7;'><b>NORMAL</b></span>, 
+                <span style='color:#E07B7B;'><b>BENIGN</b></span>, 
+                <span style='color:#8A70C9;'><b>MALIGNANT</b></span>).
             </p>
             """,
             unsafe_allow_html=True
