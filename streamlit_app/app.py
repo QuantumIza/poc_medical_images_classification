@@ -213,8 +213,7 @@ with tab1:
         st.plotly_chart(fig_stats, use_container_width=True)
         # --- TEXTE EXPLICATIF
         st.markdown(
-            "<p style='font-size:16px; color:black;'>
-            📊 Chaque groupe correspond à un sous-ensemble du dataset : </p>
+            "
             <ul>
                 <li>IMAGES CHARGEES DEPUIS KAGGLE</li>
                 <li>IMAGES APRES REEQUILIBRAGES DES CLASSES (data augmentation ciblee sur la clase "normal"), SUBDIVIS2ES EN ECHANTILLON ENTARINEMENT ET ECHANTILLON BLID TEST</li>
