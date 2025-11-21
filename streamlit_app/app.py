@@ -251,7 +251,7 @@ with tab1:
         y="count",
         color="class",
         color_discrete_map=class_colors,
-        title="DISTRIBUTION DES CLASSES"
+        title="DISTRIBUTION DES CLASSES DANS L'ECHANTILLON D'ENTRAINEMENT"
     )
     col1.plotly_chart(fig_bar, use_container_width=True)
 
