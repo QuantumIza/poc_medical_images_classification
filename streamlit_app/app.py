@@ -213,14 +213,23 @@ with tab1:
         st.plotly_chart(fig_stats, use_container_width=True)
         # --- TEXTE EXPLICATIF
         st.markdown(
-            "
-            <ul>
-                <li>IMAGES CHARGEES DEPUIS KAGGLE</li>
-                <li>IMAGES APRES REEQUILIBRAGES DES CLASSES (data augmentation ciblee sur la clase "normal"), SUBDIVIS2ES EN ECHANTILLON ENTARINEMENT ET ECHANTILLON BLID TEST</li>
+            """
+            <ul style="font-size:16px; color:black;">
+                <li>📥 Images chargées depuis Kaggle</li>
+                <li>⚖️ Rééquilibrage des classes (data augmentation ciblée sur la classe <b>normal</b>), 
+                subdivisées en échantillon <b>entraînement</b> et <b>blind test</b></li>
             </ul>
-            <b>total</b>, <b>entraînement</b> et <b>blind test</b>. Les couleurs indiquent les classes (<span style='color:#4E79A7;'>normal</span>, <span style='color:#7B6D5D;'>benign</span>, <span style='color:#8A70C9;'>malignant</span>).</p>",
+            <p style="font-size:16px; color:black;">
+                Les groupes correspondent à <b>total</b>, <b>entraînement</b> et <b>blind test</b>. 
+                Les couleurs indiquent les classes 
+                (<span style='color:#4E79A7;'>normal</span>, 
+                <span style='color:#E07B7B;'>benign</span>, 
+                <span style='color:#8A70C9;'>malignant</span>).
+            </p>
+            """,
             unsafe_allow_html=True
         )
+
 
 
 
