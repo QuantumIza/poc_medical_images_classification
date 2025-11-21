@@ -210,6 +210,17 @@ with tab1:
             title="⬛ REPARTITION DES IMAGES PAR DATASET ET PAR CLASSE"
         )
         fig_stats.update_traces(textposition="outside")
+        # --- ON VEUT RENDRE LA LEGENDE MOINS DISCRETE
+        fig_stats.update_layout(
+            legend=dict(
+                title="Classes",
+                font=dict(size=14, color="black"),   # taille et couleur du texte
+                bgcolor="white",                     # fond blanc pour contraste
+                bordercolor="black",                 # bordure noire
+                borderwidth=1
+            )
+        )
+        
         st.plotly_chart(fig_stats, use_container_width=True)
         # --- TEXTE EXPLICATIF
         st.markdown(
